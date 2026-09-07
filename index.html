@@ -2156,7 +2156,149 @@ body::before{
 }
 </style>
 
-</head><body>
+
+<style id="role-access-style">
+body.access-pending .topbar,
+body.access-pending .floating-ui-controls,
+body.access-pending .wrap,
+body.access-pending .footer{visibility:hidden}
+
+.access-gate{
+  position:fixed;inset:0;z-index:20000;
+  display:grid;place-items:center;
+  padding:20px;
+  background:
+    radial-gradient(circle at 50% -10%, color-mix(in srgb,var(--accent) 13%,transparent), transparent 42%),
+    var(--bg);
+}
+.access-gate[hidden]{display:none!important}
+.access-gate-card{
+  width:min(720px,100%);
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:color-mix(in srgb,var(--panel) 94%,transparent);
+  box-shadow:0 28px 90px rgba(0,0,0,.32);
+  padding:22px;
+}
+.access-gate-brand{text-align:center;margin:2px 0 19px}
+.access-gate-brand small{font-size:9px;font-weight:900;letter-spacing:.12em;color:var(--accent)}
+.access-gate-brand h1{font-size:30px;margin:6px 0 5px}
+.access-gate-brand p{margin:0;color:var(--muted);font-size:12px}
+.access-role-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.access-role-grid button{
+  min-height:76px;text-align:left;padding:12px;
+  border:1px solid var(--line);border-radius:11px;
+  background:var(--panel2);color:var(--text);cursor:pointer;
+  transition:.16s ease;
+}
+.access-role-grid button:hover{border-color:color-mix(in srgb,var(--accent) 55%,var(--line));transform:translateY(-1px)}
+.access-role-grid button.active{
+  border-color:var(--accent);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 28%,transparent);
+  background:color-mix(in srgb,var(--accent) 8%,var(--panel2));
+}
+.access-role-grid b{display:block;font-size:13px}
+.access-role-grid span{display:block;margin-top:4px;color:var(--muted);font-size:9px;line-height:1.3}
+.access-login-form{
+  display:grid;grid-template-columns:1fr 1.6fr auto;
+  gap:9px;align-items:end;
+  margin-top:14px;padding-top:14px;border-top:1px solid var(--line);
+}
+.access-selected small,.access-login-form label>span{
+  display:block;margin-bottom:5px;color:var(--muted);font-size:8px;font-weight:850;letter-spacing:.06em
+}
+.access-selected b{display:block;min-height:37px;padding:10px 11px;border:1px solid var(--line);border-radius:9px;background:var(--bg2);font-size:11px}
+.access-login-form input{
+  width:100%;height:39px;border:1px solid var(--line);border-radius:9px;
+  padding:0 11px;background:var(--bg2);color:var(--text);outline:none;
+}
+.access-login-form input:focus{border-color:var(--accent)}
+.access-login-submit{
+  height:39px;padding:0 17px;border:1px solid var(--accent);border-radius:9px;
+  background:var(--accent);color:#061019;font-weight:900;cursor:pointer
+}
+.access-login-submit:disabled,.access-login-form input:disabled{opacity:.5;cursor:not-allowed}
+.access-login-status{grid-column:1/-1;min-height:15px;font-size:10px;color:var(--muted)}
+.access-login-status.error{color:#e26f73}
+.access-login-status.ok{color:#72c99c}
+.access-gate-note{
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  margin-top:8px;color:var(--muted);font-size:8px
+}
+.access-profile-controls{display:flex;align-items:center;gap:5px}
+.access-role-pill,.access-logout-btn{
+  height:35px;border:1px solid var(--line);border-radius:9px;
+  background:var(--panel2);color:var(--text);cursor:pointer
+}
+.access-role-pill{padding:0 10px;color:var(--accent);font-size:9px;font-weight:900;letter-spacing:.04em}
+.access-logout-btn{width:35px;font-size:14px}
+.access-role-pill:hover,.access-logout-btn:hover{border-color:var(--accent)}
+.access-hidden{display:none!important}
+.secure-content-loading{
+  min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:6px;text-align:center;border:1px solid var(--line);border-radius:13px;background:var(--panel)
+}
+.secure-content-loading b{font-size:13px}
+.secure-content-loading span{color:var(--muted);font-size:10px}
+.access-denied-card{
+  padding:22px;border:1px solid var(--line);border-radius:13px;background:var(--panel);text-align:center
+}
+.access-denied-card b{display:block;margin-bottom:6px}
+.access-denied-card span{color:var(--muted);font-size:10px}
+
+@media(max-width:760px){
+  .access-role-grid{grid-template-columns:repeat(2,1fr)}
+  .access-login-form{grid-template-columns:1fr}
+  .access-login-status{grid-column:auto}
+  .access-profile-controls{order:3}
+}
+@media(max-width:480px){
+  .access-gate{padding:10px}
+  .access-gate-card{padding:15px;border-radius:14px}
+  .access-role-grid{grid-template-columns:1fr 1fr;gap:7px}
+  .access-role-grid button{min-height:67px;padding:10px}
+  .access-gate-brand h1{font-size:25px}
+}
+</style>
+
+</head><body class="access-pending">
+<div class="access-gate" id="accessGate" aria-hidden="false">
+  <div class="access-gate-card">
+    <div class="access-gate-brand">
+      <small>РОССИЯ ОНЛАЙН · КУТУЗОВСКИЙ</small>
+      <h1>Памятка ФСО</h1>
+      <p>Выберите профиль доступа и введите пароль.</p>
+    </div>
+
+    <div class="access-role-grid" id="accessRoleGrid">
+      <button type="button" data-access-role="academy"><b>Академия</b><span>Учебный доступ</span></button>
+      <button type="button" data-access-role="uk"><b>УК</b><span>Управление кадров</span></button>
+      <button type="button" data-access-role="ulo"><b>УЛО</b><span>Управление личной охраны</span></button>
+      <button type="button" data-access-role="usn"><b>УСН</b><span>Управление специального назначения</span></button>
+      <button type="button" data-access-role="uvk"><b>УВК</b><span>Управление внутреннего контроля</span></button>
+      <button type="button" data-access-role="leadership"><b>Руководство</b><span>Полный профиль подразделений</span></button>
+    </div>
+
+    <form class="access-login-form" id="accessLoginForm">
+      <div class="access-selected">
+        <small>ВЫБРАННЫЙ ПРОФИЛЬ</small>
+        <b id="accessSelectedRole">Не выбран</b>
+      </div>
+      <label>
+        <span>Пароль</span>
+        <input id="accessPassword" type="password" autocomplete="current-password" placeholder="Введите пароль" disabled>
+      </label>
+      <button class="access-login-submit" id="accessLoginSubmit" type="submit" disabled>Войти</button>
+      <div class="access-login-status" id="accessLoginStatus" aria-live="polite"></div>
+    </form>
+
+    <div class="access-gate-note">
+      <span>Разделы показываются в соответствии с выбранным профилем.</span>
+      <span>Доступ к материалам «СЕКРЕТНО» проверяется отдельно.</span>
+    </div>
+  </div>
+</div>
+
 <header class="topbar"><div class="topbar-in">
 <div class="brand">
 <div class="brand-main">
@@ -2175,6 +2317,10 @@ body::before{
 <button data-page="rules">Правила проекта</button>
 <button data-page="laws">Документы</button>
 </nav>
+<div class="access-profile-controls" id="accessProfileControls" hidden>
+  <button class="access-role-pill" id="accessRolePill" type="button" title="Текущий профиль доступа">ПРОФИЛЬ</button>
+  <button class="access-logout-btn" id="accessLogoutBtn" type="button" title="Выйти из профиля" aria-label="Выйти из профиля">↪</button>
+</div>
 <button class="theme secret-access-btn" id="secretAccessBtn" title="Доступ к секретным материалам">🔒</button><button class="theme help-btn" id="helpBtn" title="Помощь и обратная связь">?</button>
 </div></header>
 <div class="floating-ui-controls" aria-label="Настройки интерфейса">
@@ -2991,1382 +3137,12 @@ body::before{
 </button>
 </div>
 </div></section><section class="page" id="page-situations">
-<div class="section-head"><div><h2>Ситуации</h2><p>Только типовые события, которые сотруднику реально нужно быстро разрешить по закону.</p></div><div class="count" id="situationCount"></div></div>
-<div class="situation-search"><span>⌕</span><input id="situationSearch" placeholder="Поиск: документы, досмотр, мат, без одежды, не выполняет требование, закрытая зона..."/></div>
-<div class="situation-filters">
-<button class="situation-filter active" data-situation-filter="all">Все</button>
-<button class="situation-filter" data-situation-filter="access">Доступ</button>
-<button class="situation-filter" data-situation-filter="inspection">Досмотр</button>
-<button class="situation-filter" data-situation-filter="demand">Требования</button>
-<button class="situation-filter" data-situation-filter="order">Порядок</button>
-<button class="situation-filter" data-situation-filter="process">Задержание</button>
-<button class="situation-filter" data-situation-filter="threat">Угроза</button>
+<div id="secureSituationsMount" class="secure-content-mount">
+  <div class="secure-content-loading">
+    <b>Ситуации загружаются после проверки доступа</b>
+    <span>Материалы этого раздела не хранятся в публичном коде сайта.</span>
+  </div>
 </div>
-<div class="situation-intro"><b>Логика раздела:</b> событие → действие сотрудника → полные основания → следующий этап. Ненужные темы вроде кортежа сюда не вынесены.</div>
-<div id="situationList"><article class="scenario-card" data-group="access" data-search="Дежурство на входе: проверка доступа Документы, цель посещения, подтверждение допуска и действия при отказе или попытке пройти дальше. КПП документы цель пропуск доступ" id="scenario-entry-duty"><button class="scenario-head"><div class="scenario-num">01</div><div class="scenario-head-main"><h2>Дежурство на входе: проверка доступа</h2><p>Документы, цель посещения, подтверждение допуска и действия при отказе или попытке пройти дальше.</p><div class="scenario-tags"><span>КПП</span><span>документы</span><span>цель</span><span>пропуск</span><span>доступ</span></div></div><div class="scenario-meta"><b>8 этапов</b><span>Открыть ↓</span></div></button><div class="scenario-flow"><section class="scenario-step first-step" id="entry-duty-1"><div class="step-rail"><span>1</span></div><div class="step-content"><h3>Определить, какой режим действует на входе</h3><div class="step-pair"><div><small>Действие сотрудника</small><p>Сначала установи, что именно охраняется и какой режим действует. На закрытой территории, режимном объекте и в зоне временного особого режима действует ст. 10 ФЗ о территориях. На охраняемом объекте, мероприятии или охранной зоне ФСО применяются специальные нормы ФЗ «О ФСО РО».</p></div></div><div class="formal-note"><b>Примечание</b><p>Наличие КПП само по себе не определяет правовой режим территории. Перед требованием документов установи, что находится за линией контроля: закрытая территория, режимный объект, зона временного особого режима либо охраняемый объект / мероприятие ФСО. От этого зависит конкретное основание требования.</p></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>2</span></div><details class="ground"><summary><span>ФЗ «О государственных территориях РО»</span><b>ст. 10</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 10. Проверка оснований пребывания и установление личности
-
-1. Уполномоченный сотрудник вправе потребовать от неизвестного лица сообщить цель пребывания и
-предъявить документ, удостоверяющий личность, служебное удостоверение или пропуск, если лицо находится
-на закрытой территории, режимном объекте либо в зоне временного особого режима.
-2. Требование должно быть законным, понятным и относящимся к установленному режиму территории.
-3. При отсутствии подтвержденного права доступа лицу может быть отказано во входе либо предъявлено
-требование покинуть территорию.</pre><button class="open-doc" data-article="10" data-doc="territory">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 27</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 27. Проверка документов и доступа
-
-1. <mark>На охраняемом объекте или мероприятии сотрудник ФСО РО вправе потребовать</mark> предъявления
-документа, удостоверяющего личность, служебного удостоверения, пропуска либо иного документа,
-необходимого для подтверждения права доступа.
-
-2. Требование должно быть связано с установленным режимом охраны и не может предъявляться
-бесцельно вне охраняемого объекта, мероприятия или охранной зоны.
-
-3. При отсутствии права доступа либо отказе подтвердить его лицо может быть не допущено на охраняемый
-объект или обязано покинуть охранную зону.
-
-4. Отказ от добровольного входа на охраняемый объект не является самостоятельным основанием для
-задержания, если лицо не совершает иного правонарушения и выполняет требование покинуть
-территорию.</pre><button class="open-doc" data-article="27" data-doc="fso">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="entry-duty-2">Гражданин подходит ко входу</button></div></div></div></section><section class="scenario-step" id="entry-duty-2"><div class="step-rail"><span>2</span></div><div class="step-content"><h3>Спросить цель посещения и подтвердить право доступа</h3><div class="step-pair"><div><small>Событие</small><p>Гражданин намерен пройти дальше.</p></div><div><small>Действия сотрудника</small><p>Если действует основание ст. 10 ФЗ о территориях — можно потребовать сообщить цель пребывания и предъявить документ / служебное удостоверение / пропуск. На охраняемом объекте или мероприятии ФСО можно потребовать документ, необходимый для подтверждения права доступа.</p></div></div><div class="stage-formula">
-<b>Формулировка</b>
-<div class="formula-variant">
-<small>Закрытая территория / режимный объект / временный особый режим</small>
-<p>Гражданин, на основании ст. 10 ч. 1 ФЗ «О государственных территориях РО» требую сообщить цель пребывания и предъявить документ, удостоверяющий личность, служебное удостоверение либо пропуск.</p>
-</div>
-<div class="formula-variant">
-<small>Охраняемый объект / мероприятие ФСО</small>
-<p>Гражданин, на основании ст. 27 ч. 1 ФЗ «О ФСО РО» требую предъявить документ, подтверждающий право доступа на объект.</p>
-</div>
-</div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>2</span></div><details class="ground"><summary><span>ФЗ «О государственных территориях РО»</span><b>ст. 10</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 10. Проверка оснований пребывания и установление личности
-
-1. Уполномоченный сотрудник вправе потребовать от неизвестного лица сообщить цель пребывания и
-предъявить документ, удостоверяющий личность, служебное удостоверение или пропуск, если лицо находится
-на закрытой территории, режимном объекте либо в зоне временного особого режима.
-2. Требование должно быть законным, понятным и относящимся к установленному режиму территории.
-3. При отсутствии подтвержденного права доступа лицу может быть отказано во входе либо предъявлено
-требование покинуть территорию.</pre><button class="open-doc" data-article="10" data-doc="territory">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 27</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 27. Проверка документов и доступа
-
-1. На охраняемом объекте или мероприятии сотрудник ФСО РО вправе потребовать предъявления
-<mark>документа, удостоверяющего личность, служебного удостоверения, пропуска</mark> либо иного документа,
-необходимого для подтверждения права доступа.
-
-2. Требование должно быть связано с установленным режимом охраны и не может предъявляться
-бесцельно вне охраняемого объекта, мероприятия или охранной зоны.
-
-3. При отсутствии права доступа либо отказе подтвердить его лицо может быть не допущено на охраняемый
-объект или обязано покинуть охранную зону.
-
-4. Отказ от добровольного входа на охраняемый объект не является самостоятельным основанием для
-задержания, если лицо не совершает иного правонарушения и выполняет требование покинуть
-территорию.</pre><button class="open-doc" data-article="27" data-doc="fso">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="entry-duty-3">Доступ подтверждён</button><button class="stage-jump" data-target="entry-duty-4">Говорит «я здесь работаю»</button><button class="stage-jump" data-target="entry-duty-5">Доступ не подтверждён</button><button class="stage-jump" data-target="entry-duty-6">Отказывается от проверки и уходит</button><button class="stage-jump" data-target="entry-duty-7">Игнорирует и пытается пройти</button></div></div></div></section><section class="scenario-step" id="entry-duty-3"><div class="step-rail"><span>3</span></div><div class="step-content"><h3>Доступ подтверждён</h3><div class="step-pair"><div><small>Событие</small><p>Документы и основание доступа подтверждены.</p></div><div><small>Действия сотрудника</small><p>Пропускай только в пределах того допуска, цели, маршрута, зоны и срока, которые действительно предоставлены. Сам факт доступа на объект не означает право заходить в любые помещения.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>2</span></div><details class="ground"><summary><span>ФЗ «О государственных территориях РО»</span><b>ст. 20</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 20. Общие основания доступа
-
-1. Доступ на закрытую территорию предоставляется:
-1) лицам, обладающим беспрепятственным доступом в соответствии с настоящим Федеральным законом;
-2) сотрудникам организации-владельца в пределах предоставленного служебного допуска;
-
-3) лицам, прибывшим для исполнения предусмотренного законом полномочия;
-4) приглашенным лицам в сопровождении;
-5) лицам, имеющим действительный пропуск.
-2. <mark>Право доступа не предоставляет права входить в помещения, не связанные с целью посещения</mark>, знакомиться
-с документами, вмешиваться в деятельность сотрудников или нарушать требования безопасности.
-3. Лицо обязано предъявить подтверждение права доступа по требованию сотрудника контрольно-пропускного
-пункта или ответственного за режим сотрудника.</pre><button class="open-doc" data-article="20" data-doc="territory">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О государственных территориях РО»</span><b>ст. 46</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 46. Использование пропуска и сопровождение
-
-1. Владелец предъявляет пропуск вместе с документом, удостоверяющим личность, если личность не
-подтверждается защищенным способом.
-2. Лицо обязано соблюдать маршрут, зоны и время, указанные в пропуске.
-3. Если пропуск предусматривает сопровождение, нахождение без сопровождающего запрещается.
-4. При утрате пропуска владелец обязан незамедлительно уведомить организацию-владельца; пропуск
-блокируется.
-5. Завершение цели пребывания прекращает право доступа, даже если формальный срок пропуска еще не
-истек.</pre><button class="open-doc" data-article="46" data-doc="territory">Открыть в документе</button></div></details></div></div></section><section class="scenario-step" id="entry-duty-4"><div class="step-rail"><span>4</span></div><div class="step-content"><h3>Если человек говорит «я сотрудник»</h3><div class="step-pair"><div><small>Событие</small><p>Гражданин заявляет, что работает в организации.</p></div><div><small>Действия сотрудника</small><p>Проверь служебное основание доступа. Работа в организации не означает автоматический доступ во все помещения: действует служебный допуск и компетенция.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>2</span></div><details class="ground"><summary><span>ФЗ «О государственных территориях РО»</span><b>ст. 20</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 20. Общие основания доступа
-
-1. Доступ на закрытую территорию предоставляется:
-1) лицам, обладающим беспрепятственным доступом в соответствии с настоящим Федеральным законом;
-2) <mark>сотрудникам организации-владельца в пределах предоставленного служебного допуска</mark>;
-
-3) лицам, прибывшим для исполнения предусмотренного законом полномочия;
-4) приглашенным лицам в сопровождении;
-5) лицам, имеющим действительный пропуск.
-2. Право доступа не предоставляет права входить в помещения, не связанные с целью посещения, знакомиться
-с документами, вмешиваться в деятельность сотрудников или нарушать требования безопасности.
-3. Лицо обязано предъявить подтверждение права доступа по требованию сотрудника контрольно-пропускного
-пункта или ответственного за режим сотрудника.</pre><button class="open-doc" data-article="20" data-doc="territory">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О государственных территориях РО»</span><b>ст. 23</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 23. Сотрудники организации-владельца
-
-1. Сотрудник организации-владельца вправе находиться на закрытой территории в пределах служебного
-допуска, установленного по должности или отдельным решением руководителя.
-2. Нахождение вне времени исполнения служебных обязанностей допускается только с разрешения
-непосредственного руководителя либо при иной подтвержденной служебной необходимости.
-3. Сотрудник не вправе проводить на территорию иных лиц, если он не уполномочен выдавать приглашение.
-4. Прекращение государственной службы или изменение должности прекращает соответствующий допуск, если
-иное не установлено новым решением.</pre><button class="open-doc" data-article="23" data-doc="territory">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="entry-duty-3">Допуск подтверждён</button><button class="stage-jump" data-target="entry-duty-5">Допуск не подтверждён</button></div></div></div></section><section class="scenario-step" id="entry-duty-5"><div class="step-rail"><span>5</span></div><div class="step-content"><h3>Право доступа не подтверждено</h3><div class="step-pair"><div><small>Событие</small><p>Документа, пропуска или другого достаточного основания нет.</p></div><div><small>Действия сотрудника</small><p>Не допускай лицо дальше. В предусмотренных законом случаях предъяви понятное требование покинуть территорию / охранную зону.</p></div></div><div class="stage-formula">
-<b>Формулировка</b>
-<div class="formula-variant">
-<small>Закрытая территория / режимный объект</small>
-<p>Гражданин, на основании ст. 10 ч. 3 ФЗ «О государственных территориях РО» в доступе отказано. Не проходите за линию контроля / покиньте территорию.</p>
-</div>
-<div class="formula-variant">
-<small>Охраняемый объект / охранная зона ФСО</small>
-<p>Гражданин, на основании ст. 27 ч. 3 ФЗ «О ФСО РО» в доступе отказано. Не проходите на объект / покиньте охранную зону.</p>
-</div>
-</div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>2</span></div><details class="ground"><summary><span>ФЗ «О государственных территориях РО»</span><b>ст. 10</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 10. Проверка оснований пребывания и установление личности
-
-1. Уполномоченный сотрудник вправе потребовать от неизвестного лица сообщить цель пребывания и
-предъявить документ, удостоверяющий личность, служебное удостоверение или пропуск, если лицо находится
-на закрытой территории, режимном объекте либо в зоне временного особого режима.
-2. Требование должно быть законным, понятным и относящимся к установленному режиму территории.
-3. <mark>При отсутствии подтвержденного права доступа лицу может быть отказано во входе</mark> либо предъявлено
-требование покинуть территорию.</pre><button class="open-doc" data-article="10" data-doc="territory">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 27</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 27. Проверка документов и доступа
-
-1. На охраняемом объекте или мероприятии сотрудник ФСО РО вправе потребовать предъявления
-документа, удостоверяющего личность, служебного удостоверения, пропуска либо иного документа,
-необходимого для подтверждения права доступа.
-
-2. Требование должно быть связано с установленным режимом охраны и не может предъявляться
-бесцельно вне охраняемого объекта, мероприятия или охранной зоны.
-
-3. <mark>При отсутствии права доступа либо отказе подтвердить его лицо может быть не допущено</mark> на охраняемый
-объект или обязано покинуть охранную зону.
-
-4. Отказ от добровольного входа на охраняемый объект не является самостоятельным основанием для
-задержания, если лицо не совершает иного правонарушения и выполняет требование покинуть
-территорию.</pre><button class="open-doc" data-article="27" data-doc="fso">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="entry-duty-6">Человек уходит</button><button class="stage-jump" data-target="entry-duty-7">Продолжает проход</button></div></div></div></section><section class="scenario-step" id="entry-duty-6"><div class="step-rail"><span>6</span></div><div class="step-content"><h3>Человек отказался от входа и уходит</h3><div class="step-pair"><div><small>Событие</small><p>Лицо не стало подтверждать доступ / проходить досмотр и покидает место.</p></div><div><small>Действия сотрудника</small><p>Не превращай отказ от добровольного входа в задержание. Если иного правонарушения нет и человек уходит, самостоятельного основания задерживать его из-за одного отказа нет.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>1</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 27</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 27. Проверка документов и доступа
-
-1. На охраняемом объекте или мероприятии сотрудник ФСО РО вправе потребовать предъявления
-документа, удостоверяющего личность, служебного удостоверения, пропуска либо иного документа,
-необходимого для подтверждения права доступа.
-
-2. Требование должно быть связано с установленным режимом охраны и не может предъявляться
-бесцельно вне охраняемого объекта, мероприятия или охранной зоны.
-
-3. При отсутствии права доступа либо отказе подтвердить его лицо может быть не допущено на охраняемый
-объект или обязано покинуть охранную зону.
-
-4. Отказ от добровольного входа на охраняемый объект не является самостоятельным основанием для
-задержания, если лицо не совершает иного правонарушения и выполняет требование покинуть
-территорию.</pre><button class="open-doc" data-article="27" data-doc="fso">Открыть в документе</button></div></details></div></div></section><section class="scenario-step" id="entry-duty-7"><div class="step-rail"><span>7</span></div><div class="step-content"><h3>Человек всё равно идёт дальше</h3><div class="step-pair"><div><small>Событие</small><p>После понятного отказа во входе человек пытается пройти за контрольную границу.</p></div><div><small>Действия сотрудника</small><p>Предъяви однозначное законное требование остановиться / не проходить / покинуть территорию. Затем оцени фактическое проникновение и неповиновение отдельно: статья ответственности не заменяет полномочие на исходное требование.</p></div></div><div class="stage-formula">
-<b>Формулировка</b>
-<div class="formula-variant">
-<p>Гражданин, на основании ранее объявленного законного ограничения доступа и гл. XI ст. 2 Процессуального кодекса РО требую остановиться и прекратить проход за линию контроля.</p>
-</div>
-<div class="formula-note">В спорной ситуации называй и исходную норму, которая дала право ограничить доступ: например, ст. 10 ч. 3 ФЗ «О государственных территориях РО» либо ст. 27 ч. 3 ФЗ «О ФСО РО».</div>
-</div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>5</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 27</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 27. Проверка документов и доступа
-
-1. На охраняемом объекте или мероприятии сотрудник ФСО РО вправе потребовать предъявления
-документа, удостоверяющего личность, служебного удостоверения, пропуска либо иного документа,
-необходимого для подтверждения права доступа.
-
-2. Требование должно быть связано с установленным режимом охраны и не может предъявляться
-бесцельно вне охраняемого объекта, мероприятия или охранной зоны.
-
-3. <mark>При отсутствии права доступа либо отказе подтвердить его лицо может быть не допущено</mark> на охраняемый
-объект или обязано покинуть охранную зону.
-
-4. Отказ от добровольного входа на охраняемый объект не является самостоятельным основанием для
-задержания, если лицо не совершает иного правонарушения и выполняет требование покинуть
-территорию.</pre><button class="open-doc" data-article="27" data-doc="fso">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О государственных территориях РО»</span><b>ст. 10</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 10. Проверка оснований пребывания и установление личности
-
-1. Уполномоченный сотрудник вправе потребовать от неизвестного лица сообщить цель пребывания и
-предъявить документ, удостоверяющий личность, служебное удостоверение или пропуск, если лицо находится
-на закрытой территории, режимном объекте либо в зоне временного особого режима.
-2. Требование должно быть законным, понятным и относящимся к установленному режиму территории.
-3. <mark>При отсутствии подтвержденного права доступа лицу может быть отказано во входе</mark> либо предъявлено
-требование покинуть территорию.</pre><button class="open-doc" data-article="10" data-doc="territory">Открыть в документе</button></div></details><details class="ground"><summary><span>Процессуальный кодекс РО</span><b>гл. XI ст. 2</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 2. Общие положения об устном законном требовании.
-
-1. Государственный служащий, находящийся при исполнении служебных обязанностей, в пределах своей
-компетенции и в границах установленной юрисдикции вправе заявлять устные законные требования
-(приказы, распоряжения, указания и т.д.) обязательные для исполнения гражданами и иными
-государственными служащими. Неисполнение законного требования влечет установленную законом
-ответственность.
-
-1. <mark>Требование должно быть однозначным, конкретным, законным, этичным, исполнимым</mark>,
-сформулированным в повелительном (приказном) наклонении и не допускать в своем содержании
-признаков предложения, исполнение которого возможно по желанию (добровольно).
-
-1. Государственный сотрудник вправе заявлять требования, направленные на:
-
-проведение процессуальных действий (требование поднять руки, лечь на землю, бросить предмет, снять
-элемент одежды, отойти на определенное место или занять определенное положение и т.д.);
-обеспечение установленного законом надзора и контроля (потребовать предъявления документов для
-ознакомления, материальных объектов для осмотра, транспортных средств для обыска и т.д.);
-пресечение правонарушений и преступлений (требование о прекращении действий содержащих признаки
-правонарушения или преступления, действий которые несут непосредственную угрозу безопасности иных
-
-лиц т.д.);
-обеспечение общественного порядка и предотвращение опасности (требование покинуть место
-происшествия, отойти и/или от места проведения процессуальных действий, разойтись во время массовых
-мероприятий и т.д.);
-иные законные цели в пределах компетенции и юрисдикции в соответствии с обстановкой и ситуацией.
-
-1. Государственный служащий не обязан одновременно с каждым кратким требованием излагать его полную
-юридическую мотивировку, если обязанность немедленного разъяснения основания прямо не
-предусмотрена законом. При задержании, обыске, ограничении свободы и иных случаях, для которых
-настоящий Кодекс требует сообщить основание, такое разъяснение обязательно.
-
-1. Государственный служащий обязан сообщать основание и мотивировку своего требования суду,
-прокурору, руководству и иному уполномоченному лицу при проведении суда, расследования или иной
-проверки, где затрагиваются обстоятельства заявления государственным служащим соответствующего
-требования.</pre><button class="open-doc" data-article="2" data-chapter="XI" data-doc="pk">Открыть в документе</button></div></details><details class="ground"><summary><span>УК РО</span><b>ст. 17.6</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 17.6. Неповиновение законному требованию уполномоченного должностного лица
-
-1. <mark>Отказ выполнить законное, понятное и относящееся к компетенции должностного лица требование</mark>
-сотрудника МВД РО, ГИБДД, ФСБ РО, Следственного комитета РО, прокурора, военнослужащего при охране
-военного объекта либо иного уполномоченного законом лица, а равно как неисполнение такого требования.
-
-Наказание: уголовный штраф от 15 000 до 30 000 рублей либо до 3 лет лишения свободы.
-
-2. Злостное неповиновение, продолженное после повторного законного требования.
-
-Наказание: уголовный штраф от 25 000 до 50 000 рублей либо до 4 лет лишения свободы.
-
-Подследственность: общая.
-
-Порядок разрешения: по общему правилу.
-
-Нормативно-правовой акт подписан Премьер-министром РО
-25.08.2026 Марк Брагин</pre><button class="open-doc" data-article="17.6" data-doc="uk">Открыть в документе</button></div></details><details class="ground"><summary><span>УК РО</span><b>ст. 12.7</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 12.7. <mark>Незаконное проникновение</mark> или нахождение на закрытом или охраняемом государственном
-объекте
-
-Незаконное проникновение либо нахождение вопреки установленному режиму на закрытом или охраняемом
-объекте федерального государственного органа, особо охраняемом государственном объекте либо территории,
-
-доступ на которую ограничен федеральным законодательством.
-
-Наказание: до 3 лет лишения свободы либо уголовный штраф от 30 000 до 60 000 рублей.
-
-Подследственность: общая.
-
-Порядок разрешения: по общему правилу.</pre><button class="open-doc" data-article="12.7" data-doc="uk">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="entry-duty-6">Остановился / ушёл</button><button class="stage-jump" data-target="entry-duty-8">Продолжает нарушение</button></div></div></div></section><section class="scenario-step" id="entry-duty-8"><div class="step-rail"><span>8</span></div><div class="step-content"><h3>Решить вопрос о задержании</h3><div class="step-pair"><div><small>Событие</small><p>Нарушение продолжается после законного требования.</p></div><div><small>Действия сотрудника</small><p>Не задерживай автоматически по одному факту спора или отказа. Проверь конкретное основание ст. 30 ФЗ «О ФСО РО». Если его нет — пресечь в пределах компетенции и передать ситуацию компетентному органу.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>2</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 30</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 30. Задержание сотрудником ФСО РО
-
-1. <mark>Сотрудник ФСО РО вправе задержать лицо, если</mark>:
-
-1) лицо непосредственно совершает нападение на охраняемое лицо или объект;
-
-2) имеются достаточные основания полагать, что лицо непосредственно готовится применить оружие,
-взрывное устройство или иное средство опасного нападения в охранной зоне;
-
-3) лицо совершило преступление или административное правонарушение на охраняемом объекте либо
-мероприятии и задержание необходимо для пресечения деяния, установления личности или передачи
-компетентному органу;
-
-4) лицо оказывает активное сопротивление законному требованию покинуть охранную зону и своими
-
-действиями создает реальную угрозу безопасности;
-
-5) имеется иное прямо предусмотренное федеральным законом основание.
-
-2. Задержанному без необоснованной задержки разъясняются основание задержания и его процессуальные
-права.
-
-3. Если ограничение свободы является задержанием по Процессуальному кодексу РО, процессуальный срок
-исчисляется с момента фактического ограничения свободы сотрудником ФСО РО.
-
-4. Задержанное лицо и относящиеся к задержанию материалы передаются полиции, ФСБ РО,
-Следственному комитету либо иному компетентному органу без необоснованной задержки.
-
-5. Кратковременное удаление лица за пределы охранной зоны не является задержанием, если после
-удаления лицо свободно и в отношении него не продолжается процессуальное ограничение свободы.</pre><button class="open-doc" data-article="30" data-doc="fso">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 6</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 6. Пределы компетенции ФСО РО
-
-1. ФСО РО не является органом общей полицейской юрисдикции.
-
-2. Обычное патрулирование населенных пунктов, систематический дорожный контроль, самостоятельное
-расследование преступлений общей подследственности, производство по обычным административным
-правонарушениям, прокурорский надзор и осуществление судебных функций не относятся к компетенции
-ФСО РО.
-
-3. Сотрудник ФСО РО вправе пресечь правонарушение и применить предусмотренные настоящим
-Федеральным законом меры, если деяние непосредственно связано с безопасностью охраняемого лица,
-объекта, мероприятия либо совершается в пределах установленной охранной зоны.
-
-4. После устранения непосредственной угрозы лицо и материалы передаются компетентному
-государственному органу, если дальнейшее производство не относится к компетенции ФСО РО.</pre><button class="open-doc" data-article="6" data-doc="fso">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="detention-1">Есть основание ст. 30</button></div></div></div></section></div></article><article class="scenario-card" data-group="inspection" data-search="Досмотр при входе Когда досмотр допустим, как его объявить и что делать при согласии или отказе. досмотр обыск сумка вещи карманы" id="scenario-inspection"><button class="scenario-head"><div class="scenario-num">02</div><div class="scenario-head-main"><h2>Досмотр при входе</h2><p>Когда досмотр допустим, как его объявить и что делать при согласии или отказе.</p><div class="scenario-tags"><span>досмотр</span><span>обыск</span><span>сумка</span><span>вещи</span><span>карманы</span></div></div><div class="scenario-meta"><b>5 этапов</b><span>Открыть ↓</span></div></button><div class="scenario-flow"><section class="scenario-step first-step" id="inspection-1"><div class="step-rail"><span>1</span></div><div class="step-content"><h3>Проверить, можно ли вообще установить досмотр</h3><div class="step-pair"><div><small>Действие сотрудника</small><p>Досмотр не проводится просто потому, что сотруднику «хочется проверить». На охраняемом объекте или мероприятии ФСО он может быть установлен как условие добровольного входа / въезда и ограничен задачей безопасности.</p></div></div><div class="formal-note"><b>Примечание</b><p>Досмотр как условие добровольного входа не равен принудительному обыску. Отказ от досмотра обычно влечёт отказ в доступе, а не автоматическое задержание или принудительный обыск.</p></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>1</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 28</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 28. Досмотр при доступе на охраняемый объект
-
-1. <mark>ФСО РО вправе установить досмотр как условие добровольного входа или въезда</mark> на охраняемый объект
-либо мероприятие.
-
-2. Досмотр осуществляется с согласия лица в порядке, установленном процессуальным законодательством,
-и должен быть ограничен целью обнаружения оружия, взрывчатых веществ, опасных предметов,
-запрещенных к проносу предметов либо средств, создающих угрозу государственной охране.
-
-3. При отказе от досмотра лицо не допускается на объект либо мероприятие и должно покинуть охранную
-зону.
-
-4. Принудительный обыск допускается только при наличии самостоятельного основания, предусмотренного
-Процессуальным кодексом РО или иным федеральным законом.</pre><button class="open-doc" data-article="28" data-doc="fso">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="inspection-2">Досмотр является условием входа</button><button class="stage-jump" data-target="inspection-5">Нужно принудительно обыскать</button></div></div></div></section><section class="scenario-step" id="inspection-2"><div class="step-rail"><span>2</span></div><div class="step-content"><h3>Сообщить условие доступа</h3><div class="step-pair"><div><small>Событие</small><p>Человек собирается войти туда, где законно установлен досмотр.</p></div><div><small>Действия сотрудника</small><p>Понятно сообщи, что досмотр является условием добровольного входа. Он проводится с согласия и только ради обнаружения оружия, взрывчатых веществ, опасных / запрещённых к проносу предметов или иных средств угрозы.</p></div></div><div class="stage-formula">
-<b>Формулировка</b>
-<div class="formula-variant">
-<p>Гражданин, на основании ст. 28 ч. 1 ФЗ «О ФСО РО» для прохода на объект установлен досмотр. Вы можете пройти досмотр либо отказаться от входа.</p>
-</div>
-</div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>1</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 28</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 28. Досмотр при доступе на охраняемый объект
-
-1. ФСО РО вправе установить досмотр как условие добровольного входа или въезда на охраняемый объект
-либо мероприятие.
-
-2. <mark>Досмотр осуществляется с согласия лица</mark> в порядке, установленном процессуальным законодательством,
-и должен быть ограничен целью обнаружения оружия, взрывчатых веществ, опасных предметов,
-запрещенных к проносу предметов либо средств, создающих угрозу государственной охране.
-
-3. При отказе от досмотра лицо не допускается на объект либо мероприятие и должно покинуть охранную
-зону.
-
-4. Принудительный обыск допускается только при наличии самостоятельного основания, предусмотренного
-Процессуальным кодексом РО или иным федеральным законом.</pre><button class="open-doc" data-article="28" data-doc="fso">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="inspection-3">Согласился</button><button class="stage-jump" data-target="inspection-4">Отказался</button></div></div></div></section><section class="scenario-step" id="inspection-3"><div class="step-rail"><span>3</span></div><div class="step-content"><h3>Досмотр согласован</h3><div class="step-pair"><div><small>Событие</small><p>Лицо добровольно согласилось на установленную проверку безопасности.</p></div><div><small>Действия сотрудника</small><p>Проводится именно досмотр в объёме, необходимом для цели доступа. Не превращай его в произвольный поиск сведений или предметов, не связанных с безопасностью.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>1</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 28</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 28. Досмотр при доступе на охраняемый объект
-
-1. ФСО РО вправе установить досмотр как условие добровольного входа или въезда на охраняемый объект
-либо мероприятие.
-
-2. Досмотр осуществляется с согласия лица в порядке, установленном процессуальным законодательством,
-и <mark>должен быть ограничен целью обнаружения оружия, взрывчатых веществ, опасных предметов</mark>,
-запрещенных к проносу предметов либо средств, создающих угрозу государственной охране.
-
-3. При отказе от досмотра лицо не допускается на объект либо мероприятие и должно покинуть охранную
-зону.
-
-4. Принудительный обыск допускается только при наличии самостоятельного основания, предусмотренного
-Процессуальным кодексом РО или иным федеральным законом.</pre><button class="open-doc" data-article="28" data-doc="fso">Открыть в документе</button></div></details></div></div></section><section class="scenario-step" id="inspection-4"><div class="step-rail"><span>4</span></div><div class="step-content"><h3>Отказ от досмотра</h3><div class="step-pair"><div><small>Событие</small><p>Человек не согласен проходить досмотр.</p></div><div><small>Действия сотрудника</small><p>Не допускай на объект / мероприятие и потребуй покинуть охранную зону, если это предусмотрено режимом. Сам отказ не даёт права автоматически проводить принудительный обыск.</p></div></div><div class="stage-formula">
-<b>Формулировка</b>
-<div class="formula-variant">
-<p>Гражданин, на основании ст. 28 ч. 3 ФЗ «О ФСО РО» в связи с отказом от досмотра доступ на объект не предоставляется. Покиньте охранную зону.</p>
-</div>
-</div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>2</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 28</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 28. Досмотр при доступе на охраняемый объект
-
-1. ФСО РО вправе установить досмотр как условие добровольного входа или въезда на охраняемый объект
-либо мероприятие.
-
-2. Досмотр осуществляется с согласия лица в порядке, установленном процессуальным законодательством,
-и должен быть ограничен целью обнаружения оружия, взрывчатых веществ, опасных предметов,
-запрещенных к проносу предметов либо средств, создающих угрозу государственной охране.
-
-3. <mark>При отказе от досмотра лицо не допускается на объект либо мероприятие</mark> и должно покинуть охранную
-зону.
-
-4. Принудительный обыск допускается только при наличии самостоятельного основания, предусмотренного
-Процессуальным кодексом РО или иным федеральным законом.</pre><button class="open-doc" data-article="28" data-doc="fso">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 27</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 27. Проверка документов и доступа
-
-1. На охраняемом объекте или мероприятии сотрудник ФСО РО вправе потребовать предъявления
-документа, удостоверяющего личность, служебного удостоверения, пропуска либо иного документа,
-необходимого для подтверждения права доступа.
-
-2. Требование должно быть связано с установленным режимом охраны и не может предъявляться
-бесцельно вне охраняемого объекта, мероприятия или охранной зоны.
-
-3. При отсутствии права доступа либо отказе подтвердить его лицо может быть не допущено на охраняемый
-объект или обязано покинуть охранную зону.
-
-4. Отказ от добровольного входа на охраняемый объект не является самостоятельным основанием для
-задержания, если лицо не совершает иного правонарушения и выполняет требование покинуть
-территорию.</pre><button class="open-doc" data-article="27" data-doc="fso">Открыть в документе</button></div></details></div></div></section><section class="scenario-step" id="inspection-5"><div class="step-rail"><span>5</span></div><div class="step-content"><h3>Если нужен принудительный обыск</h3><div class="step-pair"><div><small>Событие</small><p>Есть желание / необходимость искать предметы против воли лица.</p></div><div><small>Действия сотрудника</small><p>Это уже не обычный досмотр при входе. Нужен самостоятельный процессуальный или иной федеральный законный повод. Без такого основания принудительный обыск проводить нельзя.</p></div></div><div class="stage-warning">Досмотр как условие входа и принудительный обыск — разные меры.</div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>1</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 28</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 28. Досмотр при доступе на охраняемый объект
-
-1. ФСО РО вправе установить досмотр как условие добровольного входа или въезда на охраняемый объект
-либо мероприятие.
-
-2. Досмотр осуществляется с согласия лица в порядке, установленном процессуальным законодательством,
-и должен быть ограничен целью обнаружения оружия, взрывчатых веществ, опасных предметов,
-запрещенных к проносу предметов либо средств, создающих угрозу государственной охране.
-
-3. При отказе от досмотра лицо не допускается на объект либо мероприятие и должно покинуть охранную
-зону.
-
-4. <mark>Принудительный обыск допускается только при наличии самостоятельного основания</mark>, предусмотренного
-Процессуальным кодексом РО или иным федеральным законом.</pre><button class="open-doc" data-article="28" data-doc="fso">Открыть в документе</button></div></details></div></div></section></div></article><article class="scenario-card" data-group="demand" data-search="Неисполнение законного требования Проверка законности требования, правильная формулировка, первый отказ и дальнейшее неповиновение. требование неповиновение игнорирует отказ приказ" id="scenario-lawful-demand"><button class="scenario-head"><div class="scenario-num">03</div><div class="scenario-head-main"><h2>Неисполнение законного требования</h2><p>Проверка законности требования, правильная формулировка, первый отказ и дальнейшее неповиновение.</p><div class="scenario-tags"><span>требование</span><span>неповиновение</span><span>игнорирует</span><span>отказ</span><span>приказ</span></div></div><div class="scenario-meta"><b>7 этапов</b><span>Открыть ↓</span></div></button><div class="scenario-flow"><section class="scenario-step first-step" id="lawful-demand-1"><div class="step-rail"><span>1</span></div><div class="step-content"><h3>Сначала проверить само требование</h3><div class="step-pair"><div><small>Действие сотрудника</small><p>Перед ответственностью за неповиновение проверь исходное требование: ты при исполнении, действуешь в пределах компетенции и юрисдикции; требование однозначное, конкретное, законное, этичное, исполнимое и звучит как обязательное указание, а не как предложение.</p></div></div><div class="formal-note"><b>Примечание</b><p>Статья об ответственности за неповиновение не создаёт само полномочие сотрудника. Сначала должно существовать отдельное законное основание для требования; только после этого оценивается его неисполнение.</p></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>2</span></div><details class="ground"><summary><span>Процессуальный кодекс РО</span><b>гл. XI ст. 2</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 2. Общие положения об устном законном требовании.
-
-1. Государственный служащий, находящийся при исполнении служебных обязанностей, в пределах своей
-компетенции и в границах установленной юрисдикции вправе заявлять устные законные требования
-(приказы, распоряжения, указания и т.д.) обязательные для исполнения гражданами и иными
-государственными служащими. Неисполнение законного требования влечет установленную законом
-ответственность.
-
-1. <mark>Требование должно быть однозначным, конкретным, законным, этичным, исполнимым</mark>,
-сформулированным в повелительном (приказном) наклонении и не допускать в своем содержании
-признаков предложения, исполнение которого возможно по желанию (добровольно).
-
-1. Государственный сотрудник вправе заявлять требования, направленные на:
-
-проведение процессуальных действий (требование поднять руки, лечь на землю, бросить предмет, снять
-элемент одежды, отойти на определенное место или занять определенное положение и т.д.);
-обеспечение установленного законом надзора и контроля (потребовать предъявления документов для
-ознакомления, материальных объектов для осмотра, транспортных средств для обыска и т.д.);
-пресечение правонарушений и преступлений (требование о прекращении действий содержащих признаки
-правонарушения или преступления, действий которые несут непосредственную угрозу безопасности иных
-
-лиц т.д.);
-обеспечение общественного порядка и предотвращение опасности (требование покинуть место
-происшествия, отойти и/или от места проведения процессуальных действий, разойтись во время массовых
-мероприятий и т.д.);
-иные законные цели в пределах компетенции и юрисдикции в соответствии с обстановкой и ситуацией.
-
-1. Государственный служащий не обязан одновременно с каждым кратким требованием излагать его полную
-юридическую мотивировку, если обязанность немедленного разъяснения основания прямо не
-предусмотрена законом. При задержании, обыске, ограничении свободы и иных случаях, для которых
-настоящий Кодекс требует сообщить основание, такое разъяснение обязательно.
-
-1. Государственный служащий обязан сообщать основание и мотивировку своего требования суду,
-прокурору, руководству и иному уполномоченному лицу при проведении суда, расследования или иной
-проверки, где затрагиваются обстоятельства заявления государственным служащим соответствующего
-требования.</pre><button class="open-doc" data-article="2" data-chapter="XI" data-doc="pk">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 26</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 26. Общие полномочия ФСО РО
-
-ФСО РО в пределах задач государственной охраны вправе:
-
-1) организовывать личную и объектовую охрану;
-
-2) устанавливать пропускной и внутриобъектовый режим;
-
-3) проверять документы и разрешения на доступ в случаях, предусмотренных настоящим Федеральным
-законом;
-
-4) проводить досмотр лиц, вещей и транспортных средств при входе или въезде на охраняемый объект на
-условиях настоящего Федерального закона;
-
-5) временно ограничивать доступ и движение в охранной зоне;
-
-6) предъявлять обязательные законные требования о прекращении действий, создающих угрозу
-безопасности;
-
-7) задерживать лиц в случаях, предусмотренных статьей 30 настоящего Федерального закона;
-
-8) применять физическую силу, специальные средства и огнестрельное оружие на предусмотренных
-законом основаниях;
-
-9) получать от государственных органов сведения, непосредственно необходимые для оценки угрозы
-государственной охране;
-
-10) осуществлять видеофиксацию охранных и процессуально значимых действий;
-
-11) привлекать по согласованию компетентные государственные органы к совместному обеспечению
-безопасности.</pre><button class="open-doc" data-article="26" data-doc="fso">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="lawful-demand-2">Требование соответствует условиям</button><button class="stage-jump" data-target="lawful-demand-3">Человек говорит, что требование непонятно</button></div></div></div></section><section class="scenario-step" id="lawful-demand-2"><div class="step-rail"><span>2</span></div><div class="step-content"><h3>Огласить понятное требование</h3><div class="step-pair"><div><small>Событие</small><p>У сотрудника действительно есть право требовать конкретное действие.</p></div><div><small>Действия сотрудника</small><p>Скажи прямо, что именно человек обязан сделать или прекратить. Не смешивай несколько взаимоисключающих указаний.</p></div></div><div class="stage-formula">
-<b>Формулировка</b>
-<div class="formula-variant">
-<p>Гражданин, на основании [конкретная статья, которая предоставляет сотруднику это полномочие] требую [конкретное действие]. Требование обязательно к исполнению.</p>
-</div>
-<div class="formula-note">Гл. XI ст. 2 ПК РО определяет требования к форме устного законного требования, но не заменяет профильное основание. Не говори просто «на основании законодательства» — называй конкретный документ и статью.</div>
-</div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>1</span></div><details class="ground"><summary><span>Процессуальный кодекс РО</span><b>гл. XI ст. 2</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 2. Общие положения об устном законном требовании.
-
-1. Государственный служащий, находящийся при исполнении служебных обязанностей, в пределах своей
-компетенции и в границах установленной юрисдикции вправе заявлять устные законные требования
-(приказы, распоряжения, указания и т.д.) обязательные для исполнения гражданами и иными
-государственными служащими. Неисполнение законного требования влечет установленную законом
-ответственность.
-
-1. Требование должно быть однозначным, конкретным, законным, этичным, исполнимым,
-<mark>сформулированным в повелительном (приказном) наклонении</mark> и не допускать в своем содержании
-признаков предложения, исполнение которого возможно по желанию (добровольно).
-
-1. Государственный сотрудник вправе заявлять требования, направленные на:
-
-проведение процессуальных действий (требование поднять руки, лечь на землю, бросить предмет, снять
-элемент одежды, отойти на определенное место или занять определенное положение и т.д.);
-обеспечение установленного законом надзора и контроля (потребовать предъявления документов для
-ознакомления, материальных объектов для осмотра, транспортных средств для обыска и т.д.);
-пресечение правонарушений и преступлений (требование о прекращении действий содержащих признаки
-правонарушения или преступления, действий которые несут непосредственную угрозу безопасности иных
-
-лиц т.д.);
-обеспечение общественного порядка и предотвращение опасности (требование покинуть место
-происшествия, отойти и/или от места проведения процессуальных действий, разойтись во время массовых
-мероприятий и т.д.);
-иные законные цели в пределах компетенции и юрисдикции в соответствии с обстановкой и ситуацией.
-
-1. Государственный служащий не обязан одновременно с каждым кратким требованием излагать его полную
-юридическую мотивировку, если обязанность немедленного разъяснения основания прямо не
-предусмотрена законом. При задержании, обыске, ограничении свободы и иных случаях, для которых
-настоящий Кодекс требует сообщить основание, такое разъяснение обязательно.
-
-1. Государственный служащий обязан сообщать основание и мотивировку своего требования суду,
-прокурору, руководству и иному уполномоченному лицу при проведении суда, расследования или иной
-проверки, где затрагиваются обстоятельства заявления государственным служащим соответствующего
-требования.</pre><button class="open-doc" data-article="2" data-chapter="XI" data-doc="pk">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="lawful-demand-4">Выполнил</button><button class="stage-jump" data-target="lawful-demand-5">Не выполняет</button><button class="stage-jump" data-target="lawful-demand-3">Просит уточнить</button></div></div></div></section><section class="scenario-step" id="lawful-demand-3"><div class="step-rail"><span>3</span></div><div class="step-content"><h3>Если требование оказалось неясным</h3><div class="step-pair"><div><small>Событие</small><p>Адресат сообщает, что не понимает, что именно от него требуется.</p></div><div><small>Действия сотрудника</small><p>Уточни требование и обозначь обязанность его исполнения. Некорректно заявленное требование само по себе не должно использоваться как основание ответственности за неповиновение.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>1</span></div><details class="ground"><summary><span>Процессуальный кодекс РО</span><b>гл. XI ст. 3</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 3. Иерархия и порядок исполнения устных требований.
-
-1. В случае если сотрудником (сотрудниками) к одному и тому же лицу одновременно или в чрезмерно
-короткий промежуток времени заявлено несколько взаимоисключающих друг друга устных законных
-требований то исполнению подлежит требование заявленное последним.
-
-1. В случае если сотрудником заявлено требование не соответствующее части 2 статьи 2 настоящей главы, то
-<mark>лицо которому адресовано требование обязано сообщить о неясности требования и просить уточнить его</mark>,
-а сотрудник обязан уточнить требование и отметить обязанность его исполнения.
-
-1. Неисполнение некорректно заявленного требования не влечет ответственности.
-
-1. Если требование изначально заявлено корректно, а обязанное лицо формально требует разъяснений и
-уточнений, то обязанное лицо несет ответственность за неисполнение требования несмотря на запросы о
-разъяснении.</pre><button class="open-doc" data-article="3" data-chapter="XI" data-doc="pk">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="lawful-demand-4">После уточнения выполнил</button><button class="stage-jump" data-target="lawful-demand-5">После уточнения не выполняет</button></div></div></div></section><section class="scenario-step" id="lawful-demand-4"><div class="step-rail"><span>4</span></div><div class="step-content"><h3>Требование выполнено</h3><div class="step-pair"><div><small>Событие</small><p>Человек прекратил действие / выполнил законное указание.</p></div><div><small>Действия сотрудника</small><p>Если самостоятельного состава или иной необходимости для дальнейшего ограничения нет, не продолжай принуждение только ради наказания за сам конфликт.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>1</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 41</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 41. Права граждан при осуществлении государственной охраны
-
-1. Ограничение прав граждан при осуществлении государственной охраны допускается только на
-конкретном законном основании и в необходимом объеме.
-
-2. Лицо вправе знать основание отказа в доступе, удаления из охранной зоны, задержания или иной
-существенно ограничивающей меры, если раскрытие конкретных сведений не создает непосредственной
-угрозы безопасности или охраняемой законом тайне.
-
-3. Действия и решения сотрудника ФСО РО могут быть обжалованы Директору ФСО РО, прокурору или в
-суд.
-
-4. Незаконное действие сотрудника ФСО РО не становится законным вследствие ссылки на охраняемое лицо
-или приказ руководителя.</pre><button class="open-doc" data-article="41" data-doc="fso">Открыть в документе</button></div></details></div></div></section><section class="scenario-step" id="lawful-demand-5"><div class="step-rail"><span>5</span></div><div class="step-content"><h3>Первый отказ / неисполнение</h3><div class="step-pair"><div><small>Событие</small><p>Понятное законное требование не выполнено.</p></div><div><small>Действия сотрудника</small><p>Оцени признаки УК ст. 17.6 ч. 1. Само наличие ст. 17.6 не расширяет компетенцию ФСО: исходное требование должно быть законным и относиться к полномочиям сотрудника.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>2</span></div><details class="ground"><summary><span>УК РО</span><b>ст. 17.6</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 17.6. Неповиновение законному требованию уполномоченного должностного лица
-
-1. <mark>Отказ выполнить законное, понятное и относящееся к компетенции должностного лица требование</mark>
-сотрудника МВД РО, ГИБДД, ФСБ РО, Следственного комитета РО, прокурора, военнослужащего при охране
-военного объекта либо иного уполномоченного законом лица, а равно как неисполнение такого требования.
-
-Наказание: уголовный штраф от 15 000 до 30 000 рублей либо до 3 лет лишения свободы.
-
-2. Злостное неповиновение, продолженное после повторного законного требования.
-
-Наказание: уголовный штраф от 25 000 до 50 000 рублей либо до 4 лет лишения свободы.
-
-Подследственность: общая.
-
-Порядок разрешения: по общему правилу.
-
-Нормативно-правовой акт подписан Премьер-министром РО
-25.08.2026 Марк Брагин</pre><button class="open-doc" data-article="17.6" data-doc="uk">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 6</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 6. Пределы компетенции ФСО РО
-
-1. <mark>ФСО РО не является органом общей полицейской юрисдикции</mark>.
-
-2. Обычное патрулирование населенных пунктов, систематический дорожный контроль, самостоятельное
-расследование преступлений общей подследственности, производство по обычным административным
-правонарушениям, прокурорский надзор и осуществление судебных функций не относятся к компетенции
-ФСО РО.
-
-3. Сотрудник ФСО РО вправе пресечь правонарушение и применить предусмотренные настоящим
-Федеральным законом меры, если деяние непосредственно связано с безопасностью охраняемого лица,
-объекта, мероприятия либо совершается в пределах установленной охранной зоны.
-
-4. После устранения непосредственной угрозы лицо и материалы передаются компетентному
-государственному органу, если дальнейшее производство не относится к компетенции ФСО РО.</pre><button class="open-doc" data-article="6" data-doc="fso">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="lawful-demand-6">Повторно потребовал, человек продолжает</button><button class="stage-jump" data-target="lawful-demand-7">Нужно решить вопрос о задержании</button></div></div></div></section><section class="scenario-step" id="lawful-demand-6"><div class="step-rail"><span>6</span></div><div class="step-content"><h3>Продолженное злостное неповиновение</h3><div class="step-pair"><div><small>Событие</small><p>После повторного законного требования человек продолжает сознательно не выполнять его.</p></div><div><small>Действия сотрудника</small><p>Оцени ч. 2 ст. 17.6 УК. Это квалификация поведения, а вопрос о том, вправе ли ФСО задержать именно сейчас, всё равно решается отдельно по ст. 30 ФЗ «О ФСО РО».</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>2</span></div><details class="ground"><summary><span>УК РО</span><b>ст. 17.6</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 17.6. Неповиновение законному требованию уполномоченного должностного лица
-
-1. Отказ выполнить законное, понятное и относящееся к компетенции должностного лица требование
-сотрудника МВД РО, ГИБДД, ФСБ РО, Следственного комитета РО, прокурора, военнослужащего при охране
-военного объекта либо иного уполномоченного законом лица, а равно как неисполнение такого требования.
-
-Наказание: уголовный штраф от 15 000 до 30 000 рублей либо до 3 лет лишения свободы.
-
-2. <mark>Злостное неповиновение, продолженное после повторного законного требования</mark>.
-
-Наказание: уголовный штраф от 25 000 до 50 000 рублей либо до 4 лет лишения свободы.
-
-Подследственность: общая.
-
-Порядок разрешения: по общему правилу.
-
-Нормативно-правовой акт подписан Премьер-министром РО
-25.08.2026 Марк Брагин</pre><button class="open-doc" data-article="17.6" data-doc="uk">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 30</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 30. Задержание сотрудником ФСО РО
-
-1. <mark>Сотрудник ФСО РО вправе задержать лицо, если</mark>:
-
-1) лицо непосредственно совершает нападение на охраняемое лицо или объект;
-
-2) имеются достаточные основания полагать, что лицо непосредственно готовится применить оружие,
-взрывное устройство или иное средство опасного нападения в охранной зоне;
-
-3) лицо совершило преступление или административное правонарушение на охраняемом объекте либо
-мероприятии и задержание необходимо для пресечения деяния, установления личности или передачи
-компетентному органу;
-
-4) лицо оказывает активное сопротивление законному требованию покинуть охранную зону и своими
-
-действиями создает реальную угрозу безопасности;
-
-5) имеется иное прямо предусмотренное федеральным законом основание.
-
-2. Задержанному без необоснованной задержки разъясняются основание задержания и его процессуальные
-права.
-
-3. Если ограничение свободы является задержанием по Процессуальному кодексу РО, процессуальный срок
-исчисляется с момента фактического ограничения свободы сотрудником ФСО РО.
-
-4. Задержанное лицо и относящиеся к задержанию материалы передаются полиции, ФСБ РО,
-Следственному комитету либо иному компетентному органу без необоснованной задержки.
-
-5. Кратковременное удаление лица за пределы охранной зоны не является задержанием, если после
-удаления лицо свободно и в отношении него не продолжается процессуальное ограничение свободы.</pre><button class="open-doc" data-article="30" data-doc="fso">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="detention-1">Есть основание задержания ФСО</button></div></div></div></section><section class="scenario-step" id="lawful-demand-7"><div class="step-rail"><span>7</span></div><div class="step-content"><h3>Проверить специальное основание задержания ФСО</h3><div class="step-pair"><div><small>Событие</small><p>Неповиновение установлено, но надо решить, может ли ФСО ограничить свободу.</p></div><div><small>Действия сотрудника</small><p>Для ФСО нужен конкретный пункт ст. 30: например, правонарушение на охраняемом объекте / мероприятии, когда задержание необходимо для пресечения, установления личности или передачи; либо активное сопротивление требованию покинуть охранную зону при реальной угрозе безопасности.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>1</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 30</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 30. Задержание сотрудником ФСО РО
-
-1. Сотрудник ФСО РО вправе задержать лицо, если:
-
-1) лицо непосредственно совершает нападение на охраняемое лицо или объект;
-
-2) имеются достаточные основания полагать, что лицо непосредственно готовится применить оружие,
-взрывное устройство или иное средство опасного нападения в охранной зоне;
-
-3) лицо совершило преступление или административное правонарушение на охраняемом объекте либо
-мероприятии и задержание необходимо для пресечения деяния, установления личности или передачи
-компетентному органу;
-
-4) лицо оказывает активное сопротивление законному требованию покинуть охранную зону и своими
-
-действиями создает реальную угрозу безопасности;
-
-5) имеется иное прямо предусмотренное федеральным законом основание.
-
-2. Задержанному без необоснованной задержки разъясняются основание задержания и его процессуальные
-права.
-
-3. Если ограничение свободы является задержанием по Процессуальному кодексу РО, процессуальный срок
-исчисляется с момента фактического ограничения свободы сотрудником ФСО РО.
-
-4. Задержанное лицо и относящиеся к задержанию материалы передаются полиции, ФСБ РО,
-Следственному комитету либо иному компетентному органу без необоснованной задержки.
-
-5. Кратковременное удаление лица за пределы охранной зоны не является задержанием, если после
-удаления лицо свободно и в отношении него не продолжается процессуальное ограничение свободы.</pre><button class="open-doc" data-article="30" data-doc="fso">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="detention-1">Основание есть</button></div></div></div></section></div></article><article class="scenario-card" data-group="order" data-search="Мат, непристойное поведение, гражданин без одежды на объекте Как быстро найти нужные нормы и не квалифицировать поведение только по одному внешнему признаку. мат маты голый без одежды обнажение непристойное поведение хулиганство порядок" id="scenario-public-order"><button class="scenario-head"><div class="scenario-num">04</div><div class="scenario-head-main"><h2>Мат, непристойное поведение, гражданин без одежды на объекте</h2><p>Как быстро найти нужные нормы и не квалифицировать поведение только по одному внешнему признаку.</p><div class="scenario-tags"><span>мат</span><span>маты</span><span>голый</span><span>без</span><span>одежды</span></div></div><div class="scenario-meta"><b>5 этапов</b><span>Открыть ↓</span></div></button><div class="scenario-flow"><section class="scenario-step first-step" id="public-order-1"><div class="step-rail"><span>1</span></div><div class="step-content"><h3>Определить, есть ли нарушение порядка</h3><div class="step-pair"><div><small>Действие сотрудника</small><p>Не квалифицируй только по одному слову «мат» или «голый». Смотри на поведение и последствия. ФЗ о территориях прямо указывает на вызывающее поведение, а КоАП ст. 11 требует нарушения общественного порядка / спокойствия.</p></div></div><div class="formal-note"><b>Примечание</b><p>Сам по себе мат, отсутствие одежды либо вызывающее поведение не следует автоматически квалифицировать по одной статье. Проверяй признаки конкретного состава и фактическое нарушение порядка / безопасности.</p></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>2</span></div><details class="ground"><summary><span>ФЗ «О государственных территориях РО»</span><b>ст. 15</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 15. Общественный порядок и безопасность
-
-1. На охраняемых территориях запрещаются деяния, нарушающие общественный порядок, создающие угрозу
-людям, препятствующие работе организации, повреждающие имущество либо запрещенные федеральным
-законодательством.
-
-2. Курение, употребление алкогольной продукции, нахождение в состоянии выраженного опьянения,
-агрессивное приставание, <mark>обнажение в непредназначенном для этого месте</mark>, действия сексуального характера и
-иное вызывающее поведение оцениваются в соответствии с Уголовным кодексом РО и Кодексом РО об
-административных правонарушениях.
-3. Настоящая статья не создает самостоятельного состава правонарушения и применяется совместно с нормой,
-устанавливающей ответственность.</pre><button class="open-doc" data-article="15" data-doc="territory">Открыть в документе</button></div></details><details class="ground"><summary><span>КоАП РО</span><b>ст. 11</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 11. Мелкое хулиганство
-
-1. Нарушение общественного порядка, выраженное в оскорбительном приставании к гражданам,
-демонстративном непристойном поведении, нецензурной брани при наличии очевидного нарушения
-общественного спокойствия либо иных сходных действиях.
-
-Наказание: административный штраф от 5 000 до 15 000 рублей либо административный арест до 10 суток.
-
-2. То же деяние, совершенное повторно, группой лиц либо сопряженное со злостным отказом прекратить
-нарушение после законного требования.
-
-Наказание: административный штраф от 15 000 до 30 000 рублей либо административный арест до 10 суток.</pre><button class="open-doc" data-article="11" data-doc="koap">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="public-order-2">Нарушение порядка есть</button><button class="stage-jump" data-target="public-order-5">Просто резкая речь без нарушения порядка</button></div></div></div></section><section class="scenario-step" id="public-order-2"><div class="step-rail"><span>2</span></div><div class="step-content"><h3>Потребовать прекратить нарушение</h3><div class="step-pair"><div><small>Событие</small><p>Поведение реально нарушает порядок, создаёт угрозу или мешает нормальной работе территории.</p></div><div><small>Действия сотрудника</small><p>Уполномоченный сотрудник вправе потребовать прекратить противоправное / опасное действие, предупредить о нарушении режима и при предусмотренных условиях потребовать покинуть территорию.</p></div></div><div class="stage-formula">
-<b>Формулировка</b>
-<div class="formula-variant">
-<p>Гражданин, на основании ст. 16 ч. 1 п. 1 ФЗ «О государственных территориях РО» требую прекратить действия, нарушающие общественный порядок на охраняемой территории.</p>
-</div>
-</div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>2</span></div><details class="ground"><summary><span>ФЗ «О государственных территориях РО»</span><b>ст. 16</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 16. Полномочия на охраняемой территории
-
-1. Уполномоченный сотрудник вправе:
-1) <mark>потребовать прекратить противоправное или опасное действие</mark>;
-2) предупредить о нарушении установленного режима;
-3) потребовать покинуть территорию при отсутствии законной цели, нарушении порядка или угрозе
-безопасности;
-4) вызвать компетентный правоохранительный орган;
-5) принять неотложные меры по эвакуации и ограждению опасного участка.
-2. Применение физической силы, специальных средств, оружия, задержание и досмотр допускаются только
-уполномоченным законом лицом и при наличии установленного законом основания.</pre><button class="open-doc" data-article="16" data-doc="territory">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О государственных территориях РО»</span><b>ст. 17</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 17. Обязанность покинуть территорию
-
-1. <mark>Лицо обязано покинуть охраняемую территорию по законному и понятному требованию</mark> уполномоченного
-сотрудника, если устранить нарушение иным способом невозможно либо законная цель пребывания
-отсутствует.
-2. Требование должно указывать причину и безопасный маршрут выхода, если такой маршрут неочевиден.
-3. Лица, подающие заявление, участвующие в процессуальном действии, получающие неотложную
-медицинскую помощь или реализующие право на защиту, могут быть удалены только после обеспечения
-реальной возможности продолжить соответствующее действие законным способом.
-4. Неисполнение требования влечет ответственность только при наличии состава, предусмотренного
-федеральным законодательством.</pre><button class="open-doc" data-article="17" data-doc="territory">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="public-order-3">Прекратил</button><button class="stage-jump" data-target="public-order-4">Продолжает</button></div></div></div></section><section class="scenario-step" id="public-order-3"><div class="step-rail"><span>3</span></div><div class="step-content"><h3>Нарушение прекращено</h3><div class="step-pair"><div><small>Событие</small><p>Человек прекратил поведение после требования.</p></div><div><small>Действия сотрудника</small><p>Дальнейшие действия зависят от того, имеется ли уже самостоятельный состав правонарушения и компетенция соответствующего органа. Не удерживай лицо без отдельного основания.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>1</span></div><details class="ground"><summary><span>ФЗ «О государственных территориях РО»</span><b>ст. 15</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 15. Общественный порядок и безопасность
-
-1. На охраняемых территориях запрещаются деяния, нарушающие общественный порядок, создающие угрозу
-людям, препятствующие работе организации, повреждающие имущество либо запрещенные федеральным
-законодательством.
-
-2. Курение, употребление алкогольной продукции, нахождение в состоянии выраженного опьянения,
-агрессивное приставание, обнажение в непредназначенном для этого месте, действия сексуального характера и
-иное вызывающее поведение оцениваются в соответствии с Уголовным кодексом РО и Кодексом РО об
-административных правонарушениях.
-3. <mark>Настоящая статья не создает самостоятельного состава правонарушения</mark> и применяется совместно с нормой,
-устанавливающей ответственность.</pre><button class="open-doc" data-article="15" data-doc="territory">Открыть в документе</button></div></details></div></div></section><section class="scenario-step" id="public-order-4"><div class="step-rail"><span>4</span></div><div class="step-content"><h3>Нарушение продолжается</h3><div class="step-pair"><div><small>Событие</small><p>После законного требования человек продолжает поведение.</p></div><div><small>Действия сотрудника</small><p>Проверь квалификацию: КоАП ст. 11 предусматривает повторность / злостный отказ прекратить нарушение; в государственном учреждении также может быть применима специальная норма о нарушении порядка. Для задержания ФСО — отдельно ст. 30.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>3</span></div><details class="ground"><summary><span>КоАП РО</span><b>ст. 11</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 11. Мелкое хулиганство
-
-1. Нарушение общественного порядка, выраженное в оскорбительном приставании к гражданам,
-демонстративном непристойном поведении, нецензурной брани при наличии очевидного нарушения
-общественного спокойствия либо иных сходных действиях.
-
-Наказание: административный штраф от 5 000 до 15 000 рублей либо административный арест до 10 суток.
-
-2. То же деяние, совершенное повторно, группой лиц либо сопряженное со злостным отказом прекратить
-нарушение после законного требования.
-
-Наказание: административный штраф от 15 000 до 30 000 рублей либо административный арест до 10 суток.</pre><button class="open-doc" data-article="11" data-doc="koap">Открыть в документе</button></div></details><details class="ground"><summary><span>КоАП РО</span><b>ст. 39</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 39. Нарушение установленного порядка поведения в <mark>государственном учреждении</mark>
-
-Демонстративное нарушение обязательного режима государственного учреждения, сопровождаемое созданием
-помех его работе и продолженное после законного требования прекратить нарушение, если отсутствует иной
-специальный состав.
-
-Наказание: административный штраф от 10 000 до 25 000 рублей.</pre><button class="open-doc" data-article="39" data-doc="koap">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 30</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 30. Задержание сотрудником ФСО РО
-
-1. Сотрудник ФСО РО вправе задержать лицо, если:
-
-1) лицо непосредственно совершает нападение на охраняемое лицо или объект;
-
-2) имеются достаточные основания полагать, что лицо непосредственно готовится применить оружие,
-взрывное устройство или иное средство опасного нападения в охранной зоне;
-
-3) лицо совершило преступление или административное правонарушение на охраняемом объекте либо
-мероприятии и задержание необходимо для пресечения деяния, установления личности или передачи
-компетентному органу;
-
-4) лицо оказывает активное сопротивление законному требованию покинуть охранную зону и своими
-
-действиями создает реальную угрозу безопасности;
-
-5) имеется иное прямо предусмотренное федеральным законом основание.
-
-2. Задержанному без необоснованной задержки разъясняются основание задержания и его процессуальные
-права.
-
-3. Если ограничение свободы является задержанием по Процессуальному кодексу РО, процессуальный срок
-исчисляется с момента фактического ограничения свободы сотрудником ФСО РО.
-
-4. Задержанное лицо и относящиеся к задержанию материалы передаются полиции, ФСБ РО,
-Следственному комитету либо иному компетентному органу без необоснованной задержки.
-
-5. Кратковременное удаление лица за пределы охранной зоны не является задержанием, если после
-удаления лицо свободно и в отношении него не продолжается процессуальное ограничение свободы.</pre><button class="open-doc" data-article="30" data-doc="fso">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="detention-1">Есть основание задержания ФСО</button></div></div></div></section><section class="scenario-step" id="public-order-5"><div class="step-rail"><span>5</span></div><div class="step-content"><h3>Не любой мат — автоматическое правонарушение</h3><div class="step-pair"><div><small>Событие</small><p>Человек говорит грубо или матерится, но нет очевидного нарушения общественного спокойствия, приставания или иного состава.</p></div><div><small>Действия сотрудника</small><p>Само наличие грубой лексики не позволяет автоматически приписать мелкое хулиганство. Для ст. 11 КоАП важны признаки, указанные в самой норме.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>1</span></div><details class="ground"><summary><span>КоАП РО</span><b>ст. 11</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 11. Мелкое хулиганство
-
-1. Нарушение общественного порядка, выраженное в оскорбительном приставании к гражданам,
-демонстративном непристойном поведении, нецензурной брани при наличии очевидного нарушения
-общественного спокойствия либо иных сходных действиях.
-
-Наказание: административный штраф от 5 000 до 15 000 рублей либо административный арест до 10 суток.
-
-2. То же деяние, совершенное повторно, группой лиц либо сопряженное со злостным отказом прекратить
-нарушение после законного требования.
-
-Наказание: административный штраф от 15 000 до 30 000 рублей либо административный арест до 10 суток.</pre><button class="open-doc" data-article="11" data-doc="koap">Открыть в документе</button></div></details></div></div></section></div></article><article class="scenario-card" data-group="access" data-search="Проверка лица в закрытой / служебной зоне Установление права нахождения, служебного допуска и действия при отсутствии доступа. закрытая зона служебный коридор за" id="scenario-closed-zone"><button class="scenario-head"><div class="scenario-num">05</div><div class="scenario-head-main"><h2>Проверка лица в закрытой / служебной зоне</h2><p>Установление права нахождения, служебного допуска и действия при отсутствии доступа.</p><div class="scenario-tags"><span>закрытая</span><span>зона</span><span>служебный</span><span>коридор</span><span>за</span></div></div><div class="scenario-meta"><b>6 этапов</b><span>Открыть ↓</span></div></button><div class="scenario-flow"><section class="scenario-step first-step" id="closed-zone-1"><div class="step-rail"><span>1</span></div><div class="step-content"><h3>Установить, что лицо находится именно в закрытой зоне</h3><div class="step-pair"><div><small>Действие сотрудника</small><p>Проверь статус конкретного участка. Холл может оставаться охраняемой открытой зоной, а служебный коридор за КПП — закрытой территорией.</p></div></div><div class="formal-note"><b>Примечание</b><p>Не считай всё государственное здание закрытой территорией автоматически. Холл, приёмная или иная открытая для посетителей зона может сохранять иной режим, даже если за КПП расположены закрытые служебные помещения.</p></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>2</span></div><details class="ground"><summary><span>ФЗ «О государственных территориях РО»</span><b>ст. 18</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 18. Понятие и перечень закрытых территорий
-
-1. Закрытой территорией признается государственная территория, свободное посещение которой исключено в
-целях защиты служебной деятельности, людей, документов, имущества и нормального функционирования
-организации.
-2. <mark>К закрытым территориям относятся</mark>:
-1) служебные помещения Правительства РО и федеральных министерств, кроме открытых зон приема;
-2) внутренняя территория Кутузовского районного суда, кроме холла и помещений, открытых для посетителей в
-связи с судебным заседанием;
-3) административные, лечебно-процедурные, складские, технические и служебные помещения государственных
-медицинских организаций, а также их огражденные парковки;
-4) служебные помещения органов внутренних дел и ГИБДД РО, кроме холлов;
-5) служебные помещения государственных средств массовой информации, архивы, технические этажи, крыши,
-лифтовые и иные служебные зоны;
-6) государственные пристани, ангары, гаражи и иные объекты, которым не присвоен режим режимного объекта;
-7) иные территории, прямо указанные в государственном реестре на основании федерального закона.</pre><button class="open-doc" data-article="18" data-doc="territory">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О государственных территориях РО»</span><b>ст. 19</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 19. Границы закрытой территории
-
-1. Границы закрытой территории определяются государственным реестром, схемой объекта, конструктивными
-границами помещения, ограждением, дверью с контролем доступа либо информационным знаком.
-2. Холл, приемная или иная открытая зона сохраняет статус охраняемой территории, даже если находится
-внутри здания с закрытыми служебными помещениями.
-3. <mark>Служебный коридор за контрольно-пропускным пунктом относится к закрытой территории</mark>, если иной статус
-не установлен отдельно.</pre><button class="open-doc" data-article="19" data-doc="territory">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="closed-zone-2">Закрытая зона подтверждена</button></div></div></div></section><section class="scenario-step" id="closed-zone-2"><div class="step-rail"><span>2</span></div><div class="step-content"><h3>Проверить право нахождения</h3><div class="step-pair"><div><small>Событие</small><p>Лицо находится в закрытой зоне.</p></div><div><small>Действия сотрудника</small><p>Потребуй подтвердить основание доступа. Это может быть беспрепятственный доступ, служебный допуск, исполнение законного полномочия, приглашение / сопровождение или действующий пропуск.</p></div></div><div class="stage-formula">
-<b>Формулировка</b>
-<div class="formula-variant">
-<p>Гражданин, на основании ст. 10 ч. 1 и ст. 20 ч. 3 ФЗ «О государственных территориях РО» требую сообщить цель пребывания и предъявить документ, подтверждающий право нахождения на закрытой территории.</p>
-</div>
-</div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>2</span></div><details class="ground"><summary><span>ФЗ «О государственных территориях РО»</span><b>ст. 20</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 20. Общие основания доступа
-
-1. <mark>Доступ на закрытую территорию предоставляется</mark>:
-1) лицам, обладающим беспрепятственным доступом в соответствии с настоящим Федеральным законом;
-2) сотрудникам организации-владельца в пределах предоставленного служебного допуска;
-
-3) лицам, прибывшим для исполнения предусмотренного законом полномочия;
-4) приглашенным лицам в сопровождении;
-5) лицам, имеющим действительный пропуск.
-2. Право доступа не предоставляет права входить в помещения, не связанные с целью посещения, знакомиться
-с документами, вмешиваться в деятельность сотрудников или нарушать требования безопасности.
-3. Лицо обязано предъявить подтверждение права доступа по требованию сотрудника контрольно-пропускного
-пункта или ответственного за режим сотрудника.</pre><button class="open-doc" data-article="20" data-doc="territory">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О государственных территориях РО»</span><b>ст. 10</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 10. Проверка оснований пребывания и установление личности
-
-1. Уполномоченный сотрудник вправе потребовать от неизвестного лица сообщить цель пребывания и
-предъявить документ, удостоверяющий личность, служебное удостоверение или пропуск, если лицо находится
-на закрытой территории, режимном объекте либо в зоне временного особого режима.
-2. Требование должно быть законным, понятным и относящимся к установленному режиму территории.
-3. При отсутствии подтвержденного права доступа лицу может быть отказано во входе либо предъявлено
-требование покинуть территорию.</pre><button class="open-doc" data-article="10" data-doc="territory">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="closed-zone-3">Право есть</button><button class="stage-jump" data-target="closed-zone-4">Права нет</button></div></div></div></section><section class="scenario-step" id="closed-zone-3"><div class="step-rail"><span>3</span></div><div class="step-content"><h3>Право доступа есть</h3><div class="step-pair"><div><small>Событие</small><p>Основание нахождения подтверждено.</p></div><div><small>Действия сотрудника</small><p>Проверь, не вышел ли человек за пределы цели, помещения, маршрута или зоны своего допуска.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>2</span></div><details class="ground"><summary><span>ФЗ «О государственных территориях РО»</span><b>ст. 20</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 20. Общие основания доступа
-
-1. Доступ на закрытую территорию предоставляется:
-1) лицам, обладающим беспрепятственным доступом в соответствии с настоящим Федеральным законом;
-2) сотрудникам организации-владельца в пределах предоставленного служебного допуска;
-
-3) лицам, прибывшим для исполнения предусмотренного законом полномочия;
-4) приглашенным лицам в сопровождении;
-5) лицам, имеющим действительный пропуск.
-2. <mark>Право доступа не предоставляет права входить в помещения, не связанные с целью посещения</mark>, знакомиться
-с документами, вмешиваться в деятельность сотрудников или нарушать требования безопасности.
-3. Лицо обязано предъявить подтверждение права доступа по требованию сотрудника контрольно-пропускного
-пункта или ответственного за режим сотрудника.</pre><button class="open-doc" data-article="20" data-doc="territory">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О государственных территориях РО»</span><b>ст. 46</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 46. Использование пропуска и сопровождение
-
-1. Владелец предъявляет пропуск вместе с документом, удостоверяющим личность, если личность не
-подтверждается защищенным способом.
-2. Лицо обязано соблюдать маршрут, зоны и время, указанные в пропуске.
-3. Если пропуск предусматривает сопровождение, нахождение без сопровождающего запрещается.
-4. При утрате пропуска владелец обязан незамедлительно уведомить организацию-владельца; пропуск
-блокируется.
-5. Завершение цели пребывания прекращает право доступа, даже если формальный срок пропуска еще не
-истек.</pre><button class="open-doc" data-article="46" data-doc="territory">Открыть в документе</button></div></details></div></div></section><section class="scenario-step" id="closed-zone-4"><div class="step-rail"><span>4</span></div><div class="step-content"><h3>Право доступа отсутствует</h3><div class="step-pair"><div><small>Событие</small><p>Основание находиться в закрытой зоне не подтверждено.</p></div><div><small>Действия сотрудника</small><p>Предъяви понятное требование покинуть территорию. При фактическом незаконном проникновении / нахождении оцени ст. 12.7 УК; при неисполнении законного требования — ст. 17.6, но не путай квалификацию с полномочием задержания.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>3</span></div><details class="ground"><summary><span>ФЗ «О государственных территориях РО»</span><b>ст. 10</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 10. Проверка оснований пребывания и установление личности
-
-1. Уполномоченный сотрудник вправе потребовать от неизвестного лица сообщить цель пребывания и
-предъявить документ, удостоверяющий личность, служебное удостоверение или пропуск, если лицо находится
-на закрытой территории, режимном объекте либо в зоне временного особого режима.
-2. Требование должно быть законным, понятным и относящимся к установленному режиму территории.
-3. <mark>При отсутствии подтвержденного права доступа</mark> лицу может быть отказано во входе либо предъявлено
-требование покинуть территорию.</pre><button class="open-doc" data-article="10" data-doc="territory">Открыть в документе</button></div></details><details class="ground"><summary><span>УК РО</span><b>ст. 12.7</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 12.7. <mark>Незаконное проникновение</mark> или нахождение на закрытом или охраняемом государственном
-объекте
-
-Незаконное проникновение либо нахождение вопреки установленному режиму на закрытом или охраняемом
-объекте федерального государственного органа, особо охраняемом государственном объекте либо территории,
-
-доступ на которую ограничен федеральным законодательством.
-
-Наказание: до 3 лет лишения свободы либо уголовный штраф от 30 000 до 60 000 рублей.
-
-Подследственность: общая.
-
-Порядок разрешения: по общему правилу.</pre><button class="open-doc" data-article="12.7" data-doc="uk">Открыть в документе</button></div></details><details class="ground"><summary><span>УК РО</span><b>ст. 17.6</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 17.6. Неповиновение законному требованию уполномоченного должностного лица
-
-1. <mark>Отказ выполнить законное, понятное</mark> и относящееся к компетенции должностного лица требование
-сотрудника МВД РО, ГИБДД, ФСБ РО, Следственного комитета РО, прокурора, военнослужащего при охране
-военного объекта либо иного уполномоченного законом лица, а равно как неисполнение такого требования.
-
-Наказание: уголовный штраф от 15 000 до 30 000 рублей либо до 3 лет лишения свободы.
-
-2. Злостное неповиновение, продолженное после повторного законного требования.
-
-Наказание: уголовный штраф от 25 000 до 50 000 рублей либо до 4 лет лишения свободы.
-
-Подследственность: общая.
-
-Порядок разрешения: по общему правилу.
-
-Нормативно-правовой акт подписан Премьер-министром РО
-25.08.2026 Марк Брагин</pre><button class="open-doc" data-article="17.6" data-doc="uk">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="closed-zone-5">Уходит</button><button class="stage-jump" data-target="closed-zone-6">Не уходит / продолжает</button></div></div></div></section><section class="scenario-step" id="closed-zone-5"><div class="step-rail"><span>5</span></div><div class="step-content"><h3>Лицо покинуло закрытую зону</h3><div class="step-pair"><div><small>Событие</small><p>Человек выполнил требование и вышел.</p></div><div><small>Действия сотрудника</small><p>Дальнейшее ограничение свободы возможно только при самостоятельном законном основании. Сам факт удаления из зоны не означает, что его обязательно надо задержать.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>1</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 41</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 41. Права граждан при осуществлении государственной охраны
-
-1. <mark>Ограничение прав граждан</mark> при осуществлении государственной охраны допускается только на
-конкретном законном основании и в необходимом объеме.
-
-2. Лицо вправе знать основание отказа в доступе, удаления из охранной зоны, задержания или иной
-существенно ограничивающей меры, если раскрытие конкретных сведений не создает непосредственной
-угрозы безопасности или охраняемой законом тайне.
-
-3. Действия и решения сотрудника ФСО РО могут быть обжалованы Директору ФСО РО, прокурору или в
-суд.
-
-4. Незаконное действие сотрудника ФСО РО не становится законным вследствие ссылки на охраняемое лицо
-или приказ руководителя.</pre><button class="open-doc" data-article="41" data-doc="fso">Открыть в документе</button></div></details></div></div></section><section class="scenario-step" id="closed-zone-6"><div class="step-rail"><span>6</span></div><div class="step-content"><h3>Нарушение продолжается</h3><div class="step-pair"><div><small>Событие</small><p>Лицо остаётся / пытается двигаться дальше вопреки законному требованию.</p></div><div><small>Действия сотрудника</small><p>Оцени составы 12.7 и 17.6 и затем отдельно — основание для задержания ФСО по ст. 30, если объект / мероприятие и обстоятельства входят в компетенцию ФСО.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>3</span></div><details class="ground"><summary><span>УК РО</span><b>ст. 12.7</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 12.7. Незаконное проникновение или нахождение на закрытом или охраняемом государственном
-объекте
-
-Незаконное проникновение либо нахождение вопреки установленному режиму на закрытом или охраняемом
-объекте федерального государственного органа, особо охраняемом государственном объекте либо территории,
-
-доступ на которую ограничен федеральным законодательством.
-
-Наказание: до 3 лет лишения свободы либо уголовный штраф от 30 000 до 60 000 рублей.
-
-Подследственность: общая.
-
-Порядок разрешения: по общему правилу.</pre><button class="open-doc" data-article="12.7" data-doc="uk">Открыть в документе</button></div></details><details class="ground"><summary><span>УК РО</span><b>ст. 17.6</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 17.6. Неповиновение законному требованию уполномоченного должностного лица
-
-1. Отказ выполнить законное, понятное и относящееся к компетенции должностного лица требование
-сотрудника МВД РО, ГИБДД, ФСБ РО, Следственного комитета РО, прокурора, военнослужащего при охране
-военного объекта либо иного уполномоченного законом лица, а равно как неисполнение такого требования.
-
-Наказание: уголовный штраф от 15 000 до 30 000 рублей либо до 3 лет лишения свободы.
-
-2. Злостное неповиновение, продолженное после повторного законного требования.
-
-Наказание: уголовный штраф от 25 000 до 50 000 рублей либо до 4 лет лишения свободы.
-
-Подследственность: общая.
-
-Порядок разрешения: по общему правилу.
-
-Нормативно-правовой акт подписан Премьер-министром РО
-25.08.2026 Марк Брагин</pre><button class="open-doc" data-article="17.6" data-doc="uk">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 30</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 30. Задержание сотрудником ФСО РО
-
-1. Сотрудник ФСО РО вправе задержать лицо, если:
-
-1) лицо непосредственно совершает нападение на охраняемое лицо или объект;
-
-2) имеются достаточные основания полагать, что лицо непосредственно готовится применить оружие,
-взрывное устройство или иное средство опасного нападения в охранной зоне;
-
-3) лицо совершило преступление или административное правонарушение на охраняемом объекте либо
-мероприятии и задержание необходимо для пресечения деяния, установления личности или передачи
-компетентному органу;
-
-4) лицо оказывает активное сопротивление законному требованию покинуть охранную зону и своими
-
-действиями создает реальную угрозу безопасности;
-
-5) имеется иное прямо предусмотренное федеральным законом основание.
-
-2. Задержанному без необоснованной задержки разъясняются основание задержания и его процессуальные
-права.
-
-3. Если ограничение свободы является задержанием по Процессуальному кодексу РО, процессуальный срок
-исчисляется с момента фактического ограничения свободы сотрудником ФСО РО.
-
-4. Задержанное лицо и относящиеся к задержанию материалы передаются полиции, ФСБ РО,
-Следственному комитету либо иному компетентному органу без необоснованной задержки.
-
-5. Кратковременное удаление лица за пределы охранной зоны не является задержанием, если после
-удаления лицо свободно и в отношении него не продолжается процессуальное ограничение свободы.</pre><button class="open-doc" data-article="30" data-doc="fso">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="detention-1">Основание задержания есть</button></div></div></div></section></div></article><article class="scenario-card" data-group="inspection" data-search="Оружие / опасный предмет при входе Что делать с результатом законного досмотра и где заканчивается компетенция ФСО. оружие нож взрывчатка опасный предмет досмотр вход боеприпасы" id="scenario-danger-item"><button class="scenario-head"><div class="scenario-num">06</div><div class="scenario-head-main"><h2>Оружие / опасный предмет при входе</h2><p>Что делать с результатом законного досмотра и где заканчивается компетенция ФСО.</p><div class="scenario-tags"><span>оружие</span><span>нож</span><span>взрывчатка</span><span>опасный</span><span>предмет</span></div></div><div class="scenario-meta"><b>4 этапов</b><span>Открыть ↓</span></div></button><div class="scenario-flow"><section class="scenario-step first-step" id="danger-item-1"><div class="step-rail"><span>1</span></div><div class="step-content"><h3>Предмет обнаружен при законной проверке доступа</h3><div class="step-pair"><div><small>Действие сотрудника</small><p>Прежде всего не допускай предмет / лицо дальше в рамках установленного режима и действуй в пределах охранной задачи. Само обнаружение не даёт ФСО полномочий вести обычное расследование общего преступления.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>2</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 28</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 28. Досмотр при доступе на охраняемый объект
-
-1. ФСО РО вправе установить досмотр как условие добровольного входа или въезда на охраняемый объект
-либо мероприятие.
-
-2. Досмотр осуществляется с согласия лица в порядке, установленном процессуальным законодательством,
-и должен быть ограничен целью обнаружения <mark>оружия, взрывчатых веществ, опасных предметов</mark>,
-запрещенных к проносу предметов либо средств, создающих угрозу государственной охране.
-
-3. При отказе от досмотра лицо не допускается на объект либо мероприятие и должно покинуть охранную
-зону.
-
-4. Принудительный обыск допускается только при наличии самостоятельного основания, предусмотренного
-Процессуальным кодексом РО или иным федеральным законом.</pre><button class="open-doc" data-article="28" data-doc="fso">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 6</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 6. Пределы компетенции ФСО РО
-
-1. ФСО РО не является органом общей полицейской юрисдикции.
-
-2. Обычное патрулирование населенных пунктов, систематический дорожный контроль, самостоятельное
-расследование преступлений общей подследственности, производство по обычным административным
-правонарушениям, прокурорский надзор и осуществление судебных функций не относятся к компетенции
-ФСО РО.
-
-3. Сотрудник ФСО РО вправе пресечь правонарушение и применить предусмотренные настоящим
-Федеральным законом меры, если деяние непосредственно связано с безопасностью охраняемого лица,
-объекта, мероприятия либо совершается в пределах установленной охранной зоны.
-
-4. После устранения непосредственной угрозы лицо и материалы передаются компетентному
-государственному органу, если дальнейшее производство не относится к компетенции ФСО РО.</pre><button class="open-doc" data-article="6" data-doc="fso">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="danger-item-2">Есть признаки правонарушения</button><button class="stage-jump" data-target="danger-item-4">Человек отказывается от входа и уходит</button></div></div></div></section><section class="scenario-step" id="danger-item-2"><div class="step-rail"><span>2</span></div><div class="step-content"><h3>Определить правовую квалификацию</h3><div class="step-pair"><div><small>Событие</small><p>Обнаруженное может образовывать самостоятельное нарушение.</p></div><div><small>Действия сотрудника</small><p>Проверь соответствующую норму УК / КоАП: оружие и боеприпасы, взрывчатые вещества, опасное открытое ношение и т. п. Не подменяй компетентный орган в дальнейшем производстве.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>3</span></div><details class="ground"><summary><span>УК РО</span><b>ст. 12.8</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 12.8. (С) Незаконный оборот оружия и боеприпасов
-
-Незаконные приобретение, передача, сбыт, хранение, перевозка или ношение огнестрельного оружия, его
-основных частей или боеприпасов.
-
-Наказание: до 4 лет лишения свободы, уголовный штраф от 40 000 до 70 000 рублей и возможное лишение
-права на оружие.
-
-Подследственность: общая.
-
-Порядок разрешения: по общему правилу.
-
-Примечание. Добровольная сдача предметов до их обнаружения при принудительном процессуальном
-действии может освобождать от ответственности за хранение, если отсутствует иной состав.</pre><button class="open-doc" data-article="12.8" data-doc="uk">Открыть в документе</button></div></details><details class="ground"><summary><span>УК РО</span><b>ст. 12.9</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 12.9. (С) Незаконный оборот взрывчатых веществ и взрывных устройств
-
-Незаконные приобретение, передача, сбыт, хранение, перевозка или ношение взрывчатых веществ или
-взрывных устройств.
-
-Наказание: до 6 лет лишения свободы.
-
-Подследственность: общая; при установлении связи с террористической деятельностью, диверсией или иным
-преступлением против безопасности государства — Федеральная служба безопасности РО.
-
-Порядок разрешения: по общему правилу.</pre><button class="open-doc" data-article="12.9" data-doc="uk">Открыть в документе</button></div></details><details class="ground"><summary><span>КоАП РО</span><b>ст. 15</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 15. Опасное открытое ношение или использование разрешенных предметов
-
-Ношение в открытом виде либо использование не по назначению законно находящегося у лица оружия,
-инструмента, спортивного или иного потенциально опасного предмета в общественном месте, если деяние не
-образует преступления.
-
-Наказание: административный штраф от 15 000 до 30 000 рублей; при повторном нарушении — от 30 000 до 50
-000 рублей.</pre><button class="open-doc" data-article="15" data-doc="koap">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="danger-item-3">Нужно пресечь и передать</button></div></div></div></section><section class="scenario-step" id="danger-item-3"><div class="step-rail"><span>3</span></div><div class="step-content"><h3>Пресечение и передача по компетенции</h3><div class="step-pair"><div><small>Событие</small><p>Есть нарушение, непосредственно связанное с безопасностью охраняемого объекта / мероприятия.</p></div><div><small>Действия сотрудника</small><p>ФСО может пресечь в рамках своей компетенции; дальнейшее производство после устранения угрозы передаётся компетентному органу. Вопрос задержания — только по ст. 30.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>2</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 6</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 6. Пределы компетенции ФСО РО
-
-1. ФСО РО не является органом общей полицейской юрисдикции.
-
-2. Обычное патрулирование населенных пунктов, систематический дорожный контроль, самостоятельное
-расследование преступлений общей подследственности, производство по обычным административным
-правонарушениям, прокурорский надзор и осуществление судебных функций не относятся к компетенции
-ФСО РО.
-
-3. Сотрудник ФСО РО вправе пресечь правонарушение и применить предусмотренные настоящим
-Федеральным законом меры, если деяние непосредственно связано с безопасностью охраняемого лица,
-объекта, мероприятия либо совершается в пределах установленной охранной зоны.
-
-4. <mark>После устранения непосредственной угрозы лицо и материалы передаются</mark> компетентному
-государственному органу, если дальнейшее производство не относится к компетенции ФСО РО.</pre><button class="open-doc" data-article="6" data-doc="fso">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 30</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 30. Задержание сотрудником ФСО РО
-
-1. Сотрудник ФСО РО вправе задержать лицо, если:
-
-1) лицо непосредственно совершает нападение на охраняемое лицо или объект;
-
-2) имеются достаточные основания полагать, что лицо непосредственно готовится применить оружие,
-взрывное устройство или иное средство опасного нападения в охранной зоне;
-
-3) лицо совершило преступление или административное правонарушение на охраняемом объекте либо
-мероприятии и задержание необходимо для пресечения деяния, установления личности или передачи
-компетентному органу;
-
-4) лицо оказывает активное сопротивление законному требованию покинуть охранную зону и своими
-
-действиями создает реальную угрозу безопасности;
-
-5) имеется иное прямо предусмотренное федеральным законом основание.
-
-2. Задержанному без необоснованной задержки разъясняются основание задержания и его процессуальные
-права.
-
-3. Если ограничение свободы является задержанием по Процессуальному кодексу РО, процессуальный срок
-исчисляется с момента фактического ограничения свободы сотрудником ФСО РО.
-
-4. Задержанное лицо и относящиеся к задержанию материалы передаются полиции, ФСБ РО,
-Следственному комитету либо иному компетентному органу без необоснованной задержки.
-
-5. Кратковременное удаление лица за пределы охранной зоны не является задержанием, если после
-удаления лицо свободно и в отношении него не продолжается процессуальное ограничение свободы.</pre><button class="open-doc" data-article="30" data-doc="fso">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="detention-1">Основание задержания есть</button></div></div></div></section><section class="scenario-step" id="danger-item-4"><div class="step-rail"><span>4</span></div><div class="step-content"><h3>Отказ от входа без иных оснований</h3><div class="step-pair"><div><small>Событие</small><p>Человек не проходит на объект и покидает место.</p></div><div><small>Действия сотрудника</small><p>Если отсутствует самостоятельное правонарушение и лицо выполняет требование не входить / покинуть зону, не задерживай только из-за отказа от допуска.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>1</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 27</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 27. Проверка документов и доступа
-
-1. На охраняемом объекте или мероприятии сотрудник ФСО РО вправе потребовать предъявления
-документа, удостоверяющего личность, служебного удостоверения, пропуска либо иного документа,
-необходимого для подтверждения права доступа.
-
-2. Требование должно быть связано с установленным режимом охраны и не может предъявляться
-бесцельно вне охраняемого объекта, мероприятия или охранной зоны.
-
-3. При отсутствии права доступа либо отказе подтвердить его лицо может быть не допущено на охраняемый
-объект или обязано покинуть охранную зону.
-
-4. <mark>Отказ от добровольного входа</mark> на охраняемый объект не является самостоятельным основанием для
-задержания, если лицо не совершает иного правонарушения и выполняет требование покинуть
-территорию.</pre><button class="open-doc" data-article="27" data-doc="fso">Открыть в документе</button></div></details></div></div></section></div></article><article class="scenario-card" data-group="order" data-search="Правонарушение на охраняемом объекте / мероприятии Универсальная схема: компетенция → пресечение → задержание только при основании → передача. правонарушение объект мероприятие преступление административка пресечение полиция передача" id="scenario-offence-object"><button class="scenario-head"><div class="scenario-num">07</div><div class="scenario-head-main"><h2>Правонарушение на охраняемом объекте / мероприятии</h2><p>Универсальная схема: компетенция → пресечение → задержание только при основании → передача.</p><div class="scenario-tags"><span>правонарушение</span><span>объект</span><span>мероприятие</span><span>преступление</span><span>административка</span></div></div><div class="scenario-meta"><b>4 этапов</b><span>Открыть ↓</span></div></button><div class="scenario-flow"><section class="scenario-step first-step" id="offence-object-1"><div class="step-rail"><span>1</span></div><div class="step-content"><h3>Проверить связь с государственной охраной</h3><div class="step-pair"><div><small>Действие сотрудника</small><p>ФСО не является общей полицией. Пресечение мерами ФСО допустимо, когда деяние непосредственно связано с безопасностью охраняемого лица, объекта, мероприятия либо происходит в установленной охранной зоне в пределах специальной нормы.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>1</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 6</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 6. Пределы компетенции ФСО РО
-
-1. ФСО РО не является органом общей полицейской юрисдикции.
-
-2. Обычное патрулирование населенных пунктов, систематический дорожный контроль, самостоятельное
-расследование преступлений общей подследственности, производство по обычным административным
-правонарушениям, прокурорский надзор и осуществление судебных функций не относятся к компетенции
-ФСО РО.
-
-3. Сотрудник ФСО РО вправе пресечь правонарушение и применить предусмотренные настоящим
-Федеральным законом меры, если деяние непосредственно связано с безопасностью охраняемого лица,
-объекта, мероприятия либо совершается в пределах установленной охранной зоны.
-
-4. После устранения непосредственной угрозы лицо и материалы передаются компетентному
-государственному органу, если дальнейшее производство не относится к компетенции ФСО РО.</pre><button class="open-doc" data-article="6" data-doc="fso">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="offence-object-2">Связь с охраной есть</button><button class="stage-jump" data-target="offence-object-4">Связи нет</button></div></div></div></section><section class="scenario-step" id="offence-object-2"><div class="step-rail"><span>2</span></div><div class="step-content"><h3>Пресечь продолжающееся нарушение</h3><div class="step-pair"><div><small>Событие</small><p>Деяние входит в компетенцию ФСО в данной ситуации.</p></div><div><small>Действия сотрудника</small><p>Прими предусмотренные законом меры для прекращения нарушения и сохранения безопасности. Затем определи, требуется ли задержание или достаточно передачи информации / материалов компетентному органу.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>2</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 26</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 26. Общие полномочия ФСО РО
-
-ФСО РО в пределах задач государственной охраны вправе:
-
-1) организовывать личную и объектовую охрану;
-
-2) устанавливать пропускной и внутриобъектовый режим;
-
-3) проверять документы и разрешения на доступ в случаях, предусмотренных настоящим Федеральным
-законом;
-
-4) проводить досмотр лиц, вещей и транспортных средств при входе или въезде на охраняемый объект на
-условиях настоящего Федерального закона;
-
-5) временно ограничивать доступ и движение в охранной зоне;
-
-6) предъявлять обязательные законные требования о прекращении действий, создающих угрозу
-безопасности;
-
-7) задерживать лиц в случаях, предусмотренных статьей 30 настоящего Федерального закона;
-
-8) применять физическую силу, специальные средства и огнестрельное оружие на предусмотренных
-законом основаниях;
-
-9) получать от государственных органов сведения, непосредственно необходимые для оценки угрозы
-государственной охране;
-
-10) осуществлять видеофиксацию охранных и процессуально значимых действий;
-
-11) привлекать по согласованию компетентные государственные органы к совместному обеспечению
-безопасности.</pre><button class="open-doc" data-article="26" data-doc="fso">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 30</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 30. Задержание сотрудником ФСО РО
-
-1. Сотрудник ФСО РО вправе задержать лицо, если:
-
-1) лицо непосредственно совершает нападение на охраняемое лицо или объект;
-
-2) имеются достаточные основания полагать, что лицо непосредственно готовится применить оружие,
-взрывное устройство или иное средство опасного нападения в охранной зоне;
-
-3) лицо совершило преступление или административное правонарушение на охраняемом объекте либо
-мероприятии и задержание необходимо для пресечения деяния, установления личности или передачи
-компетентному органу;
-
-4) лицо оказывает активное сопротивление законному требованию покинуть охранную зону и своими
-
-действиями создает реальную угрозу безопасности;
-
-5) имеется иное прямо предусмотренное федеральным законом основание.
-
-2. Задержанному без необоснованной задержки разъясняются основание задержания и его процессуальные
-права.
-
-3. Если ограничение свободы является задержанием по Процессуальному кодексу РО, процессуальный срок
-исчисляется с момента фактического ограничения свободы сотрудником ФСО РО.
-
-4. Задержанное лицо и относящиеся к задержанию материалы передаются полиции, ФСБ РО,
-Следственному комитету либо иному компетентному органу без необоснованной задержки.
-
-5. Кратковременное удаление лица за пределы охранной зоны не является задержанием, если после
-удаления лицо свободно и в отношении него не продолжается процессуальное ограничение свободы.</pre><button class="open-doc" data-article="30" data-doc="fso">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="detention-1">Есть основание задержать</button><button class="stage-jump" data-target="offence-object-3">Угроза устранена</button></div></div></div></section><section class="scenario-step" id="offence-object-3"><div class="step-rail"><span>3</span></div><div class="step-content"><h3>После устранения угрозы</h3><div class="step-pair"><div><small>Событие</small><p>Непосредственная охранная задача завершена.</p></div><div><small>Действия сотрудника</small><p>Если дальнейшее производство не относится к ФСО, передай лицо и материалы компетентному органу без превращения ФСО в орган общего расследования.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>1</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 6</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 6. Пределы компетенции ФСО РО
-
-1. ФСО РО не является органом общей полицейской юрисдикции.
-
-2. Обычное патрулирование населенных пунктов, систематический дорожный контроль, самостоятельное
-расследование преступлений общей подследственности, производство по обычным административным
-правонарушениям, прокурорский надзор и осуществление судебных функций не относятся к компетенции
-ФСО РО.
-
-3. Сотрудник ФСО РО вправе пресечь правонарушение и применить предусмотренные настоящим
-Федеральным законом меры, если деяние непосредственно связано с безопасностью охраняемого лица,
-объекта, мероприятия либо совершается в пределах установленной охранной зоны.
-
-4. После устранения непосредственной угрозы лицо и материалы передаются компетентному
-государственному органу, если дальнейшее производство не относится к компетенции ФСО РО.</pre><button class="open-doc" data-article="6" data-doc="fso">Открыть в документе</button></div></details></div></div></section><section class="scenario-step" id="offence-object-4"><div class="step-rail"><span>4</span></div><div class="step-content"><h3>Нарушение вне компетенции ФСО</h3><div class="step-pair"><div><small>Событие</small><p>Событие не связано с охраняемым лицом / объектом / мероприятием и не даёт специального основания ФСО.</p></div><div><small>Действия сотрудника</small><p>Не расширяй полномочия по аналогии. Сообщи / передай ситуацию компетентному правоохранительному органу, если это требуется.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>1</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 6</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 6. Пределы компетенции ФСО РО
-
-1. ФСО РО <mark>не является органом общей полицейской юрисдикции</mark>.
-
-2. Обычное патрулирование населенных пунктов, систематический дорожный контроль, самостоятельное
-расследование преступлений общей подследственности, производство по обычным административным
-правонарушениям, прокурорский надзор и осуществление судебных функций не относятся к компетенции
-ФСО РО.
-
-3. Сотрудник ФСО РО вправе пресечь правонарушение и применить предусмотренные настоящим
-Федеральным законом меры, если деяние непосредственно связано с безопасностью охраняемого лица,
-объекта, мероприятия либо совершается в пределах установленной охранной зоны.
-
-4. После устранения непосредственной угрозы лицо и материалы передаются компетентному
-государственному органу, если дальнейшее производство не относится к компетенции ФСО РО.</pre><button class="open-doc" data-article="6" data-doc="fso">Открыть в документе</button></div></details></div></div></section></div></article><article class="scenario-card" data-group="process" data-search="Возникло основание для задержания ФСО Проверка ст. 30 → процессуальный порядок → права → фиксация → передача. задержание задержать наручники права миранда прокурор видео передача" id="scenario-detention"><button class="scenario-head"><div class="scenario-num">08</div><div class="scenario-head-main"><h2>Возникло основание для задержания ФСО</h2><p>Проверка ст. 30 → процессуальный порядок → права → фиксация → передача.</p><div class="scenario-tags"><span>задержание</span><span>задержать</span><span>наручники</span><span>права</span><span>миранда</span></div></div><div class="scenario-meta"><b>6 этапов</b><span>Открыть ↓</span></div></button><div class="scenario-flow"><section class="scenario-step first-step" id="detention-1"><div class="step-rail"><span>1</span></div><div class="step-content"><h3>Назвать конкретное основание ст. 30</h3><div class="step-pair"><div><small>Действие сотрудника</small><p>Перед фактическим ограничением свободы определи конкретный пункт ст. 30 ФЗ «О ФСО РО». Формула «он нарушил закон» недостаточна: ФСО имеет специальную, а не общую полицейскую компетенцию.</p></div></div><div class="formal-note"><b>Примечание</b><p>Для сотрудника ФСО сначала определяется конкретное основание задержания по профильному ФЗ. Процессуальный кодекс регулирует дальнейший порядок и гарантии задержанного, но сам по себе не расширяет компетенцию ФСО.</p></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>2</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 30</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 30. Задержание сотрудником ФСО РО
-
-1. <mark>Сотрудник ФСО РО вправе задержать лицо, если</mark>:
-
-1) лицо непосредственно совершает нападение на охраняемое лицо или объект;
-
-2) имеются достаточные основания полагать, что лицо непосредственно готовится применить оружие,
-взрывное устройство или иное средство опасного нападения в охранной зоне;
-
-3) лицо совершило преступление или административное правонарушение на охраняемом объекте либо
-мероприятии и задержание необходимо для пресечения деяния, установления личности или передачи
-компетентному органу;
-
-4) лицо оказывает активное сопротивление законному требованию покинуть охранную зону и своими
-
-действиями создает реальную угрозу безопасности;
-
-5) имеется иное прямо предусмотренное федеральным законом основание.
-
-2. Задержанному без необоснованной задержки разъясняются основание задержания и его процессуальные
-права.
-
-3. Если ограничение свободы является задержанием по Процессуальному кодексу РО, процессуальный срок
-исчисляется с момента фактического ограничения свободы сотрудником ФСО РО.
-
-4. Задержанное лицо и относящиеся к задержанию материалы передаются полиции, ФСБ РО,
-Следственному комитету либо иному компетентному органу без необоснованной задержки.
-
-5. Кратковременное удаление лица за пределы охранной зоны не является задержанием, если после
-удаления лицо свободно и в отношении него не продолжается процессуальное ограничение свободы.</pre><button class="open-doc" data-article="30" data-doc="fso">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 6</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 6. Пределы компетенции ФСО РО
-
-1. <mark>ФСО РО не является органом общей полицейской юрисдикции</mark>.
-
-2. Обычное патрулирование населенных пунктов, систематический дорожный контроль, самостоятельное
-расследование преступлений общей подследственности, производство по обычным административным
-правонарушениям, прокурорский надзор и осуществление судебных функций не относятся к компетенции
-ФСО РО.
-
-3. Сотрудник ФСО РО вправе пресечь правонарушение и применить предусмотренные настоящим
-Федеральным законом меры, если деяние непосредственно связано с безопасностью охраняемого лица,
-объекта, мероприятия либо совершается в пределах установленной охранной зоны.
-
-4. После устранения непосредственной угрозы лицо и материалы передаются компетентному
-государственному органу, если дальнейшее производство не относится к компетенции ФСО РО.</pre><button class="open-doc" data-article="6" data-doc="fso">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="detention-2">Конкретное основание есть</button><button class="stage-jump" data-target="detention-6">Основания нет</button></div></div></div></section><section class="scenario-step" id="detention-2"><div class="step-rail"><span>2</span></div><div class="step-content"><h3>Начать процессуальный порядок задержания</h3><div class="step-pair"><div><small>Событие</small><p>Основание задержания установлено и свобода лица фактически ограничивается.</p></div><div><small>Действия сотрудника</small><p>Действуй по обязательной последовательности гл. II ст. 2 ПК: идентификация сотрудника, установление личности и другие предусмотренные Кодексом действия, затем разъяснение основания и прав.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>1</span></div><details class="ground"><summary><span>Процессуальный кодекс РО</span><b>гл. II ст. 2</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 2. Порядок задержания правомочным лицом. Задержание лица при ведении следствия производится в
-следующей последовательности:
-
-Надеть наручники на подозреваемого (если применяются).
-Предъявить опознавательный знак (нашивка, бейдж, жетон, удостоверение или иной идентификационный
-знак, подтверждающий принадлежность к правоохранительным органам).
-Произвести первичный обыск на наличие документов с целью установления личности задержанного и его
-принадлежности к государственному органу, а также на наличие нелегальных и запрещенных предметов.
-
-Примечание: В случае необходимости проверить наличие либо отсутствие сведений о нахождении гражданина
-в розыске.
-
-Произвести выемку любого вида оружия, спецсредств нелетального действия, взрывчатых веществ,
-колющих или режущих предметов, предполагаемых наркотических средств на время процессуальных
-действий.
-
-При наличии законных оснований внести сведения о лице в учет розыска, изменить основание розыска
-либо отменить его в установленном порядке.
-<mark>Разъяснить задержанному основания задержания и статьи</mark>, по которым он задержан, с кратким
-разъяснением их содержания.
-Разъяснить задержанному его процессуальные и конституционные права в порядке статьи 6 настоящей
-главы.
-Доставить задержанного в изолятор временного содержания или суд (при необходимости)
-При необходимости провести экспертизу состояния какого-либо технического или биологического
-объекта.
-При необходимости произвести допрос подозреваемого. Если адвокат запрошен, он имеет право
-присутствовать на допросе.
-Если задержанный является государственным служащим, вызвать сотрудника прокуратуры в случаях, когда
-его участие обязательно, а также вправе уведомить государственный орган, в котором служит
-задержанный, о факте и месте проведения процессуальных действий.</pre><button class="open-doc" data-article="2" data-chapter="II" data-doc="pk">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="detention-3">Основание и статьи объявлены</button></div></div></div></section><section class="scenario-step" id="detention-3"><div class="step-rail"><span>3</span></div><div class="step-content"><h3>Разъяснить права</h3><div class="step-pair"><div><small>Событие</small><p>Лицо задержано.</p></div><div><small>Действия сотрудника</small><p>Ясно и разборчиво сообщи основные процессуальные права. Если лицо сообщает, что не поняло, соответствующее право разъясняется повторно.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>2</span></div><details class="ground"><summary><span>Процессуальный кодекс РО</span><b>гл. II ст. 6</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 6. Разъяснение процессуальных прав задержанному.
-1. <mark>При задержании лицу ясно и разборчиво сообщаются его основные процессуальные права</mark>. Допускается
-следующая формулировка: «Вы имеете право хранить молчание. Всё, что вы скажете, может и будет
-использовано против Вас в суде. Вы имеете право на один телефонный звонок. Также Вы имеете право на
-адвоката. Если вам необходим адвокат, он будет для Вас запрошен. Вы понимаете свои права?»
-2. Точное дословное воспроизведение указанной формулировки не требуется, если задержанному фактически
-разъяснены все перечисленные права в понятной форме.
-3. Если задержанный сообщает, что не понял разъяснение, сотрудник обязан повторно разъяснить
-соответствующее право или права. Формальное многократное повторение уже понятого разъяснения не
-требуется.
-4. Право хранить молчание означает в том числе право не давать показания против самого себя, своего супруга
-и близких родственников в пределах, установленных Конституцией и федеральным законодательством.</pre><button class="open-doc" data-article="6" data-chapter="II" data-doc="pk">Открыть в документе</button></div></details><details class="ground"><summary><span>Процессуальный кодекс РО</span><b>гл. II ст. 9</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 9. Права задерживаемого. У задержанного имеются следующие права:
-а) Подозреваемый имеет право на один телефонный разговор, длительностью не более 3 минут в присутствии
-сотрудника.
-б) Подозреваемый имеет право на адвоката. (Заключается в реализации сотрудником права адвокату
-беспрепятственно встретиться со своим подзащитным наедине, в условиях, обеспечивающих
-конфиденциальность, если это потребует сам адвокат). Длительность конфиденциального разговора между
-адвокатом со своим подзащитным составляет не более 10 минут;
-в) Подозреваемый имеет право хранить молчание и не свидетельствовать против себя, супруга и близких
-родственников;
-г) Подозреваемый имеет право знать основания задержания, применяемые нормы закона и существо
-предъявляемых ему требований;
-д) Подозреваемый имеет право заявлять ходатайства и обжаловать действия, бездействие и решения
-должностных лиц в установленном законом порядке;</pre><button class="open-doc" data-article="9" data-chapter="II" data-doc="pk">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="detention-4">Права разъяснены</button></div></div></div></section><section class="scenario-step" id="detention-4"><div class="step-rail"><span>4</span></div><div class="step-content"><h3>Соблюдать обязанности и фиксацию</h3><div class="step-pair"><div><small>Событие</small><p>Процесс задержания продолжается.</p></div><div><small>Действия сотрудника</small><p>Соблюдай требования Кодекса о видеофиксации и иных обязанностях. Если задержанный — государственный служащий или лицо со специальным статусом, проверь специальные процедуры.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>2</span></div><details class="ground"><summary><span>Процессуальный кодекс РО</span><b>гл. II ст. 10</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 10. Обязанности сотрудника выполняющего задержание.
-а) Сотрудник правоохранительных
-ГЛАВНАЯ ФОРУМорганов обязан
-ЧТО вести иПОЛЬЗОВАТЕЛИ
-НОВОГО хранить видеозапись оснований для Азадержания и
-самого задержания в течение 48 часов или до окончания расследования, связанного с задержанием;
-б) Сотрудник обязан разъяснить и предоставить адвокату причины задержания, видеозапись с каждым
-отдельным эпизодом нарушения, инкриминируемого подозреваемому, а также с ходом процессуальных
-действий в отношении подозреваемого;
-в) Сотрудник обязан предоставить видеозапись сотруднику прокуратуры, если последний является субъектом
-задержания;
-г) В случае задержания государственного служащего видеозапись может быть предоставлена уполномоченному
-представителю государственного органа, в котором он служит, только в объеме, необходимом для законной
-служебной проверки и не нарушающем тайну расследования.</pre><button class="open-doc" data-article="10" data-chapter="II" data-doc="pk">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О неприкосновенности должностных лиц»</span><b>ст. 2</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 2. Основные понятия
-Для целей настоящего Федерального закона:
-1) <mark>процессуальная неприкосновенность</mark> — установленный законом специальный порядок применения к
-должностному лицу мер процессуального принуждения и иных существенно ограничивающих его права мер;
-2) снятие неприкосновенности — временное прекращение действия процессуальной гарантии полностью либо
-в определенной части на основании акта компетентного органа;
-3) частичное снятие неприкосновенности — разрешение конкретного процессуального действия без
-прекращения остальных гарантий лица;
-4) экстренное ограничение свободы — кратковременное ограничение действий лица, обладающего
-неприкосновенностью, без предварительного снятия неприкосновенности исключительно для немедленного
-пресечения опасности или сохранения возможности последующего законного производства;
-5) компетентный орган — суд, Высшая квалификационная коллегия судей либо иной орган, которому настоящим
-Федеральным законом прямо предоставлено полномочие разрешить применение специальной меры.</pre><button class="open-doc" data-article="2" data-doc="immunity">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="detention-5">Дальнейшее производство не ФСО</button></div></div></div></section><section class="scenario-step" id="detention-5"><div class="step-rail"><span>5</span></div><div class="step-content"><h3>Передать компетентному органу</h3><div class="step-pair"><div><small>Событие</small><p>Охранная задача выполнена, а дальнейшее производство относится к другому органу.</p></div><div><small>Действия сотрудника</small><p>Передай задержанного и относящиеся к задержанию материалы полиции, ФСБ, СК или иному компетентному органу без необоснованной задержки.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>1</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 30</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 30. Задержание сотрудником ФСО РО
-
-1. Сотрудник ФСО РО вправе задержать лицо, если:
-
-1) лицо непосредственно совершает нападение на охраняемое лицо или объект;
-
-2) имеются достаточные основания полагать, что лицо непосредственно готовится применить оружие,
-взрывное устройство или иное средство опасного нападения в охранной зоне;
-
-3) лицо совершило преступление или административное правонарушение на охраняемом объекте либо
-мероприятии и задержание необходимо для пресечения деяния, установления личности или передачи
-компетентному органу;
-
-4) лицо оказывает активное сопротивление законному требованию покинуть охранную зону и своими
-
-действиями создает реальную угрозу безопасности;
-
-5) имеется иное прямо предусмотренное федеральным законом основание.
-
-2. Задержанному без необоснованной задержки разъясняются основание задержания и его процессуальные
-права.
-
-3. Если ограничение свободы является задержанием по Процессуальному кодексу РО, процессуальный срок
-исчисляется с момента фактического ограничения свободы сотрудником ФСО РО.
-
-4. <mark>Задержанное лицо и относящиеся к задержанию материалы передаются</mark> полиции, ФСБ РО,
-Следственному комитету либо иному компетентному органу без необоснованной задержки.
-
-5. Кратковременное удаление лица за пределы охранной зоны не является задержанием, если после
-удаления лицо свободно и в отношении него не продолжается процессуальное ограничение свободы.</pre><button class="open-doc" data-article="30" data-doc="fso">Открыть в документе</button></div></details></div></div></section><section class="scenario-step" id="detention-6"><div class="step-rail"><span>6</span></div><div class="step-content"><h3>Если основания задержания нет</h3><div class="step-pair"><div><small>Событие</small><p>Ни один специальный пункт ст. 30 или иное прямое федеральное основание не подходит.</p></div><div><small>Действия сотрудника</small><p>Не оформляй задержание только потому, что человек спорит, раздражает сотрудника или совершил нарушение вне специальной компетенции ФСО. Используй только те меры, основание для которых действительно есть.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>1</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 41</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 41. Права граждан при осуществлении государственной охраны
-
-1. <mark>Ограничение прав граждан</mark> при осуществлении государственной охраны допускается только на
-конкретном законном основании и в необходимом объеме.
-
-2. Лицо вправе знать основание отказа в доступе, удаления из охранной зоны, задержания или иной
-существенно ограничивающей меры, если раскрытие конкретных сведений не создает непосредственной
-угрозы безопасности или охраняемой законом тайне.
-
-3. Действия и решения сотрудника ФСО РО могут быть обжалованы Директору ФСО РО, прокурору или в
-суд.
-
-4. Незаконное действие сотрудника ФСО РО не становится законным вследствие ссылки на охраняемое лицо
-или приказ руководителя.</pre><button class="open-doc" data-article="41" data-doc="fso">Открыть в документе</button></div></details></div></div></section></div></article><article class="scenario-card" data-group="threat" data-search="Непосредственная угроза охраняемому лицу / объекту Только правовая логика: что относится к компетенции ФСО и когда подключается другой орган. угроза охраняемому лицу нападение опасность эвакуация ФСБ теракт" id="scenario-direct-threat"><button class="scenario-head"><div class="scenario-num">09</div><div class="scenario-head-main"><h2>Непосредственная угроза охраняемому лицу / объекту</h2><p>Только правовая логика: что относится к компетенции ФСО и когда подключается другой орган.</p><div class="scenario-tags"><span>угроза</span><span>охраняемому</span><span>лицу</span><span>нападение</span><span>опасность</span></div></div><div class="scenario-meta"><b>3 этапов</b><span>Открыть ↓</span></div></button><div class="scenario-flow"><section class="scenario-step first-step" id="direct-threat-1"><div class="step-rail"><span>1</span></div><div class="step-content"><h3>Установлена непосредственная угроза</h3><div class="step-pair"><div><small>Действие сотрудника</small><p>Приоритет — законные меры государственной охраны: защита охраняемого лица, безопасное изменение порядка его перемещения / места нахождения, при необходимости эвакуация и ограничение опасной зоны в объёме, необходимом для устранения угрозы.</p></div></div><div class="stage-warning">Раздел показывает только правовые основания и последовательность решений, без тактических инструкций.</div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>3</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 4</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 4. Основные понятия
-
-Для целей настоящего Федерального закона:
-
-1) государственная охрана — совокупность правовых, организационных, режимных, технических и иных
-мер, направленных на обеспечение безопасности охраняемых лиц, охраняемых объектов и
-государственных мероприятий;
-
-2) охраняемое лицо — должностное лицо либо иное лицо, которому государственная охрана предоставлена
-настоящим Федеральным законом или в установленном им порядке;
-
-3) охраняемый объект — государственное здание, территория, помещение, транспортное средство либо
-иной объект, в отношении которого установлен режим государственной охраны;
-
-4) охраняемое мероприятие — официальное государственное мероприятие, в отношении которого ФСО РО
-осуществляет комплекс мер государственной охраны;
-
-5) охранная зона — временно или постоянно определенная территория вокруг охраняемого лица, объекта
-или мероприятия, в пределах которой действуют специальные правила доступа и безопасности;
-
-6) <mark>непосредственная угроза — реальная и существующая в данный момент опасность</mark> нападения,
-вооруженного посягательства, захвата, взрыва, иного насильственного воздействия либо иного события,
-способного причинить существенный вред охраняемому лицу или объекту.</pre><button class="open-doc" data-article="4" data-doc="fso">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 35</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 35. Личная охрана
-
-1. Личная охрана включает сопровождение охраняемого лица, оценку маршрута и места пребывания,
-обеспечение безопасного доступа, организацию эвакуации и иные разумно необходимые меры.
-
-2. Личная охрана не предоставляет сотруднику ФСО РО права произвольно ограничивать законное общение
-охраняемого лица с гражданами или государственными органами.
-
-3. <mark>При возникновении непосредственной угрозы</mark> сотрудник вправе незамедлительно изменить маршрут,
-место нахождения либо порядок перемещения охраняемого лица в объеме, необходимом для его спасения.</pre><button class="open-doc" data-article="35" data-doc="fso">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 29</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 29. Временное ограничение движения и доступа
-
-1. ФСО РО вправе временно ограничить проход, проезд, остановку, стоянку, доступ в помещение или
-нахождение в определенной части охранной зоны, если это необходимо для предотвращения конкретной
-угрозы либо безопасного перемещения охраняемого лица.
-
-2. Ограничение применяется на минимально необходимый срок и прекращается после достижения
-законной цели.
-
-3. Длительное или широкое ограничение дорожного движения осуществляется во взаимодействии с ГИБДД.
-
-4. Законные полномочия суда, прокуратуры, Следственного комитета, ФСБ РО и иных государственных
-органов учитываются при установлении режима доступа; ФСО РО не вправе использовать охранный режим
-для воспрепятствования их законной деятельности.</pre><button class="open-doc" data-article="29" data-doc="fso">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="direct-threat-2">Есть нападающее / опасное лицо</button><button class="stage-jump" data-target="direct-threat-3">Признаки террористической угрозы</button></div></div></div></section><section class="scenario-step" id="direct-threat-2"><div class="step-rail"><span>2</span></div><div class="step-content"><h3>Пресечение и возможное задержание</h3><div class="step-pair"><div><small>Событие</small><p>Опасное лицо непосредственно угрожает охраняемому лицу / объекту.</p></div><div><small>Действия сотрудника</small><p>Проверь специальное основание задержания по ст. 30 и действуй только в необходимом объёме. После устранения непосредственной угрозы дальнейшее производство передаётся компетентному органу.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>2</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 30</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 30. Задержание сотрудником ФСО РО
-
-1. Сотрудник ФСО РО вправе задержать лицо, если:
-
-1) лицо непосредственно совершает нападение на охраняемое лицо или объект;
-
-2) имеются достаточные основания полагать, что лицо непосредственно готовится применить оружие,
-взрывное устройство или иное средство опасного нападения в охранной зоне;
-
-3) лицо совершило преступление или административное правонарушение на охраняемом объекте либо
-мероприятии и задержание необходимо для пресечения деяния, установления личности или передачи
-компетентному органу;
-
-4) лицо оказывает активное сопротивление законному требованию покинуть охранную зону и своими
-
-действиями создает реальную угрозу безопасности;
-
-5) имеется иное прямо предусмотренное федеральным законом основание.
-
-2. Задержанному без необоснованной задержки разъясняются основание задержания и его процессуальные
-права.
-
-3. Если ограничение свободы является задержанием по Процессуальному кодексу РО, процессуальный срок
-исчисляется с момента фактического ограничения свободы сотрудником ФСО РО.
-
-4. Задержанное лицо и относящиеся к задержанию материалы передаются полиции, ФСБ РО,
-Следственному комитету либо иному компетентному органу без необоснованной задержки.
-
-5. Кратковременное удаление лица за пределы охранной зоны не является задержанием, если после
-удаления лицо свободно и в отношении него не продолжается процессуальное ограничение свободы.</pre><button class="open-doc" data-article="30" data-doc="fso">Открыть в документе</button></div></details><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 6</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 6. Пределы компетенции ФСО РО
-
-1. ФСО РО не является органом общей полицейской юрисдикции.
-
-2. Обычное патрулирование населенных пунктов, систематический дорожный контроль, самостоятельное
-расследование преступлений общей подследственности, производство по обычным административным
-правонарушениям, прокурорский надзор и осуществление судебных функций не относятся к компетенции
-ФСО РО.
-
-3. Сотрудник ФСО РО вправе пресечь правонарушение и применить предусмотренные настоящим
-Федеральным законом меры, если деяние непосредственно связано с безопасностью охраняемого лица,
-объекта, мероприятия либо совершается в пределах установленной охранной зоны.
-
-4. <mark>После устранения непосредственной угрозы</mark> лицо и материалы передаются компетентному
-государственному органу, если дальнейшее производство не относится к компетенции ФСО РО.</pre><button class="open-doc" data-article="6" data-doc="fso">Открыть в документе</button></div></details></div><div class="stage-next"><b>Что произошло дальше?</b><div><button class="stage-jump" data-target="detention-2">Лицо задержано</button></div></div></div></section><section class="scenario-step" id="direct-threat-3"><div class="step-rail"><span>3</span></div><div class="step-content"><h3>Признаки террористической угрозы</h3><div class="step-pair"><div><small>Событие</small><p>Обстоятельства указывают на возможную террористическую угрозу.</p></div><div><small>Действия сотрудника</small><p>ФСО принимает неотложные меры в части защиты / эвакуации охраняемых лиц и блокирования опасной зоны, а информация передаётся ФСБ. Руководство контртеррористическим расследованием относится к компетентному органу.</p></div></div><div class="step-grounds"><div class="grounds-title"><b>Основания этапа</b><span>1</span></div><details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 37</b><i>полный текст</i></summary><div class="ground-body"><pre>Статья 37. Государственная охрана при террористической угрозе
-
-1. При выявлении признаков террористической угрозы ФСО РО принимает неотложные меры по защите и
-эвакуации охраняемых лиц, блокированию опасной зоны и <mark>передаче информации ФСБ РО</mark>.
-
-2. Руководство контртеррористическим расследованием и специальными мероприятиями осуществляется
-компетентным органом в соответствии с Федеральным законом «О Федеральной службе безопасности РО»
-и процессуальным законодательством.
-
-3. ФСО РО продолжает отвечать за непосредственную защиту охраняемых лиц и объектов в рамках своей
-компетенции.</pre><button class="open-doc" data-article="37" data-doc="fso">Открыть в документе</button></div></details></div></div></section></div></article></div>
 </section>
 <section class="page" id="page-departments">
 <div class="section-head"><div><h2>Подразделения ФСО</h2><p>Задачи подразделений — по Внутреннему уставу. Связанные нормы вынесены отдельно.</p></div></div>
@@ -4709,7 +3485,7 @@ body::before{
 </div>
 <p class="footer-disclaimer">Неофициальная памятка. При расхождении приоритет имеют действующие нормативные акты проекта.</p>
 <div class="footer-update-row">
-<small class="footer-updated">Последнее обновление: 06.09.2026</small>
+<small class="footer-updated">Последнее обновление: 07.09.2026</small>
 <button class="updates-btn" id="updatesBtn" type="button">Обновления</button>
 </div>
 </div>
@@ -4730,6 +3506,17 @@ body::before{
       <button class="updates-close" id="updatesClose" type="button" aria-label="Закрыть">×</button>
     </div>
     <div class="updates-body">
+      <article class="update-entry">
+        <div class="update-date">07.09.2026</div>
+        <h4>Профили доступа</h4>
+        <ul>
+          <li>Добавлен вход по профилям: Академия, УК, УЛО, УСН, УВК и Руководство.</li>
+          <li>Для Академии оставлены только Основания, Коды и Документы.</li>
+          <li>Раздел «Ситуации» вынесен из публичного HTML и загружается только после серверной проверки доступа.</li>
+          <li>Для сотрудников подразделений сохраняется общая правовая база; раздел «Подразделения» показывает профиль соответствующего управления.</li>
+        </ul>
+      </article>
+      
       <article class="update-entry">
         <div class="update-date">06.09.2026</div>
         <h4>Поиск и навигация</h4>
@@ -5983,6 +4770,320 @@ if(docs.length) renderDoc(docs[0]);
   close.addEventListener("click",hide);
   modal.addEventListener("click",e=>{if(e.target===modal)hide();});
   document.addEventListener("keydown",e=>{if(e.key==="Escape"&&modal.classList.contains("open"))hide();});
+})();
+</script>
+
+
+<script id="role-access-script">
+(function(){
+  const ACCESS_API="https://fso-access-api.osopoao078.workers.dev";
+  const TOKEN_KEY="fso-role-session";
+
+  const ROLE_META={
+    academy:{short:"АКАДЕМИЯ",name:"Академия"},
+    uk:{short:"УК",name:"Управление кадров",dept:"УК"},
+    ulo:{short:"УЛО",name:"Управление личной охраны",dept:"УЛО"},
+    usn:{short:"УСН",name:"Управление специального назначения",dept:"УСН"},
+    uvk:{short:"УВК",name:"Управление внутреннего контроля",dept:"УВК"},
+    leadership:{short:"РУКОВОДСТВО",name:"Руководство"}
+  };
+
+  const ACADEMY_PAGES=new Set(["home","basis","codes","laws"]);
+  const NORMAL_PAGES=new Set(["home","basis","situations","departments","process","terms","convoys","codes","rules","laws"]);
+
+  let selectedRole="";
+  let session=null;
+
+  const gate=document.getElementById("accessGate");
+  const grid=document.getElementById("accessRoleGrid");
+  const form=document.getElementById("accessLoginForm");
+  const pass=document.getElementById("accessPassword");
+  const submit=document.getElementById("accessLoginSubmit");
+  const status=document.getElementById("accessLoginStatus");
+  const selected=document.getElementById("accessSelectedRole");
+  const profileControls=document.getElementById("accessProfileControls");
+  const rolePill=document.getElementById("accessRolePill");
+  const logout=document.getElementById("accessLogoutBtn");
+
+  function setStatus(text,type=""){
+    status.textContent=text||"";
+    status.className="access-login-status"+(type?" "+type:"");
+  }
+
+  function chooseRole(role){
+    if(!ROLE_META[role])return;
+    selectedRole=role;
+    grid.querySelectorAll("[data-access-role]").forEach(b=>b.classList.toggle("active",b.dataset.accessRole===role));
+    selected.textContent=ROLE_META[role].name;
+    pass.disabled=false;
+    submit.disabled=false;
+    pass.focus();
+    setStatus("");
+  }
+
+  grid.addEventListener("click",e=>{
+    const b=e.target.closest("[data-access-role]");
+    if(b)chooseRole(b.dataset.accessRole);
+  });
+
+  async function request(path,options={}){
+    const r=await fetch(ACCESS_API+path,options);
+    let data={};
+    try{data=await r.json();}catch(_){}
+    if(!r.ok){
+      const err=new Error(data.error||("Ошибка "+r.status));
+      err.status=r.status;
+      throw err;
+    }
+    return data;
+  }
+
+  async function login(role,password){
+    return request("/login",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({role,password})
+    });
+  }
+
+  async function checkToken(token){
+    return request("/session",{
+      headers:{"Authorization":"Bearer "+token}
+    });
+  }
+
+  async function getSecureContent(key){
+    return request("/content/"+encodeURIComponent(key),{
+      headers:{"Authorization":"Bearer "+session.token}
+    });
+  }
+
+  function allowedPages(){
+    return session?.role==="academy"?ACADEMY_PAGES:NORMAL_PAGES;
+  }
+
+  function hideAcademyExtras(){
+    const academy=session?.role==="academy";
+    document.querySelectorAll(".nav [data-page]").forEach(btn=>{
+      btn.classList.toggle("access-hidden",academy&&!ACADEMY_PAGES.has(btn.dataset.page));
+    });
+
+    document.querySelectorAll("[data-jump-page]").forEach(btn=>{
+      btn.classList.toggle("access-hidden",academy&&!ACADEMY_PAGES.has(btn.dataset.jumpPage));
+    });
+
+    document.querySelectorAll("[data-jump-situation]").forEach(btn=>{
+      btn.classList.toggle("access-hidden",academy);
+    });
+
+    const heroText=document.querySelector("#page-home .hero-center p");
+    if(heroText){
+      heroText.textContent=academy
+        ?"Основания, коды и полный текст документов для подготовки и аттестации."
+        :"Быстрые основания, практические ситуации, служебные термины и полный текст документов.";
+    }
+
+    const searchTitle=document.querySelector(".smart-search-title span");
+    if(searchTitle && academy)searchTitle.textContent="Поиск по основаниям и документам";
+  }
+
+  function filterDepartments(){
+    const page=document.getElementById("page-departments");
+    if(!page)return;
+
+    const cards=[...page.querySelectorAll(".dept-card")];
+    const meta=ROLE_META[session.role];
+
+    if(session.role==="leadership"){
+      cards.forEach(c=>c.classList.remove("access-hidden"));
+    }else if(meta?.dept){
+      cards.forEach(c=>{
+        const code=c.querySelector(".dept-code")?.textContent.trim();
+        c.classList.toggle("access-hidden",code!==meta.dept);
+      });
+      const title=page.querySelector(".section-head h2");
+      const desc=page.querySelector(".section-head p");
+      if(title)title.textContent=meta.name;
+      if(desc)desc.textContent="Профиль подразделения и связанные нормы Внутреннего устава ФСО.";
+      const navBtn=document.querySelector('.nav [data-page="departments"]');
+      if(navBtn)navBtn.textContent=meta.short;
+    }
+  }
+
+  function guardPageNavigation(){
+    const permitted=allowedPages();
+    const original=window.showPage;
+    if(typeof original!=="function"||original.__roleGuarded)return;
+
+    function guarded(name,updateHash=true){
+      if(!permitted.has(name))name="home";
+      return original(name,updateHash);
+    }
+    guarded.__roleGuarded=true;
+    window.showPage=guarded;
+
+    document.querySelectorAll(".nav button[data-page]").forEach(b=>{
+      b.onclick=()=>guarded(b.dataset.page);
+    });
+
+    document.querySelectorAll("[data-jump-page]").forEach(b=>{
+      b.addEventListener("click",e=>{
+        if(!permitted.has(b.dataset.jumpPage)){
+          e.preventDefault();
+          guarded("home");
+        }
+      },true);
+    });
+
+    const hash=location.hash.replace("#","");
+    if(hash && !permitted.has(hash))guarded("home",false);
+  }
+
+  function bindLoadedSituations(){
+    const mount=document.getElementById("secureSituationsMount");
+    if(!mount||mount.dataset.bound==="1")return;
+    mount.dataset.bound="1";
+
+    mount.addEventListener("click",e=>{
+      const head=e.target.closest(".scenario-head");
+      if(head){
+        head.closest(".scenario-card")?.classList.toggle("open");
+        return;
+      }
+      const filter=e.target.closest(".situation-filter");
+      if(filter){
+        mount.querySelectorAll(".situation-filter").forEach(x=>x.classList.toggle("active",x===filter));
+        mount.dataset.filter=filter.dataset.situationFilter||"all";
+        applySituationFilter();
+      }
+    });
+
+    const input=mount.querySelector("#situationSearch");
+    input?.addEventListener("input",applySituationFilter);
+    applySituationFilter();
+
+    function norm(s){return String(s||"").toLowerCase().replace(/ё/g,"е").replace(/\s+/g," ").trim();}
+    function applySituationFilter(){
+      const q=norm(mount.querySelector("#situationSearch")?.value);
+      const f=mount.dataset.filter||"all";
+      let visible=0;
+      mount.querySelectorAll(".scenario-card").forEach(card=>{
+        const groupOk=f==="all"||card.dataset.group===f;
+        const queryOk=!q||norm(card.dataset.search).includes(q);
+        const show=groupOk&&queryOk;
+        card.classList.toggle("is-hidden",!show);
+        if(show)visible++;
+      });
+      const count=mount.querySelector("#situationCount");
+      if(count)count.textContent=visible+" из "+mount.querySelectorAll(".scenario-card").length;
+    }
+  }
+
+  async function loadSituations(){
+    const mount=document.getElementById("secureSituationsMount");
+    if(!mount)return;
+
+    if(session.role==="academy"){
+      mount.innerHTML='<div class="access-denied-card"><b>Раздел недоступен в профиле Академии</b><span>На аттестации используются Основания, Коды и Документы без готовых ситуационных алгоритмов.</span></div>';
+      return;
+    }
+
+    try{
+      const data=await getSecureContent("situations");
+      mount.innerHTML=data.content;
+      bindLoadedSituations();
+    }catch(err){
+      mount.innerHTML='<div class="access-denied-card"><b>Ситуации пока не загружены</b><span>'+escapeHtml(err.message||"Не удалось получить материал")+'</span></div>';
+    }
+  }
+
+  function escapeHtml(s){
+    return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  }
+
+  async function activate(data,token){
+    session={
+      role:data.role,
+      roleName:data.roleName||ROLE_META[data.role]?.name||data.role,
+      permissions:data.permissions||[],
+      token
+    };
+
+    rolePill.textContent=ROLE_META[session.role]?.short||session.roleName;
+    rolePill.title="Профиль: "+session.roleName;
+    profileControls.hidden=false;
+
+    hideAcademyExtras();
+    filterDepartments();
+    guardPageNavigation();
+
+    await loadSituations();
+
+    document.body.classList.remove("access-pending");
+    document.body.classList.add("access-ready");
+    gate.hidden=true;
+    gate.setAttribute("aria-hidden","true");
+
+    const permitted=allowedPages();
+    const current=location.hash.replace("#","")||"home";
+    if(!permitted.has(current) && typeof window.showPage==="function")window.showPage("home",false);
+  }
+
+  form.addEventListener("submit",async e=>{
+    e.preventDefault();
+    if(!selectedRole||!pass.value)return;
+
+    submit.disabled=true;
+    pass.disabled=true;
+    setStatus("Проверка доступа…");
+
+    try{
+      const data=await login(selectedRole,pass.value);
+      sessionStorage.setItem(TOKEN_KEY,data.token);
+      pass.value="";
+      setStatus("Доступ подтверждён","ok");
+      await activate(data,data.token);
+    }catch(err){
+      setStatus(err.status===401?"Неверный пароль.":(err.message||"Ошибка входа"),"error");
+      pass.disabled=false;
+      submit.disabled=false;
+      pass.focus();
+    }
+  });
+
+  logout.addEventListener("click",()=>{
+    sessionStorage.removeItem(TOKEN_KEY);
+    location.hash="home";
+    location.reload();
+  });
+
+  rolePill.addEventListener("click",()=>{
+    sessionStorage.removeItem(TOKEN_KEY);
+    location.hash="home";
+    location.reload();
+  });
+
+  async function restore(){
+    const token=sessionStorage.getItem(TOKEN_KEY);
+    if(!token){
+      document.body.classList.add("access-pending");
+      gate.hidden=false;
+      return;
+    }
+
+    setStatus("Проверка сохранённой сессии…");
+    try{
+      const data=await checkToken(token);
+      await activate(data,token);
+    }catch(_){
+      sessionStorage.removeItem(TOKEN_KEY);
+      gate.hidden=false;
+      document.body.classList.add("access-pending");
+      setStatus("Сессия завершена. Войдите снова.");
+    }
+  }
+
+  restore();
 })();
 </script>
 
