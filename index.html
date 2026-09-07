@@ -2261,6 +2261,59 @@ body.access-pending .footer{visibility:hidden}
 }
 </style>
 
+
+<style id="nav-scroll-style">
+.nav-shell{flex:1 1 auto;min-width:0;display:flex;align-items:center;gap:4px}
+.nav{flex:1 1 auto;min-width:0;overflow-x:auto;overflow-y:hidden;scroll-behavior:smooth;scrollbar-width:none;overscroll-behavior-inline:contain}
+.nav::-webkit-scrollbar{display:none}
+.nav-scroll{
+  flex:0 0 auto;width:30px;height:34px;display:grid;place-items:center;
+  border:1px solid #3d4750;border-radius:8px;background:#1b232a;color:#cbd4db;
+  font-size:20px;line-height:1;cursor:pointer;transition:.16s ease
+}
+.nav-scroll:hover:not(:disabled){border-color:#697680;color:#fff;background:#222b33}
+.nav-scroll:disabled{opacity:.18;cursor:default}
+@media(max-width:760px){
+  .nav-shell{order:3;width:100%}
+  .nav-scroll{display:none}
+  .nav{width:100%;padding-inline:2px}
+}
+</style>
+
+
+<style id="territories-style">
+.territory-kicker{color:var(--accent);font-size:9px;font-weight:900;letter-spacing:.1em;margin-bottom:4px}
+.territory-open-law,.territory-alert button,.territory-mini-links button,.territory-actions button,.territory-common-card>button,.territory-card-head>button{
+  border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:8px;padding:7px 9px;font-size:10px;font-weight:800;cursor:pointer
+}
+.territory-open-law:hover,.territory-alert button:hover,.territory-mini-links button:hover,.territory-actions button:hover,.territory-common-card>button:hover,.territory-card-head>button:hover{border-color:var(--accent);color:var(--accent)}
+.territory-alert{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:13px 14px;border:1px solid color-mix(in srgb,var(--accent) 45%,var(--line));border-radius:12px;background:color-mix(in srgb,var(--accent) 6%,var(--panel));margin-bottom:12px}
+.territory-alert b{font-size:11px;color:var(--accent)}.territory-alert span{font-size:11px;color:var(--muted)}
+.territory-regime-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:10px}
+.territory-regime-card{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:13px;min-height:150px}
+.territory-regime-card::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--territory-color)}
+.territory-regime-top{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:7px}
+.territory-regime-top b{font-size:12px}.territory-regime-top em{font-style:normal;font-size:9px;color:var(--muted)}
+.territory-dot{width:9px;height:9px;border-radius:50%;background:var(--territory-color);border:1px solid color-mix(in srgb,var(--territory-color) 55%,var(--strong))}
+.territory-regime-card p{font-size:10px;line-height:1.45;color:var(--muted);margin:10px 0 12px}
+.territory-mini-links{display:flex;gap:5px;flex-wrap:wrap}
+.regime-white{--territory-color:#f0f2f4}.regime-yellow{--territory-color:#e4c45f}.regime-red{--territory-color:#d96b70}.regime-blue{--territory-color:#5f98df}
+.territory-common-card{display:grid;grid-template-columns:1fr auto;align-items:center;gap:16px;padding:14px;background:var(--panel);border:1px solid var(--line);border-radius:12px;margin-bottom:12px}
+.territory-common-card small,.territory-card-head small{color:var(--accent);font-size:8px;font-weight:900;letter-spacing:.09em}
+.territory-common-card h3,.territory-card-head h3{margin:3px 0 5px;font-size:14px}.territory-common-card p{margin:0;color:var(--muted);font-size:10px;line-height:1.5}
+.territory-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.territory-detail-card{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:14px}
+.territory-detail-card.territory-wide{grid-column:1/-1}
+.territory-card-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.regime-white-head{border-top:2px solid #f0f2f4;padding-top:9px}.regime-yellow-head{border-top:2px solid #e4c45f;padding-top:9px}.regime-red-head{border-top:2px solid #d96b70;padding-top:9px}.regime-blue-head{border-top:2px solid #5f98df;padding-top:9px}
+.territory-points{display:grid;gap:8px;padding-top:10px}.territory-points p{margin:0;color:var(--muted);font-size:10px;line-height:1.5}.territory-points b{color:var(--text)}
+.territory-two-cols{grid-template-columns:1fr 1fr;column-gap:18px}
+.territory-actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:11px;padding-top:10px;border-top:1px solid var(--line)}
+.territory-warning{border-color:color-mix(in srgb,#d9a55f 45%,var(--line));background:color-mix(in srgb,#d9a55f 4%,var(--panel))}
+@media(max-width:1100px){.territory-regime-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){.territory-alert{grid-template-columns:1fr}.territory-regime-grid,.territory-detail-grid{grid-template-columns:1fr}.territory-detail-card.territory-wide{grid-column:auto}.territory-two-cols{grid-template-columns:1fr}.territory-common-card{grid-template-columns:1fr}}
+</style>
+
 </head><body class="access-pending">
 <div class="access-gate" id="accessGate" aria-hidden="false">
   <div class="access-gate-card">
@@ -2307,22 +2360,28 @@ body.access-pending .footer{visibility:hidden}
 </div>
 <small class="brand-author">by Арсений Рубежной</small>
 </div>
-<nav class="nav">
+<div class="nav-shell">
+<button class="nav-scroll nav-scroll-left" id="navScrollLeft" type="button" aria-label="Прокрутить разделы влево">‹</button>
+<nav class="nav" id="mainNav">
 <button class="active" data-page="home">Памятка</button><button data-page="basis">Основания</button><button data-page="situations">Ситуации</button>
 <button data-page="departments">Подразделения</button>
 <button data-page="process">Задержание и права</button>
 <button data-page="terms">Термины</button>
+<button data-page="territories">Гос. территории</button>
 <button data-page="convoys">Кортежи</button>
 <button data-page="codes">Коды</button>
 <button data-page="rules">Правила проекта</button>
 <button data-page="laws">Документы</button>
 </nav>
+<button class="nav-scroll nav-scroll-right" id="navScrollRight" type="button" aria-label="Прокрутить разделы вправо">›</button>
+</div>
 <div class="access-profile-controls" id="accessProfileControls" hidden>
   <button class="access-role-pill" id="accessRolePill" type="button" title="Текущий профиль доступа">ПРОФИЛЬ</button>
   <button class="access-logout-btn" id="accessLogoutBtn" type="button" title="Выйти из профиля" aria-label="Выйти из профиля">↪</button>
 </div>
-<button class="theme secret-access-btn" id="secretAccessBtn" title="Доступ к секретным материалам">🔒</button><button class="theme help-btn" id="helpBtn" title="Помощь и обратная связь">?</button>
+<button class="theme help-btn" id="helpBtn" title="Помощь и обратная связь">?</button>
 </div></header>
+<button id="secretAccessBtn" type="button" hidden aria-hidden="true"></button>
 <div class="floating-ui-controls" aria-label="Настройки интерфейса">
   <button class="theme sound-btn floating-ui-btn" id="soundBtn" title="Включить или отключить звук интерфейса" aria-label="Звук интерфейса">🔊</button>
   <button class="theme floating-ui-btn" id="themeBtn" title="Сменить тему" aria-label="Сменить тему">◐</button>
@@ -3364,6 +3423,164 @@ body.access-pending .footer{visibility:hidden}
 </section>
 <section class="page" id="page-terms"><div class="section-head"><div><h2>Термины и разъяснения</h2><p>Только понятия, у которых есть специальный смысл и которые реально становятся предметом спора.</p></div><div class="count" id="termCount"></div></div><div class="term-search"><span>⌕</span><input id="termSearch" placeholder="Поиск: законное требование, провокация, КПП, неприкосновенность, досмотр..."/></div><div class="term-filters"><button class="term-filter active" data-term-filter="all">Все</button><button class="term-filter" data-term-filter="Служебные понятия">Служебные</button><button class="term-filter" data-term-filter="Государственная охрана">Гос. охрана</button><button class="term-filter" data-term-filter="Территории и доступ">Территории</button><button class="term-filter" data-term-filter="Процесс">Процесс</button></div><div id="termList"><article class="term-card" data-search="Компетенция Круг вопросов и действий, которые закон относит к конкретному органу или должностному лицу. Для ФСО это принципиально: форма, звание или приказ не дают общих полицейских полномочий, если конкретная задача не относится к государственной охране. ФЗ «О ФСО РО» — ст. 6 компетенция полномочия можно ли ФСО юрисдикция" data-term-group="Служебные понятия"><div class="term-kicker">Служебные понятия</div><h3>Компетенция</h3><p>Круг вопросов и действий, которые закон относит к конкретному органу или должностному лицу. Для ФСО это принципиально: форма, звание или приказ не дают общих полицейских полномочий, если конкретная задача не относится к государственной охране.</p><small>ФЗ «О ФСО РО» — ст. 6</small></article><article class="term-card" data-search="Законное требование Обязательное и конкретное указание, которое сотрудник вправе заявить именно в этой ситуации. По ПК оно должно быть в пределах компетенции и юрисдикции, однозначным, конкретным, законным, этичным, исполнимым и сформулированным как требование, а не добровольное предложение. ПК РО — гл. XI ст. 2 требование приказ законное требование выполнить повелительное" data-term-group="Служебные понятия"><div class="term-kicker">Служебные понятия</div><h3>Законное требование</h3><p>Обязательное и конкретное указание, которое сотрудник вправе заявить именно в этой ситуации. По ПК оно должно быть в пределах компетенции и юрисдикции, однозначным, конкретным, законным, этичным, исполнимым и сформулированным как требование, а не добровольное предложение.</p><small>ПК РО — гл. XI ст. 2</small></article><article class="term-card" data-search="Провокация Намеренное действие или высказывание, цель которого — подтолкнуть другого игрока к нарушению правил либо специально создать ситуацию, в которой от него ожидают или добиваются нарушения. Обычный спор, критика, вопрос или законное требование сами по себе провокацией не являются: ключевой признак — целенаправленное подталкивание к нарушению. П. 5.12 Основных правил проекта; рабочее определение провокация спровоцировал подстрекательство вывести на нарушение" data-term-group="Служебные понятия"><div class="term-kicker">Служебные понятия</div><h3>Провокация</h3><p>Намеренное действие или высказывание, цель которого — подтолкнуть другого игрока к нарушению правил либо специально создать ситуацию, в которой от него ожидают или добиваются нарушения. Обычный спор, критика, вопрос или законное требование сами по себе провокацией не являются: ключевой признак — целенаправленное подталкивание к нарушению.</p><small>П. 5.12 Основных правил проекта; рабочее определение</small></article><article class="term-card" data-search="Неповиновение законному требованию Не просто спор с сотрудником, а отказ либо неисполнение законного, понятного и относящегося к компетенции требования. Продолжение после повторного законного требования выделено в УК отдельно. УК РО — ст. 17.6 неповиновение отказ игнорирует требование не выполняет 17.6" data-term-group="Служебные понятия"><div class="term-kicker">Служебные понятия</div><h3>Неповиновение законному требованию</h3><p>Не просто спор с сотрудником, а отказ либо неисполнение законного, понятного и относящегося к компетенции требования. Продолжение после повторного законного требования выделено в УК отдельно.</p><small>УК РО — ст. 17.6</small></article><article class="term-card" data-search="Процессуальная неприкосновенность Не «иммунитет от закона», а специальный порядок применения к определённому должностному лицу задержания, ареста, обыска и иных существенно ограничивающих мер. Она не освобождает от ответственности. ФЗ «О неприкосновенности должностных лиц» — ст. 1–2 неприкосновенность иммунитет должностное лицо задержать обыскать" data-term-group="Служебные понятия"><div class="term-kicker">Служебные понятия</div><h3>Процессуальная неприкосновенность</h3><p>Не «иммунитет от закона», а специальный порядок применения к определённому должностному лицу задержания, ареста, обыска и иных существенно ограничивающих мер. Она не освобождает от ответственности.</p><small>ФЗ «О неприкосновенности должностных лиц» — ст. 1–2</small></article><article class="term-card" data-search="Кратковременное удаление ≠ задержание Удаление лица за пределы охранной зоны не считается задержанием, если после удаления человек свободен и его свобода больше процессуально не ограничивается. ФЗ «О ФСО РО» — ст. 30 ч. 5 удаление вывести с территории не задержание свободен" data-term-group="Служебные понятия"><div class="term-kicker">Служебные понятия</div><h3>Кратковременное удаление ≠ задержание</h3><p>Удаление лица за пределы охранной зоны не считается задержанием, если после удаления человек свободен и его свобода больше процессуально не ограничивается.</p><small>ФЗ «О ФСО РО» — ст. 30 ч. 5</small></article><article class="term-card" data-search="Процессуальный час Срок процессуального задержания начинает иметь значение с фактического ограничения свободы как задержания, а не только с момента надевания наручников. ПК РО; ФЗ «О ФСО РО» — ст. 30 ч. 3 процессуальный час срок задержания один час наручники" data-term-group="Служебные понятия"><div class="term-kicker">Служебные понятия</div><h3>Процессуальный час</h3><p>Срок процессуального задержания начинает иметь значение с фактического ограничения свободы как задержания, а не только с момента надевания наручников.</p><small>ПК РО; ФЗ «О ФСО РО» — ст. 30 ч. 3</small></article><article class="term-card" data-search="Охраняемый объект ФСО Объект, в отношении которого установлен именно режим государственной охраны ФСО. Не каждое государственное здание автоматически является охраняемым объектом ФСО только потому, что туда приехало охраняемое лицо. ФЗ «О ФСО РО» — ст. 4, 21 охраняемый объект ФСО здание правительство режим охраны" data-term-group="Государственная охрана"><div class="term-kicker">Государственная охрана</div><h3>Охраняемый объект ФСО</h3><p>Объект, в отношении которого установлен именно режим государственной охраны ФСО. Не каждое государственное здание автоматически является охраняемым объектом ФСО только потому, что туда приехало охраняемое лицо.</p><small>ФЗ «О ФСО РО» — ст. 4, 21</small></article><article class="term-card" data-search="Охраняемое мероприятие Официальное государственное мероприятие, в отношении которого ФСО осуществляет комплекс мер государственной охраны. На время такого мероприятия могут вводиться специальные пропускные и режимные меры. ФЗ «О ФСО РО» — ст. 4, 22 мероприятие охраняемое мероприятие периметр пропуск" data-term-group="Государственная охрана"><div class="term-kicker">Государственная охрана</div><h3>Охраняемое мероприятие</h3><p>Официальное государственное мероприятие, в отношении которого ФСО осуществляет комплекс мер государственной охраны. На время такого мероприятия могут вводиться специальные пропускные и режимные меры.</p><small>ФЗ «О ФСО РО» — ст. 4, 22</small></article><article class="term-card" data-search="Охранная зона Установленная уполномоченным руководителем зона вокруг охраняемого лица, объекта или мероприятия, где действуют специальные правила доступа и безопасности. Это не произвольный «радиус», который сотрудник придумывает на месте. ФЗ «О ФСО РО» — ст. 4, 23 охранная зона радиус периметр границы доступ" data-term-group="Государственная охрана"><div class="term-kicker">Государственная охрана</div><h3>Охранная зона</h3><p>Установленная уполномоченным руководителем зона вокруг охраняемого лица, объекта или мероприятия, где действуют специальные правила доступа и безопасности. Это не произвольный «радиус», который сотрудник придумывает на месте.</p><small>ФЗ «О ФСО РО» — ст. 4, 23</small></article><article class="term-card" data-search="Непосредственная угроза Реальная и существующая сейчас опасность нападения или иного события, способного причинить существенный вред охраняемому лицу или объекту. Не абстрактная возможность и не просто подозрение без конкретных обстоятельств. ФЗ «О ФСО РО» — ст. 4 п. 6 непосредственная угроза реальная опасность нападение сейчас" data-term-group="Государственная охрана"><div class="term-kicker">Государственная охрана</div><h3>Непосредственная угроза</h3><p>Реальная и существующая сейчас опасность нападения или иного события, способного причинить существенный вред охраняемому лицу или объекту. Не абстрактная возможность и не просто подозрение без конкретных обстоятельств.</p><small>ФЗ «О ФСО РО» — ст. 4 п. 6</small></article><article class="term-card" data-search="Охраняемая территория Государственная территория, куда в общем случае допускается нахождение при законной цели. Сам факт охраны не превращает её в закрытую территорию. Типичный пример — открытый для посетителей холл / приёмная. ФЗ «О государственных территориях РО» — ст. 3, 11–14 охраняемая территория холл приемная открытая зона посетитель" data-term-group="Территории и доступ"><div class="term-kicker">Территории и доступ</div><h3>Охраняемая территория</h3><p>Государственная территория, куда в общем случае допускается нахождение при законной цели. Сам факт охраны не превращает её в закрытую территорию. Типичный пример — открытый для посетителей холл / приёмная.</p><small>ФЗ «О государственных территориях РО» — ст. 3, 11–14</small></article><article class="term-card" data-search="Закрытая территория Территория, свободное посещение которой исключено. Для входа нужно предусмотренное законом основание: специальный статус, служебный допуск, исполнение полномочия, приглашение / сопровождение или пропуск. ФЗ «О государственных территориях РО» — ст. 18–20 закрытая территория служебная зона за КПП пропуск допуск" data-term-group="Территории и доступ"><div class="term-kicker">Территории и доступ</div><h3>Закрытая территория</h3><p>Территория, свободное посещение которой исключено. Для входа нужно предусмотренное законом основание: специальный статус, служебный допуск, исполнение полномочия, приглашение / сопровождение или пропуск.</p><small>ФЗ «О государственных территориях РО» — ст. 18–20</small></article><article class="term-card" data-search="Режимный объект Объект с усиленным режимом охраны, допуска и нахождения из-за особо значимой безопасности. Это отдельный правовой режим, а не просто «очень закрытая территория». ФЗ «О государственных территориях РО» — ст. 3, гл. IV режимный объект красная зона усиленный режим" data-term-group="Территории и доступ"><div class="term-kicker">Территории и доступ</div><h3>Режимный объект</h3><p>Объект с усиленным режимом охраны, допуска и нахождения из-за особо значимой безопасности. Это отдельный правовой режим, а не просто «очень закрытая территория».</p><small>ФЗ «О государственных территориях РО» — ст. 3, гл. IV</small></article><article class="term-card" data-search="Временный особый режим Временный набор дополнительных ограничений, который вводится по предусмотренному законом основанию поверх основного режима территории. Самостоятельным видом территории не является. ФЗ «О государственных территориях РО» — ст. 3 ч. 2, ст. 9 временный особый режим временно закрыли эвакуация периметр" data-term-group="Территории и доступ"><div class="term-kicker">Территории и доступ</div><h3>Временный особый режим</h3><p>Временный набор дополнительных ограничений, который вводится по предусмотренному законом основанию поверх основного режима территории. Самостоятельным видом территории не является.</p><small>ФЗ «О государственных территориях РО» — ст. 3 ч. 2, ст. 9</small></article><article class="term-card" data-search="КПП Не вид территории, а специально определённое место, где проверяются основания доступа, документы, пропуска и меры безопасности. Какие именно требования допустимы на КПП, зависит от режима территории и полномочий сотрудника. ФЗ «О государственных территориях РО» — ст. 3 п. 10 КПП кпп проходная пост вход документы пропуск" data-term-group="Территории и доступ"><div class="term-kicker">Территории и доступ</div><h3>КПП</h3><p>Не вид территории, а специально определённое место, где проверяются основания доступа, документы, пропуска и меры безопасности. Какие именно требования допустимы на КПП, зависит от режима территории и полномочий сотрудника.</p><small>ФЗ «О государственных территориях РО» — ст. 3 п. 10</small></article><article class="term-card" data-search="Допуск Право конкретного лица находиться в определённой служебной зоне / помещении в пределах предоставленной ему служебной необходимости. Фраза «я здесь работаю» сама по себе не означает доступ во все помещения. ФЗ «О государственных территориях РО» — ст. 20, 23 допуск сотрудник работаю здесь служебная зона" data-term-group="Территории и доступ"><div class="term-kicker">Территории и доступ</div><h3>Допуск</h3><p>Право конкретного лица находиться в определённой служебной зоне / помещении в пределах предоставленной ему служебной необходимости. Фраза «я здесь работаю» сама по себе не означает доступ во все помещения.</p><small>ФЗ «О государственных территориях РО» — ст. 20, 23</small></article><article class="term-card" data-search="Беспрепятственный доступ Специальное право отдельных должностных лиц и непосредственно сопровождающих их сотрудников ФСО проходить на определённые закрытые / режимные территории. Оно не отменяет идентификацию и меры безопасности. ФЗ «О государственных территориях РО» — ст. 21, 35 беспрепятственный доступ без пропуска премьер прокурор ФСО" data-term-group="Территории и доступ"><div class="term-kicker">Территории и доступ</div><h3>Беспрепятственный доступ</h3><p>Специальное право отдельных должностных лиц и непосредственно сопровождающих их сотрудников ФСО проходить на определённые закрытые / режимные территории. Оно не отменяет идентификацию и меры безопасности.</p><small>ФЗ «О государственных территориях РО» — ст. 21, 35</small></article><article class="term-card" data-search="Законная цель пребывания Реальная относящаяся к назначению объекта причина находиться в открытой охраняемой зоне: обращение в орган, услуга, трудоустройство, исполнение обязанности, встреча и другие предусмотренные законом цели. ФЗ «О государственных территориях РО» — ст. 13 цель посещения зачем пришел законная цель заявление трудоустройство встреча" data-term-group="Территории и доступ"><div class="term-kicker">Территории и доступ</div><h3>Законная цель пребывания</h3><p>Реальная относящаяся к назначению объекта причина находиться в открытой охраняемой зоне: обращение в орган, услуга, трудоустройство, исполнение обязанности, встреча и другие предусмотренные законом цели.</p><small>ФЗ «О государственных территориях РО» — ст. 13</small></article><article class="term-card" data-search="Досмотр и обыск — не одно и то же Досмотр при доступе может быть добровольным условием входа и ограничивается целью безопасности. Принудительный обыск — самостоятельная процессуальная мера, для которой требуется отдельное законное основание. Отказ от добровольного досмотра не превращает его в принудительный обыск. ФЗ «О ФСО РО» — ст. 28 досмотр обыск разница сумка вещи отказ добровольно" data-term-group="Процесс"><div class="term-kicker">Процесс</div><h3>Досмотр и обыск — не одно и то же</h3><p>Досмотр при доступе может быть добровольным условием входа и ограничивается целью безопасности. Принудительный обыск — самостоятельная процессуальная мера, для которой требуется отдельное законное основание. Отказ от добровольного досмотра не превращает его в принудительный обыск.</p><small>ФЗ «О ФСО РО» — ст. 28</small></article><article class="term-card" data-search="Задержание Фактическое процессуальное ограничение свободы по конкретному законному основанию. Для ФСО действует специальный перечень оснований ст. 30 ФЗ «О ФСО РО», а после возникновения задержания — требования Процессуального кодекса. ФЗ «О ФСО РО» — ст. 30; ПК РО — гл. II задержание задержать свобода ст 30 процесс" data-term-group="Процесс"><div class="term-kicker">Процесс</div><h3>Задержание</h3><p>Фактическое процессуальное ограничение свободы по конкретному законному основанию. Для ФСО действует специальный перечень оснований ст. 30 ФЗ «О ФСО РО», а после возникновения задержания — требования Процессуального кодекса.</p><small>ФЗ «О ФСО РО» — ст. 30; ПК РО — гл. II</small></article></div></section>
 
+
+<section class="page" id="page-territories">
+  <div class="section-head territories-head">
+    <div>
+      <div class="territory-kicker">ФЗ «О ГОСУДАРСТВЕННЫХ ТЕРРИТОРИЯХ РО»</div>
+      <h2>Режимы государственных территорий</h2>
+      <p>Рабочая памятка по доступу, нахождению и ограничениям. Нажатие на основание открывает точную статью закона.</p>
+    </div>
+    <button class="territory-open-law" type="button" data-territory-article="4">Открыть закон</button>
+  </div>
+
+  <div class="territory-alert">
+    <b>Главное правило</b>
+    <span>Статус территории сам по себе не создаёт право на задержание, принудительный обыск, применение силы или иные меры принуждения. Для такой меры требуется отдельное законное основание.</span>
+    <button type="button" data-territory-article="16">ст. 16 ч. 2</button>
+  </div>
+
+  <div class="territory-regime-grid">
+    <article class="territory-regime-card regime-white">
+      <div class="territory-regime-top"><span class="territory-dot"></span><b>Охраняемая территория</b><em>⚪ белый</em></div>
+      <p>Открытая для посетителей государственная территория. Находиться можно при наличии законной цели, относящейся к назначению объекта.</p>
+      <div class="territory-mini-links"><button type="button" data-territory-article="11">ст. 11</button><button type="button" data-territory-article="12">ст. 12</button><button type="button" data-territory-article="13">ст. 13</button></div>
+    </article>
+
+    <article class="territory-regime-card regime-yellow">
+      <div class="territory-regime-top"><span class="territory-dot"></span><b>Закрытая территория</b><em>🟡 жёлтый</em></div>
+      <p>Свободное посещение исключено. Нужны предусмотренное законом право доступа, служебный допуск, исполнение полномочия, приглашение либо действительный пропуск.</p>
+      <div class="territory-mini-links"><button type="button" data-territory-article="18">ст. 18</button><button type="button" data-territory-article="20">ст. 20</button></div>
+    </article>
+
+    <article class="territory-regime-card regime-red">
+      <div class="territory-regime-top"><span class="territory-dot"></span><b>Режимный объект</b><em>🔴 красный</em></div>
+      <p>Объект с усиленным режимом охраны и допуска. Не является публичным местом; доступ — только предусмотренным законом категориям.</p>
+      <div class="territory-mini-links"><button type="button" data-territory-article="30">ст. 30</button><button type="button" data-territory-article="34">ст. 34</button></div>
+    </article>
+
+    <article class="territory-regime-card regime-blue">
+      <div class="territory-regime-top"><span class="territory-dot"></span><b>Территория с особым статусом</b><em>🔵 синий</em></div>
+      <p>Объект или зона особой государственной, стратегической, историко-культурной или общественной ценности. По умолчанию открыта, если актом о режиме не установлено иное.</p>
+      <div class="territory-mini-links"><button type="button" data-territory-article="39">ст. 39</button><button type="button" data-territory-article="41">ст. 41</button></div>
+    </article>
+  </div>
+
+  <div class="territory-common-card">
+    <div>
+      <small>ВРЕМЕННЫЙ ОСОБЫЙ РЕЖИМ</small>
+      <h3>Это не пятый вид территории</h3>
+      <p>Он действует поверх основного статуса. Его могут вводить Премьер-министр, Вице-премьер, Министр юстиции — Генеральный прокурор либо суд в пределах компетенции. Руководитель организации-владельца может ввести его на своей территории до трёх часов при предусмотренных законом чрезвычайных обстоятельствах.</p>
+    </div>
+    <button type="button" data-territory-article="9">ст. 9</button>
+  </div>
+
+  <div class="territory-detail-grid">
+    <article class="territory-detail-card">
+      <div class="territory-card-head regime-white-head"><div><small>⚪ ОХРАНЯЕМАЯ</small><h3>Кто и зачем может находиться</h3></div><button type="button" data-territory-article="13">ст. 13</button></div>
+      <div class="territory-points">
+        <p><b>Законные цели:</b> обращение в государственный орган, государственная или медицинская услуга, участие в судебном заседании, трудоустройство, исполнение обязанности, встреча с уполномоченным сотрудником либо иная законная цель.</p>
+        <p><b>Типичные зоны:</b> холлы, тамбуры, приёмные и другие открытые зоны госорганов; открытые территории государственных медорганизаций; обозначенные служебные парковочные места и посадочные площадки, если им не присвоен иной режим; открытые участки перед КПП.</p>
+        <p><b>Важно:</b> наличие охраны не превращает территорию в закрытую или режимную.</p>
+      </div>
+      <div class="territory-actions"><button type="button" data-territory-article="11">ст. 11</button><button type="button" data-territory-article="12">ст. 12</button><button type="button" data-territory-article="14">ст. 14 · холлы</button></div>
+    </article>
+
+    <article class="territory-detail-card">
+      <div class="territory-card-head regime-white-head"><div><small>⚪ ОХРАНЯЕМАЯ</small><h3>Нарушение порядка и требование покинуть</h3></div><button type="button" data-territory-article="16">ст. 16</button></div>
+      <div class="territory-points">
+        <p>Уполномоченный сотрудник вправе потребовать прекратить противоправное или опасное действие, предупредить о нарушении режима, потребовать покинуть территорию при отсутствии законной цели, нарушении порядка или угрозе безопасности, вызвать компетентный орган либо принять неотложные меры по эвакуации и ограждению опасного участка.</p>
+        <p><b>Курение, алкоголь, выраженное опьянение, агрессивное приставание, обнажение в непредназначенном месте и иное вызывающее поведение</b> оцениваются по УК/КоАП. Статья о территориях сама по себе нового состава правонарушения не создаёт.</p>
+        <p>Требование покинуть территорию должно быть законным и понятным. Для заявления, процессуального действия, неотложной медпомощи или права на защиту сначала обеспечивается реальная возможность продолжить действие законным способом.</p>
+      </div>
+      <div class="territory-actions"><button type="button" data-territory-article="15">ст. 15</button><button type="button" data-territory-article="16">ст. 16</button><button type="button" data-territory-article="17">ст. 17</button></div>
+    </article>
+
+    <article class="territory-detail-card">
+      <div class="territory-card-head regime-yellow-head"><div><small>🟡 ЗАКРЫТАЯ</small><h3>Основания доступа</h3></div><button type="button" data-territory-article="20">ст. 20</button></div>
+      <div class="territory-points">
+        <p>Пройти могут: лица с беспрепятственным доступом; сотрудники организации-владельца в пределах служебного допуска; лица, прибывшие для исполнения предусмотренного законом полномочия; приглашённые в сопровождении; владельцы действительного пропуска.</p>
+        <p><b>Границы:</b> реестр, схема объекта, конструктивная граница помещения, ограждение, дверь с контролем доступа или информационный знак. Холл и приёмная внутри такого здания сохраняют режим охраняемой территории.</p>
+        <p>Право доступа не даёт права заходить в помещения, не связанные с целью посещения, знакомиться с документами или вмешиваться в работу органа вне своей компетенции.</p>
+      </div>
+      <div class="territory-actions"><button type="button" data-territory-article="18">ст. 18 · перечень</button><button type="button" data-territory-article="19">ст. 19 · границы</button><button type="button" data-territory-article="20">ст. 20 · доступ</button></div>
+    </article>
+
+    <article class="territory-detail-card">
+      <div class="territory-card-head regime-yellow-head"><div><small>🟡 ЗАКРЫТАЯ</small><h3>Кто имеет специальный доступ</h3></div><button type="button" data-territory-article="21">ст. 21</button></div>
+      <div class="territory-points">
+        <p><b>Беспрепятственный:</b> Премьер-министр, Вице-премьер, Министр юстиции — Генеральный прокурор и его заместители при исполнении полномочий, непосредственно обеспечивающие их государственную охрану сотрудники ФСО, а также руководитель организации-владельца на своей территории.</p>
+        <p><b>Ведомственный:</b> отдельные права предусмотрены для руководства Минздрава, Минкультуры, МВД и ГИБДД на подведомственных территориях.</p>
+        <p><b>Сотрудник организации-владельца:</b> только в пределах своего служебного допуска; вне исполнения обязанностей — с разрешения руководителя либо при подтверждённой служебной необходимости.</p>
+      </div>
+      <div class="territory-actions"><button type="button" data-territory-article="21">ст. 21</button><button type="button" data-territory-article="22">ст. 22</button><button type="button" data-territory-article="23">ст. 23</button><button type="button" data-territory-article="24">ст. 24 · ФСО</button></div>
+    </article>
+
+    <article class="territory-detail-card">
+      <div class="territory-card-head regime-yellow-head"><div><small>🟡 ЗАКРЫТАЯ</small><h3>Процессуальный доступ и приглашённые</h3></div><button type="button" data-territory-article="25">ст. 25</button></div>
+      <div class="territory-points">
+        <p>Прокурор, следователь СК, сотрудник ФСБ и иной уполномоченный законом сотрудник проходят только в пределах конкретной законной цели и по разумному кратчайшему маршруту. Без неотложности предъявляются удостоверение и подтверждение основания.</p>
+        <p>Судья и адвокат имеют предусмотренный законом доступ к задержанному или месту процессуального действия. После завершения цели посещения лицо обязано покинуть закрытую территорию, если другого основания нет.</p>
+        <p><b>Приглашённый:</b> обычно находится в сопровождении. Организация вправе проверить личность, пропуск и проносимые предметы как условие добровольного входа. Отказ — отказ во входе. Это не процессуальный обыск.</p>
+      </div>
+      <div class="territory-actions"><button type="button" data-territory-article="25">ст. 25</button><button type="button" data-territory-article="26">ст. 26</button><button type="button" data-territory-article="27">ст. 27</button><button type="button" data-territory-article="29">ст. 29</button></div>
+    </article>
+
+    <article class="territory-detail-card">
+      <div class="territory-card-head regime-red-head"><div><small>🔴 РЕЖИМНЫЙ ОБЪЕКТ</small><h3>Что относится и как проходит доступ</h3></div><button type="button" data-territory-article="30">ст. 30</button></div>
+      <div class="territory-points">
+        <p>К режимным относятся, в частности, территория ФСБ внутри установленного периметра, территория воинской части за КПП/ограждением, учреждения содержания под стражей, специально определённые объекты ФСО, государственные хранилища опасных и секретных материалов и иные прямо отнесённые законом объекты.</p>
+        <p><b>Обычное служебное помещение нельзя сделать режимным объектом одним внутренним приказом руководителя.</b></p>
+        <p>При входе подтверждается основание доступа. Приглашённый проходит с сопровождением, если пропуск не разрешает иное. Самостоятельное перемещение — только по разрешённым маршрутам и зонам.</p>
+      </div>
+      <div class="territory-actions"><button type="button" data-territory-article="31">ст. 31 · ФСБ</button><button type="button" data-territory-article="32">ст. 32 · ВС</button><button type="button" data-territory-article="33">ст. 33 · объекты</button><button type="button" data-territory-article="34">ст. 34 · доступ</button></div>
+    </article>
+
+    <article class="territory-detail-card">
+      <div class="territory-card-head regime-red-head"><div><small>🔴 РЕЖИМНЫЙ ОБЪЕКТ</small><h3>Проверка безопасности</h3></div><button type="button" data-territory-article="37">ст. 37</button></div>
+      <div class="territory-points">
+        <p>Для приглашённых и владельцев пропусков допускаются проверка документов, технический контроль и осмотр проносимых предметов как условие входа.</p>
+        <p>При отказе от добровольной проверки во входе отказывают. <b>Принудительный процессуальный обыск — только по Процессуальному кодексу.</b></p>
+        <p>Лица с беспрепятственным доступом обычно не проходят обычную проверку проносимых предметов, если другое прямо не установлено законом или не вызвано конкретной непосредственной угрозой.</p>
+      </div>
+      <div class="territory-actions"><button type="button" data-territory-article="35">ст. 35</button><button type="button" data-territory-article="36">ст. 36</button><button type="button" data-territory-article="37">ст. 37</button><button type="button" data-territory-article="38">ст. 38 · ЧС</button></div>
+    </article>
+
+    <article class="territory-detail-card territory-wide">
+      <div class="territory-card-head regime-blue-head"><div><small>🔵 ОСОБЫЙ СТАТУС</small><h3>Кремль, Красная площадь и мероприятия</h3></div><button type="button" data-territory-article="39">ст. 39</button></div>
+      <div class="territory-points territory-two-cols">
+        <p><b>Перечень:</b> Кремль, Красная площадь и иные территории, прямо определённые федеральным законом.</p>
+        <p><b>Посещение:</b> территория открыта, если актом о режиме не установлено иное. Премьер-министр может устанавливать часы посещения, охранные зоны, маршруты, пропускные пункты и иные соразмерные меры.</p>
+        <p><b>Охрана:</b> ФСО, ФСБ, МВД, ГИБДД, ВС и иные органы действуют каждый в пределах своей компетенции. Совместная работа сама по себе не создаёт взаимного подчинения.</p>
+        <p><b>Мероприятие:</b> возможно временное оперативное управление ответственным госорганом и временные входы, зоны досмотра, маршруты и ограничения по утверждённому плану. Это не расширяет полномочия сверх закона.</p>
+      </div>
+      <div class="territory-actions"><button type="button" data-territory-article="39">ст. 39</button><button type="button" data-territory-article="40">ст. 40</button><button type="button" data-territory-article="41">ст. 41</button><button type="button" data-territory-article="42">ст. 42</button></div>
+    </article>
+
+    <article class="territory-detail-card territory-wide">
+      <div class="territory-card-head"><div><small>ПРОПУСКИ</small><h3>Пропуск даёт доступ только в пределах своей цели</h3></div><button type="button" data-territory-article="43">ст. 43</button></div>
+      <div class="territory-points territory-two-cols">
+        <p>Пропуск индивидуален и не передаётся другому лицу. Он не заменяет служебное удостоверение, процессуальный документ, судебный акт или другой обязательный документ.</p>
+        <p>В пропуске должны быть определены территория, разрешённые зоны, цель, срок, время посещения и необходимость сопровождения.</p>
+        <p>Если пропуск предусматривает сопровождение, находиться без сопровождающего нельзя.</p>
+        <p><b>Завершение цели пребывания прекращает право доступа, даже если формальный срок пропуска ещё не истёк.</b></p>
+      </div>
+      <div class="territory-actions"><button type="button" data-territory-article="43">ст. 43</button><button type="button" data-territory-article="44">ст. 44</button><button type="button" data-territory-article="45">ст. 45</button><button type="button" data-territory-article="46">ст. 46</button><button type="button" data-territory-article="47">ст. 47</button></div>
+    </article>
+
+    <article class="territory-detail-card territory-wide territory-warning">
+      <div class="territory-card-head"><div><small>ОТВЕТСТВЕННОСТЬ И ЗАКОННОСТЬ</small><h3>Нельзя наказывать только за «цвет территории»</h3></div><button type="button" data-territory-article="49">ст. 49</button></div>
+      <div class="territory-points territory-two-cols">
+        <p>Незаконное проникновение или нахождение на закрытой территории/режимном объекте квалифицируется по УК или КоАП только при наличии всех признаков соответствующего состава.</p>
+        <p>Неисполнение требования влечёт ответственность по ст. 17.6 УК только если само требование было законным и присутствуют признаки этой статьи.</p>
+        <p>Ошибочный вход на неочевидно обозначенную территорию при немедленном добровольном выходе после предупреждения сам по себе не образует умышленного проникновения.</p>
+        <p><b>Статус территории не освобождает сотрудника от обязанности обосновать законность предъявленного требования.</b></p>
+      </div>
+      <div class="territory-actions"><button type="button" data-territory-article="48">ст. 48</button><button type="button" data-territory-article="49">ст. 49</button><button type="button" data-territory-article="50">ст. 50</button><button type="button" data-territory-article="51">ст. 51</button></div>
+    </article>
+  </div>
+</section>
+
 <section class="page" id="page-convoys">
   <div class="section-head convoy-section-head">
     <div>
@@ -3508,6 +3725,17 @@ body.access-pending .footer{visibility:hidden}
     <div class="updates-body">
       <article class="update-entry">
         <div class="update-date">07.09.2026</div>
+        <h4>Государственные территории и навигация</h4>
+        <ul>
+          <li>Добавлена отдельная рабочая памятка по ФЗ «О государственных территориях РО».</li>
+          <li>Разобраны четыре режима территорий, временный особый режим, пропуска, доступ и ответственность.</li>
+          <li>Основания в памятке открывают точную статью полного закона.</li>
+          <li>Верхняя строка разделов получила горизонтальную прокрутку и кнопки перехода влево/вправо.</li>
+        </ul>
+      </article>
+      
+      <article class="update-entry">
+        <div class="update-date">07.09.2026</div>
         <h4>Профили доступа</h4>
         <ul>
           <li>Добавлен вход по профилям: Академия, УК, УЛО, УСН, УВК и Руководство.</li>
@@ -3571,7 +3799,7 @@ function showPage(name,updateHash=true){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 $$('.nav button[data-page]').forEach(b=>b.onclick=()=>showPage(b.dataset.page));
-const initPage=location.hash.replace('#',''); if(['home','basis','situations','departments','process','terms','convoys','codes','rules','laws'].includes(initPage)) showPage(initPage,false);
+const initPage=location.hash.replace('#',''); if(['home','basis','situations','departments','process','terms','territories','convoys','codes','rules','laws'].includes(initPage)) showPage(initPage,false);
 
 const themeBtn=$('#themeBtn');
 function setTheme(t){document.documentElement.dataset.theme=t;try{localStorage.setItem('fso-theme',t);}catch(e){} themeBtn.textContent=t==='dark'?'☀':'◐';}
@@ -3689,6 +3917,7 @@ function scrollArticleByOccurrence(num,occ){
 function openDoc(id,article='',chapter=''){
   const d=docMap[id]; if(!d)return; showPage('laws'); renderDoc(d); $('#lawSearch').value=''; setTimeout(()=>{if(article)scrollToArticle(article,chapter)},30);
 }
+window.openDoc=openDoc;
 $$('.doc-btn').forEach(b=>b.onclick=()=>openDoc(b.dataset.doc));
 $('#docFilter').oninput=e=>{const q=e.target.value;$$('.doc-btn').forEach(b=>{const d=docMap[b.dataset.doc];const alias=$$('#page-basis .basis-card').some(c=>{try{return JSON.parse(c.dataset.norm).doc===b.dataset.doc&&searchMatch(c.dataset.search||'',q);}catch(_){return false;}});b.style.display=(!q||searchMatch((d?.title||'')+' '+(d?.text||''),q)||alias)?'block':'none';});};
 $('#lawFind').onclick=()=>{if(!currentDoc)return; const q=$('#lawSearch').value.trim(); renderLawText(currentDoc.text,q); if(q){const m=$('#lawBody mark');if(m)focusLawLine(m.closest('[data-line]')||m,'center');}};
@@ -4788,8 +5017,8 @@ if(docs.length) renderDoc(docs[0]);
     leadership:{short:"РУКОВОДСТВО",name:"Руководство"}
   };
 
-  const ACADEMY_PAGES=new Set(["home","basis","codes","laws"]);
-  const NORMAL_PAGES=new Set(["home","basis","situations","departments","process","terms","convoys","codes","rules","laws"]);
+  const ACADEMY_PAGES=new Set(["home","basis","territories","codes","laws"]);
+  const NORMAL_PAGES=new Set(["home","basis","situations","departments","process","terms","territories","convoys","codes","rules","laws"]);
 
   let selectedRole="";
   let session=null;
@@ -4879,7 +5108,7 @@ if(docs.length) renderDoc(docs[0]);
     const heroText=document.querySelector("#page-home .hero-center p");
     if(heroText){
       heroText.textContent=academy
-        ?"Основания, коды и полный текст документов для подготовки и аттестации."
+        ?"Основания, государственные территории, коды и полный текст документов для подготовки и аттестации."
         :"Быстрые основания, практические ситуации, служебные термины и полный текст документов.";
     }
 
@@ -5084,6 +5313,42 @@ if(docs.length) renderDoc(docs[0]);
   }
 
   restore();
+})();
+</script>
+
+
+<script id="territories-script">
+(function(){
+  document.addEventListener("click",e=>{
+    const b=e.target.closest("[data-territory-article]");
+    if(!b)return;
+    e.preventDefault();
+    if(typeof window.openDoc==="function")window.openDoc("territory",b.dataset.territoryArticle||"");
+  });
+})();
+</script>
+
+
+<script id="nav-scroll-script">
+(function(){
+  const nav=document.getElementById("mainNav");
+  const left=document.getElementById("navScrollLeft");
+  const right=document.getElementById("navScrollRight");
+  if(!nav||!left||!right)return;
+  function update(){
+    const max=Math.max(0,nav.scrollWidth-nav.clientWidth);
+    left.disabled=nav.scrollLeft<=2;
+    right.disabled=nav.scrollLeft>=max-2;
+  }
+  left.addEventListener("click",()=>nav.scrollBy({left:-360,behavior:"smooth"}));
+  right.addEventListener("click",()=>nav.scrollBy({left:360,behavior:"smooth"}));
+  nav.addEventListener("scroll",update,{passive:true});
+  window.addEventListener("resize",update);
+  document.addEventListener("click",e=>{
+    const active=e.target.closest(".nav button[data-page]");
+    if(active)setTimeout(()=>active.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"}),30);
+  });
+  requestAnimationFrame(update);
 })();
 </script>
 
