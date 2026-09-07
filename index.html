@@ -1684,134 +1684,7 @@ body::before{
 }
 
 
-.secret-access-modal{
-  position:fixed;
-  inset:0;
-  z-index:10020;
-  display:none;
-}
-.secret-access-modal.open{
-  display:block;
-  animation:secretFade .17s ease both;
-}
-.secret-access-backdrop{
-  position:absolute;
-  inset:0;
-  background:rgba(4,7,11,.68);
-  backdrop-filter:blur(6px);
-}
-.secret-access-panel{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  width:min(470px,calc(100vw - 28px));
-  padding:18px;
-  border:1px solid var(--line);
-  border-radius:16px;
-  background:var(--panel);
-  color:var(--text);
-  box-shadow:0 28px 90px rgba(0,0,0,.42);
-  animation:secretRise .19s ease both;
-}
-.secret-access-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:14px;
-  margin-bottom:15px;
-}
-.secret-access-head small{
-  color:var(--accent);
-  font-size:7px;
-  font-weight:950;
-  letter-spacing:.12em;
-}
-.secret-access-head h2{
-  margin:4px 0 4px;
-  font-size:20px;
-}
-.secret-access-head p{
-  margin:0;
-  color:var(--muted);
-  font-size:9px;
-  line-height:1.5;
-}
-.secret-access-close{
-  width:33px;
-  height:33px;
-  flex:0 0 33px;
-  border:1px solid var(--line);
-  border-radius:9px;
-  background:var(--panel2);
-  color:var(--text);
-  font-size:19px;
-  cursor:pointer;
-}
-.secret-password-field span{
-  display:block;
-  margin-bottom:5px;
-  color:var(--muted);
-  font-size:8px;
-  font-weight:850;
-  text-transform:uppercase;
-  letter-spacing:.05em;
-}
-.secret-password-field input{
-  width:100%;
-  box-sizing:border-box;
-  min-height:45px;
-  padding:10px 11px;
-  border:1px solid var(--line);
-  border-radius:10px;
-  background:var(--panel2);
-  color:var(--text);
-  font:inherit;
-  outline:none;
-}
-.secret-password-field input:focus{
-  border-color:var(--accent);
-  box-shadow:0 0 0 3px rgba(53,169,255,.08);
-}
-.secret-access-status{
-  min-height:16px;
-  margin-top:8px;
-  color:var(--muted);
-  font-size:9px;
-}
-.secret-access-status.error{color:#ef8585}
-.secret-access-status.ok{color:var(--accent)}
-.secret-access-actions{
-  display:flex;
-  justify-content:flex-end;
-  gap:7px;
-  margin-top:8px;
-}
-.secret-access-secondary,
-.secret-access-submit{
-  padding:8px 11px;
-  border-radius:9px;
-  font:inherit;
-  font-size:9px;
-  font-weight:900;
-  cursor:pointer;
-}
-.secret-access-secondary{
-  border:1px solid var(--line);
-  background:var(--panel2);
-  color:var(--text);
-}
-.secret-access-submit{
-  border:1px solid var(--accent);
-  background:var(--accent);
-  color:#fff;
-}
-@keyframes secretFade{
-  from{opacity:0}to{opacity:1}
-}
-@keyframes secretRise{
-  from{opacity:0;transform:translate(-50%,calc(-50% + 8px)) scale(.99)}
-  to{opacity:1;transform:translate(-50%,-50%) scale(1)}
+to{opacity:1;transform:translate(-50%,-50%) scale(1)}
 }
 @media(max-width:650px){
   .secure-section-lock{
@@ -2314,6 +2187,33 @@ body.access-pending .footer{visibility:hidden}
 @media(max-width:760px){.territory-alert{grid-template-columns:1fr}.territory-regime-grid,.territory-detail-grid{grid-template-columns:1fr}.territory-detail-card.territory-wide{grid-column:auto}.territory-two-cols{grid-template-columns:1fr}.territory-common-card{grid-template-columns:1fr}}
 </style>
 
+
+<style id="role-docs-style">
+.role-doc-loading{
+  min-height:170px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:5px;
+  text-align:center;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--panel);
+}
+.role-doc-loading b{font-size:12px}
+.role-doc-loading span{font-size:10px;color:var(--muted)}
+.role-doc-error{
+  padding:18px;
+  border:1px solid color-mix(in srgb,#d96b70 45%,var(--line));
+  border-radius:12px;
+  background:color-mix(in srgb,#d96b70 5%,var(--panel));
+}
+.role-doc-error b{display:block;margin-bottom:5px}
+.role-doc-error span{font-size:10px;color:var(--muted)}
+.secret-doc-access em{font-style:normal}
+</style>
+
 </head><body class="access-pending">
 <div class="access-gate" id="accessGate" aria-hidden="false">
   <div class="access-gate-card">
@@ -2381,7 +2281,6 @@ body.access-pending .footer{visibility:hidden}
 </div>
 <button class="theme help-btn" id="helpBtn" title="Помощь и обратная связь">?</button>
 </div></header>
-<button id="secretAccessBtn" type="button" hidden aria-hidden="true"></button>
 <div class="floating-ui-controls" aria-label="Настройки интерфейса">
   <button class="theme sound-btn floating-ui-btn" id="soundBtn" title="Включить или отключить звук интерфейса" aria-label="Звук интерфейса">🔊</button>
   <button class="theme floating-ui-btn" id="themeBtn" title="Сменить тему" aria-label="Сменить тему">◐</button>
@@ -2908,13 +2807,13 @@ body.access-pending .footer{visibility:hidden}
 </div><div class="basis-section secret-basis-teaser" data-basis-group="protection" id="secretBasisTeaser">
 <div class="basis-section-head">
 <div>
-<h2>Секретные служебные материалы</h2>
-<p>Специализированные положения закрытых приказов не отображаются в публичной версии памятки.</p>
+<h2>Приказ ФСО РО № 28</h2>
+<p>Регламент взаимодействия ФСО с ГИБДД при обеспечении охраняемого кортежа.</p>
 </div>
-<span>🔒</span>
+<span>СЕКРЕТНО</span>
 </div>
-<button class="secret-basis-open" data-unlock-doc="order28" type="button">
-    Открыть Приказ ФСО РО № 28 после проверки доступа
+<button class="secret-basis-open role-secure-doc" data-role-doc="order28" type="button">
+    Открыть Приказ ФСО РО № 28
     <span>↗</span>
 </button>
 </div><div class="basis-section" data-basis-group="process" id="basis-process"><div class="basis-section-head"><div><h2>Процесс</h2><p>Законное требование, задержание и обязательные процессуальные действия.</p></div><span>7</span></div><div class="basis-card-list"><button class="norm-card basis-card" data-keywords="задержание | основания задержания | пойман на месте | видео нарушения | розыск | свидетели" data-norm='{"t": "Общие основания задержания по ПК", "r": "гл. II ст. 1", "a": "1", "s": "Это общие процессуальные основания. Для ФСО они не заменяют специальное основание из ФЗ «О ФСО РО», а применяются вместе с ним.", "h": "", "f": "", "rel": "", "doc": "pk", "search": "задержание основания пойман нарушение свидетели видео розыск угроза Общие основания задержания по ПК гл. II ст. 1 Общие процессуальные основания задержания подозреваемого. Для сотрудника ФСО они применяются вместе со специальной компетенцией и основаниями ФЗ «О ФСО РО». Процессуальный кодекс РО задержание основания задержания пойман на месте видео нарушения розыск свидетели задержание основания пойман нарушение свидетели видео розыск угроза Общие основания задержания по ПК гл. II ст. 1 Общие процессуальные основания задержания подозреваемого. Для сотрудника ФСО они применяются вместе со специальной компетенцией и основаниями ФЗ «О ФСО РО». Процессуальный кодекс РО задержание основания задержания пойман на месте видео нарушения розыск свидетели Общие основания задержания по ПК Общие процессуальные основания задержания подозреваемого. Для сотрудника ФСО они применяются вместе со специальной компетенцией и основаниями ФЗ «О ФСО РО». гл. II ст. 1 задержание основания задержания пойман на месте видео нарушения розыск свидетели", "chapter": "II"}' data-search="задержание основания пойман нарушение свидетели видео розыск угроза Общие основания задержания по ПК гл. II ст. 1 Общие процессуальные основания задержания подозреваемого. Для сотрудника ФСО они применяются вместе со специальной компетенцией и основаниями ФЗ «О ФСО РО». Процессуальный кодекс РО задержание основания задержания пойман на месте видео нарушения розыск свидетели задержание основания пойман нарушение свидетели видео розыск угроза Общие основания задержания по ПК гл. II ст. 1 Общие процессуальные основания задержания подозреваемого. Для сотрудника ФСО они применяются вместе со специальной компетенцией и основаниями ФЗ «О ФСО РО». Процессуальный кодекс РО задержание основания задержания пойман на месте видео нарушения розыск свидетели Общие основания задержания по ПК Общие процессуальные основания задержания подозреваемого. Для сотрудника ФСО они применяются вместе со специальной компетенцией и основаниями ФЗ «О ФСО РО». гл. II ст. 1 задержание основания задержания пойман на месте видео нарушения розыск свидетели Это общие процессуальные основания. Для ФСО они не заменяют специальное основание из ФЗ «О ФСО РО», а применяются вместе с ним.">
@@ -3198,7 +3097,7 @@ body.access-pending .footer{visibility:hidden}
 </div></section><section class="page" id="page-situations">
 <div id="secureSituationsMount" class="secure-content-mount">
   <div class="secure-content-loading">
-    <b>Ситуации загружаются после проверки доступа</b>
+    <b>Ситуации загружаются </b>
     <span>Материалы этого раздела не хранятся в публичном коде сайта.</span>
   </div>
 </div>
@@ -3638,16 +3537,10 @@ body.access-pending .footer{visibility:hidden}
 </section>
 
 <section class="page" id="page-codes">
-<div class="section-head"><div><h2>Оперативные коды <span class="codes-secret-badge">СЕКРЕТНО</span></h2><p>Приложение № 1 к Приказу ФСО № 23 от 1 сентября 2026 г. · Гриф: «Секретно»</p></div></div><div class="secure-section-lock" id="codesSecureLock">
-<div class="secure-lock-icon">🔒</div>
-<div class="secure-lock-copy">
-<small>ОГРАНИЧЕННЫЙ ДОСТУП</small>
-<h3>Оперативные коды скрыты</h3>
-<p>Содержание Приказа ФСО РО № 23 и Приложения № 1 загружается только после проверки доступа.</p>
+<div class="section-head"><div><h2>Оперативные коды <span class="codes-secret-badge">СЕКРЕТНО</span></h2><p>Приложение № 1 к Приказу ФСО № 23 от 1 сентября 2026 г.</p></div></div>
+<div class="secure-codes-content" id="secureCodesContent">
+  <div class="role-doc-loading"><b>Загрузка оперативных кодов…</b><span>Доступ определяется текущим профилем ФСО.</span></div>
 </div>
-<button class="secure-unlock-btn" data-unlock-doc="order23" type="button">Получить доступ</button>
-</div><div class="secure-codes-content" hidden="" id="secureCodesContent"></div>
-
 </section>
 <section class="page" id="page-rules">
 <div class="section-head"><div><h2>Правила проекта</h2><p>Отдельно от IC-законодательства.</p></div></div>
@@ -3659,19 +3552,13 @@ body.access-pending .footer{visibility:hidden}
 <div class="laws-layout">
 <aside class="law-side"><div class="law-search"><input id="docFilter" placeholder="Поиск по названию и полному тексту всех документов..."/></div><div class="law-group-title">Основные</div><button class="doc-btn" data-doc="fso">ФЗ «О Федеральной службе охраны РО»</button><button class="doc-btn" data-doc="charter">Внутренний устав ФСО РО</button><button class="doc-btn" data-doc="territory">ФЗ «О государственных территориях РО»</button><button class="doc-btn" data-doc="pk">Процессуальный кодекс РО</button><button class="doc-btn" data-doc="uk">Уголовный кодекс РО</button><button class="doc-btn" data-doc="koap">Кодекс РО об административных правонарушениях</button><div class="law-group-title">Служба</div><button class="doc-btn" data-doc="ethics">Кодекс этики и служебного поведения</button><button class="doc-btn" data-doc="labor">Трудовой кодекс РО</button><div class="law-group-title">Дополнительные</div><button class="doc-btn" data-doc="constitution">Конституция РО</button><button class="doc-btn" data-doc="immunity">ФЗ «О неприкосновенности должностных лиц»</button><button class="doc-btn" data-doc="gservice">ФЗ «О государственной службе РО»</button><button class="doc-btn" data-doc="secret">ФЗ «О государственной тайне»</button><button class="doc-btn" data-doc="weapons">ФЗ «Об оружии»</button><button class="doc-btn" data-doc="pm">ФКЗ «О Премьер-министре РО и Правительстве РО»</button><button class="doc-btn" data-doc="emergency">ФКЗ «О чрезвычайном и военном положении»</button><button class="doc-btn" data-doc="pdd">Правила дорожного движения РО</button><div id="secretDocsGroup">
 <div class="law-group-title secret-group-title">Секретные материалы</div>
-<button class="secret-doc-access" data-secret-doc="order23" type="button">
-<span>
-<b>Приказ ФСО РО № 23</b>
-<small>Таблица оперативных кодов (Тен-кодов)</small>
-</span>
-<em>🔒 СЕКРЕТНО</em>
+<button class="secret-doc-access role-secure-doc" data-role-doc="order23" type="button">
+<span><b>Приказ ФСО РО № 23</b><small>Таблица оперативных кодов (Тен-кодов)</small></span>
+<em>СЕКРЕТНО</em>
 </button>
-<button class="secret-doc-access" data-secret-doc="order28" type="button">
-<span>
-<b>Приказ ФСО РО № 28</b>
-<small>Регламент взаимодействия ФСО с ГИБДД</small>
-</span>
-<em>🔒 СЕКРЕТНО</em>
+<button class="secret-doc-access role-secure-doc" data-role-doc="order28" type="button">
+<span><b>Приказ ФСО РО № 28</b><small>Регламент взаимодействия ФСО с ГИБДД</small></span>
+<em>СЕКРЕТНО</em>
 </button>
 </div><div class="law-group-title">Взаимодействие</div><button class="doc-btn" data-doc="gibdd">ФЗ «О ГИБДД РО»</button><button class="doc-btn" data-doc="police">ФЗ «О полиции»</button><button class="doc-btn" data-doc="fsb">ФЗ «О Федеральной службе безопасности РО»</button><button class="doc-btn" data-doc="sk">ФЗ «О Следственном комитете РО»</button><button class="doc-btn" data-doc="prosecution">ФЗ «О прокуратуре РО»</button><button class="doc-btn" data-doc="army">ФЗ «О Вооружённых Силах РО»</button><div class="law-group-title">Правила проекта</div><button class="doc-btn" data-doc="state_rules">Правила государственных организаций</button><button class="doc-btn" data-doc="project_rules">Основные правила проекта</button></aside>
 <section class="law-view">
@@ -3725,23 +3612,13 @@ body.access-pending .footer{visibility:hidden}
     <div class="updates-body">
       <article class="update-entry">
         <div class="update-date">07.09.2026</div>
-        <h4>Государственные территории и навигация</h4>
-        <ul>
-          <li>Добавлена отдельная рабочая памятка по ФЗ «О государственных территориях РО».</li>
-          <li>Разобраны четыре режима территорий, временный особый режим, пропуска, доступ и ответственность.</li>
-          <li>Основания в памятке открывают точную статью полного закона.</li>
-          <li>Верхняя строка разделов получила горизонтальную прокрутку и кнопки перехода влево/вправо.</li>
-        </ul>
-      </article>
-      
-      <article class="update-entry">
-        <div class="update-date">07.09.2026</div>
-        <h4>Профили доступа</h4>
+        <h4>Профили доступа, навигация и государственные территории</h4>
         <ul>
           <li>Добавлен вход по профилям: Академия, УК, УЛО, УСН, УВК и Руководство.</li>
-          <li>Для Академии оставлены только Основания, Коды и Документы.</li>
-          <li>Раздел «Ситуации» вынесен из публичного HTML и загружается только после серверной проверки доступа.</li>
-          <li>Для сотрудников подразделений сохраняется общая правовая база; раздел «Подразделения» показывает профиль соответствующего управления.</li>
+          <li>Академия работает без готовых «Ситуаций»; раздел «Ситуации» вынесен из публичного HTML.</li>
+          <li>Отдельная парольная проверка для приказов и кодов удалена: доступ теперь определяется профилем ФСО.</li>
+          <li>Добавлена памятка по ФЗ «О государственных территориях РО» с четырьмя режимами, пропусками, доступом и ответственностью.</li>
+          <li>Верхняя строка разделов получила горизонтальную прокрутку и кнопки перехода влево/вправо.</li>
         </ul>
       </article>
       
@@ -3769,7 +3646,7 @@ body.access-pending .footer{visibility:hidden}
         <h4>Документы и доступ</h4>
         <ul>
           <li>Добавлен полнотекстовый поиск по нормативной базе.</li>
-          <li>Закрытые приказы № 23 и № 28 вынесены из публичного кода и загружаются после проверки доступа.</li>
+          <li>Закрытые приказы № 23 и № 28 вынесены из публичного кода и загружаются .</li>
           <li>Добавлен просмотр одной выбранной статьи без перехода к соседним нормам.</li>
         </ul>
       </article>
@@ -4656,303 +4533,6 @@ if(docs.length) renderDoc(docs[0]);
 })();
 </script>
 
-<div aria-hidden="true" class="secret-access-modal" id="secretAccessModal">
-<div class="secret-access-backdrop" data-secret-close=""></div>
-<section aria-labelledby="secretAccessTitle" aria-modal="true" class="secret-access-panel" role="dialog">
-<div class="secret-access-head">
-<div>
-<small>СЕКРЕТНЫЕ МАТЕРИАЛЫ</small>
-<h2 id="secretAccessTitle">Проверка доступа</h2>
-<p>Введите пароль доступа. Секретные документы не хранятся в публичном HTML и загружаются с защищённого сервера.</p>
-</div>
-<button aria-label="Закрыть" class="secret-access-close" data-secret-close="" type="button">×</button>
-</div>
-<form id="secretAccessForm">
-<label class="secret-password-field">
-<span>Пароль доступа</span>
-<input autocomplete="current-password" id="secretPassword" placeholder="Введите пароль" required="" type="password"/>
-</label>
-<div class="secret-access-status" id="secretAccessStatus"></div>
-<div class="secret-access-actions">
-<button class="secret-access-secondary" data-secret-close="" type="button">Отмена</button>
-<button class="secret-access-submit" type="submit">Проверить доступ</button>
-</div>
-</form>
-</section>
-</div>
-
-<script id="secureDocsController">
-(() => {
-  const SECRET_WORKER = "https://fso-secret-api.osopoao078.workers.dev";
-  const SECRET_DOC_META = {
-    order23: {
-      title: "Приказ ФСО РО № 23 от 01.09.2026 · Таблица оперативных кодов (Тен-кодов)",
-      category: "СЕКРЕТНО"
-    },
-    order28: {
-      title: "Приказ ФСО РО № 28 от 05.09.2026 · Регламент взаимодействия с ГИБДД",
-      category: "СЕКРЕТНО"
-    }
-  };
-
-  let secretPassword = "";
-  let pendingDoc = "";
-  const cache = new Map();
-
-  const modal = document.getElementById("secretAccessModal");
-  const form = document.getElementById("secretAccessForm");
-  const input = document.getElementById("secretPassword");
-  const status = document.getElementById("secretAccessStatus");
-  const accessBtn = document.getElementById("secretAccessBtn");
-
-  function setStatus(text="", type=""){
-    if(!status) return;
-    status.textContent = text;
-    status.className = "secret-access-status" + (type ? " " + type : "");
-  }
-
-  function openModal(docId=""){
-    pendingDoc = docId || pendingDoc || "";
-    setStatus("");
-    if(input) input.value = "";
-    modal?.classList.add("open");
-    modal?.setAttribute("aria-hidden","false");
-    document.body.style.overflow = "hidden";
-    setTimeout(()=>input?.focus(),100);
-  }
-
-  function closeModal(){
-    modal?.classList.remove("open");
-    modal?.setAttribute("aria-hidden","true");
-    document.body.style.overflow = "";
-  }
-
-  function markUnlocked(){
-    accessBtn?.classList.add("unlocked");
-    if(accessBtn){
-      accessBtn.textContent = "🔓";
-      accessBtn.title = "Доступ к секретным материалам предоставлен";
-    }
-    document.querySelectorAll(".secret-doc-access").forEach(btn=>{
-      btn.classList.add("unlocked");
-      const em = btn.querySelector("em");
-      if(em) em.textContent = "🔓 ДОСТУП";
-    });
-  }
-
-  async function requestSecretDoc(docId, password){
-    const response = await fetch(SECRET_WORKER + "/document", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify({
-        doc: docId,
-        password
-      })
-    });
-
-    let data = null;
-    try { data = await response.json(); } catch(e) {}
-
-    if(!response.ok || !data?.ok){
-      const err = new Error(data?.error || ("Ошибка доступа: HTTP " + response.status));
-      err.status = response.status;
-      throw err;
-    }
-
-    const doc = {
-      id: "secure-" + docId,
-      secretId: docId,
-      title: data.title || SECRET_DOC_META[docId]?.title || docId,
-      category: "СЕКРЕТНО",
-      text: String(data.text || "")
-    };
-    cache.set(docId, doc);
-    return doc;
-  }
-
-  async function getDoc(docId){
-    if(cache.has(docId)) return cache.get(docId);
-
-    if(!secretPassword){
-      openModal(docId);
-      return null;
-    }
-
-    try{
-      return await requestSecretDoc(docId, secretPassword);
-    }catch(err){
-      if(err.status === 401 || err.status === 403){
-        secretPassword = "";
-        openModal(docId);
-        setStatus("Доступ не подтверждён. Введите пароль ещё раз.", "error");
-        return null;
-      }
-      alert("Не удалось загрузить секретный документ: " + err.message);
-      return null;
-    }
-  }
-
-  async function openSecretDocument(docId){
-    const doc = await getDoc(docId);
-    if(!doc) return;
-
-    if(typeof showPage === "function" && typeof renderDoc === "function"){
-      showPage("laws");
-      renderDoc(doc);
-      const lawSearch = document.getElementById("lawSearch");
-      if(lawSearch) lawSearch.value = "";
-      document.querySelectorAll(".secret-doc-access").forEach(b=>{
-        b.classList.toggle("active", b.dataset.secretDoc === docId);
-      });
-    }
-  }
-
-  function escapeHtml(value){
-    return String(value ?? "").replace(/[&<>"']/g, c => ({
-      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-    }[c]));
-  }
-
-  function extractCodes(text){
-    const appendixIndex = text.search(/ТАБЛИЦА\s+ОПЕРАТИВНЫХ\s+КОДОВ/i);
-    const source = appendixIndex >= 0 ? text.slice(appendixIndex) : text;
-    const rx = /Код\s+(\d+)\s*\n+\s*Описание оперативной обстановки:\s*\n+([\s\S]*?)\n+\s*Порядок действий сотрудника:\s*\n+([\s\S]*?)(?=\n+\s*Код\s+\d+\s*(?:\n|$)|$)/gi;
-    const result = [];
-    let m;
-    while((m = rx.exec(source))){
-      result.push({
-        code: m[1],
-        situation: m[2].trim(),
-        action: m[3].trim()
-      });
-    }
-    return result;
-  }
-
-  async function unlockCodes(){
-    const doc = await getDoc("order23");
-    if(!doc) return;
-
-    const lock = document.getElementById("codesSecureLock");
-    const holder = document.getElementById("secureCodesContent");
-    if(!holder) return;
-
-    const codes = extractCodes(doc.text);
-    if(codes.length){
-      holder.innerHTML = `
-        <div class="secure-codes-meta">
-          <b>Приказ ФСО РО № 23 · Приложение № 1</b>
-          <span>🔓 СЕКРЕТНО · ДОСТУП ПРЕДОСТАВЛЕН</span>
-        </div>
-        <div class="code-list">
-          ${codes.map(item=>`
-            <article class="code-card">
-              <span>Код ${escapeHtml(item.code)}</span>
-              <div>
-                <h3>${escapeHtml(item.situation.split(/\.\s+/)[0] || ("Код " + item.code))}</h3>
-                <p>${escapeHtml(item.situation)}</p>
-                <div class="secure-code-action">
-                  <b>Порядок действий</b>
-                  <p>${escapeHtml(item.action)}</p>
-                </div>
-              </div>
-            </article>
-          `).join("")}
-        </div>`;
-    }else{
-      holder.innerHTML = `
-        <div class="secure-codes-meta">
-          <b>Приказ ФСО РО № 23</b>
-          <span>🔓 СЕКРЕТНО · ДОСТУП ПРЕДОСТАВЛЕН</span>
-        </div>
-        <div class="secure-raw-document">${escapeHtml(doc.text)}</div>`;
-    }
-
-    holder.hidden = false;
-    if(lock) lock.hidden = true;
-  }
-
-  document.querySelectorAll("[data-secret-close]").forEach(el=>{
-    el.addEventListener("click", closeModal);
-  });
-
-  modal?.addEventListener("click", e=>{
-    if(e.target?.matches(".secret-access-backdrop")) closeModal();
-  });
-
-  document.addEventListener("keydown", e=>{
-    if(e.key === "Escape" && modal?.classList.contains("open")) closeModal();
-  });
-
-  accessBtn?.addEventListener("click", ()=>{
-    if(secretPassword){
-      setStatus("Доступ уже предоставлен на текущую сессию.", "ok");
-      openModal();
-    }else{
-      openModal();
-    }
-  });
-
-  form?.addEventListener("submit", async e=>{
-    e.preventDefault();
-    const value = String(input?.value || "");
-    if(!value){
-      setStatus("Введите пароль.", "error");
-      return;
-    }
-
-    setStatus("Проверка доступа…");
-    const submit = form.querySelector(".secret-access-submit");
-    if(submit) submit.disabled = true;
-
-    const testDoc = pendingDoc || "order23";
-    try{
-      const doc = await requestSecretDoc(testDoc, value);
-      secretPassword = value;
-      markUnlocked();
-      setStatus("Доступ предоставлен.", "ok");
-      setTimeout(closeModal, 350);
-
-      const target = pendingDoc;
-      pendingDoc = "";
-
-      if(target === "order23" && document.getElementById("page-codes")?.classList.contains("active")){
-        setTimeout(unlockCodes, 400);
-      }else if(target){
-        setTimeout(()=>openSecretDocument(target), 400);
-      }
-    }catch(err){
-      secretPassword = "";
-      setStatus(err.status === 401 ? "Неверный пароль." : ("Ошибка: " + err.message), "error");
-    }finally{
-      if(submit) submit.disabled = false;
-    }
-  });
-
-  document.addEventListener("click", e=>{
-    const docBtn = e.target.closest(".secret-doc-access");
-    if(docBtn){
-      e.preventDefault();
-      openSecretDocument(docBtn.dataset.secretDoc);
-      return;
-    }
-
-    const unlock = e.target.closest("[data-unlock-doc]");
-    if(unlock){
-      e.preventDefault();
-      const id = unlock.dataset.unlockDoc;
-      if(id === "order23" && unlock.closest("#page-codes")){
-        unlockCodes();
-      }else{
-        openSecretDocument(id);
-      }
-    }
-  });
-})();
-</script>
 
 <script id="convoy-script">
 (function(){
@@ -5264,7 +4844,7 @@ if(docs.length) renderDoc(docs[0]);
 
     submit.disabled=true;
     pass.disabled=true;
-    setStatus("Проверка доступа…");
+    setStatus("…");
 
     try{
       const data=await login(selectedRole,pass.value);
@@ -5349,6 +4929,156 @@ if(docs.length) renderDoc(docs[0]);
     if(active)setTimeout(()=>active.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"}),30);
   });
   requestAnimationFrame(update);
+})();
+</script>
+
+
+<script id="role-protected-docs-script">
+(function(){
+  const API="https://fso-access-api.osopoao078.workers.dev";
+  const TOKEN_KEY="fso-role-session";
+  const cache=new Map();
+
+  const META={
+    order23:{
+      title:"Приказ ФСО РО № 23 от 01.09.2026 · Таблица оперативных кодов (Тен-кодов)",
+      category:"СЕКРЕТНО"
+    },
+    order28:{
+      title:"Приказ ФСО РО № 28 от 05.09.2026 · Регламент взаимодействия с ГИБДД",
+      category:"СЕКРЕТНО"
+    }
+  };
+
+  function escapeHtml(v){
+    return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  }
+
+  async function getRoleDoc(id){
+    if(cache.has(id))return cache.get(id);
+    const token=sessionStorage.getItem(TOKEN_KEY);
+    if(!token)throw new Error("Сессия ФСО не найдена.");
+
+    const r=await fetch(API+"/content/"+encodeURIComponent(id),{
+      headers:{"Authorization":"Bearer "+token}
+    });
+
+    let data={};
+    try{data=await r.json();}catch(_){}
+    if(!r.ok||!data.ok){
+      const err=new Error(data.error||("HTTP "+r.status));
+      err.status=r.status;
+      throw err;
+    }
+
+    const doc={
+      id:"role-"+id,
+      secretId:id,
+      title:META[id]?.title||id,
+      category:META[id]?.category||"СЕКРЕТНО",
+      text:String(data.content||"")
+    };
+    cache.set(id,doc);
+    return doc;
+  }
+
+  async function openRoleDoc(id){
+    try{
+      const doc=await getRoleDoc(id);
+      if(typeof showPage==="function"&&typeof renderDoc==="function"){
+        showPage("laws");
+        renderDoc(doc);
+        const search=document.getElementById("lawSearch");
+        if(search)search.value="";
+      }
+    }catch(err){
+      alert(err.status===403
+        ?"Этот документ недоступен для текущего профиля."
+        :"Не удалось загрузить документ: "+err.message);
+    }
+  }
+
+  function extractCodes(text){
+    const appendixIndex=text.search(/ТАБЛИЦА\s+ОПЕРАТИВНЫХ\s+КОДОВ/i);
+    const source=appendixIndex>=0?text.slice(appendixIndex):text;
+    const rx=/Код\s+(\d+)\s*\n+\s*Описание оперативной обстановки:\s*\n+([\s\S]*?)\n+\s*Порядок действий сотрудника:\s*\n+([\s\S]*?)(?=\n+\s*Код\s+\d+\s*(?:\n|$)|$)/gi;
+    const result=[];
+    let m;
+    while((m=rx.exec(source))){
+      result.push({code:m[1],situation:m[2].trim(),action:m[3].trim()});
+    }
+    return result;
+  }
+
+  async function loadCodes(force=false){
+    const holder=document.getElementById("secureCodesContent");
+    if(!holder)return;
+    if(holder.dataset.loaded==="1"&&!force)return;
+
+    holder.innerHTML='<div class="role-doc-loading"><b>Загрузка оперативных кодов…</b><span>Проверяется профиль ФСО.</span></div>';
+
+    try{
+      const doc=await getRoleDoc("order23");
+      const codes=extractCodes(doc.text);
+
+      if(codes.length){
+        holder.innerHTML=`
+          <div class="secure-codes-meta">
+            <b>Приказ ФСО РО № 23 · Приложение № 1</b>
+            <span>СЕКРЕТНО · ПРОФИЛЬ ПОДТВЕРЖДЁН</span>
+          </div>
+          <div class="code-list">
+            ${codes.map(item=>`
+              <article class="code-card">
+                <span>Код ${escapeHtml(item.code)}</span>
+                <div>
+                  <h3>${escapeHtml(item.situation.split(/\.\s+/)[0]||("Код "+item.code))}</h3>
+                  <p>${escapeHtml(item.situation)}</p>
+                  <div class="secure-code-action">
+                    <b>Порядок действий</b>
+                    <p>${escapeHtml(item.action)}</p>
+                  </div>
+                </div>
+              </article>`).join("")}
+          </div>`;
+      }else{
+        holder.innerHTML=`
+          <div class="secure-codes-meta">
+            <b>Приказ ФСО РО № 23</b>
+            <span>СЕКРЕТНО · ПРОФИЛЬ ПОДТВЕРЖДЁН</span>
+          </div>
+          <div class="secure-raw-document">${escapeHtml(doc.text)}</div>`;
+      }
+      holder.dataset.loaded="1";
+    }catch(err){
+      holder.innerHTML=`
+        <div class="role-doc-error">
+          <b>Оперативные коды не загружены</b>
+          <span>${escapeHtml(err.status===403?"Материал недоступен для текущего профиля.":err.message)}</span>
+        </div>`;
+    }
+  }
+
+  document.addEventListener("click",e=>{
+    const docBtn=e.target.closest("[data-role-doc]");
+    if(docBtn){
+      e.preventDefault();
+      const id=docBtn.dataset.roleDoc;
+      if(id==="order23"&&docBtn.closest("#page-codes"))loadCodes(true);
+      else openRoleDoc(id);
+      return;
+    }
+
+    const pageBtn=e.target.closest('[data-page="codes"],[data-jump-page="codes"]');
+    if(pageBtn)setTimeout(()=>loadCodes(),120);
+  });
+
+  // Если сессия восстановилась сразу на вкладке Коды.
+  setTimeout(()=>{
+    if(document.getElementById("page-codes")?.classList.contains("active"))loadCodes();
+  },700);
+
+  window.openRoleProtectedDoc=openRoleDoc;
 })();
 </script>
 
