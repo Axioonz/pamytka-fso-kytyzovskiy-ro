@@ -2224,7 +2224,7 @@ body.access-pending .footer{visibility:hidden}
     </div>
 
     <div class="access-role-grid" id="accessRoleGrid">
-      <button type="button" data-access-role="academy"><b>Академия</b><span>Учебный доступ</span></button>
+      <button type="button" data-access-role="academy"><b>Курсанты Академии</b><span>Учебный доступ</span></button>
       <button type="button" data-access-role="uk"><b>УК</b><span>Управление кадров</span></button>
       <button type="button" data-access-role="ulo"><b>УЛО</b><span>Управление личной охраны</span></button>
       <button type="button" data-access-role="usn"><b>УСН</b><span>Управление специального назначения</span></button>
@@ -2247,6 +2247,7 @@ body.access-pending .footer{visibility:hidden}
 
     <div class="access-gate-note">
       <span>Разделы показываются в соответствии с выбранным профилем.</span>
+      <span>Доступ к материалам «СЕКРЕТНО» проверяется отдельно.</span>
     </div>
   </div>
 </div>
@@ -3610,11 +3611,20 @@ body.access-pending .footer{visibility:hidden}
     </div>
     <div class="updates-body">
       <article class="update-entry">
+        <div class="update-date">08.09.2026</div>
+        <h4>Профили подразделений</h4>
+        <ul>
+          <li>Профиль «Академия» переименован в «Курсанты Академии».</li>
+          <li>Для Управления кадров скрыт раздел «Кортежи» как непрофильный материал.</li>
+        </ul>
+      </article>
+      
+      <article class="update-entry">
         <div class="update-date">07.09.2026</div>
         <h4>Профили доступа, навигация и государственные территории</h4>
         <ul>
-          <li>Добавлен вход по профилям: Академия, УК, УЛО, УСН, УВК и Руководство.</li>
-          <li>Академия работает без готовых «Ситуаций»; раздел «Ситуации» вынесен из публичного HTML.</li>
+          <li>Добавлен вход по профилям: Курсанты Академии, УК, УЛО, УСН, УВК и Руководство.</li>
+          <li>Курсанты Академии работают без готовых «Ситуаций»; раздел «Ситуации» вынесен из публичного HTML.</li>
           <li>Отдельная парольная проверка для приказов и кодов удалена: доступ теперь определяется профилем ФСО.</li>
           <li>Добавлена памятка по ФЗ «О государственных территориях РО» с четырьмя режимами, пропусками, доступом и ответственностью.</li>
           <li>Верхняя строка разделов получила горизонтальную прокрутку и кнопки перехода влево/вправо.</li>
@@ -4588,7 +4598,7 @@ if(docs.length) renderDoc(docs[0]);
   const TOKEN_KEY="fso-role-session";
 
   const ROLE_META={
-    academy:{short:"АКАДЕМИЯ",name:"Академия"},
+    academy:{short:"КУРСАНТ",name:"Курсанты Академии"},
     uk:{short:"УК",name:"Управление кадров",dept:"УК"},
     ulo:{short:"УЛО",name:"Управление личной охраны",dept:"УЛО"},
     usn:{short:"УСН",name:"Управление специального назначения",dept:"УСН"},
@@ -4597,6 +4607,7 @@ if(docs.length) renderDoc(docs[0]);
   };
 
   const ACADEMY_PAGES=new Set(["home","basis","territories","codes","laws"]);
+  const UK_PAGES=new Set(["home","basis","situations","departments","process","terms","territories","codes","rules","laws"]);
   const NORMAL_PAGES=new Set(["home","basis","situations","departments","process","terms","territories","convoys","codes","rules","laws"]);
 
   let selectedRole="";
@@ -4667,17 +4678,21 @@ if(docs.length) renderDoc(docs[0]);
   }
 
   function allowedPages(){
-    return session?.role==="academy"?ACADEMY_PAGES:NORMAL_PAGES;
+    if(session?.role==="academy")return ACADEMY_PAGES;
+    if(session?.role==="uk")return UK_PAGES;
+    return NORMAL_PAGES;
   }
 
-  function hideAcademyExtras(){
+  function applyRoleVisibility(){
+    const permitted=allowedPages();
     const academy=session?.role==="academy";
+
     document.querySelectorAll(".nav [data-page]").forEach(btn=>{
-      btn.classList.toggle("access-hidden",academy&&!ACADEMY_PAGES.has(btn.dataset.page));
+      btn.classList.toggle("access-hidden",!permitted.has(btn.dataset.page));
     });
 
     document.querySelectorAll("[data-jump-page]").forEach(btn=>{
-      btn.classList.toggle("access-hidden",academy&&!ACADEMY_PAGES.has(btn.dataset.jumpPage));
+      btn.classList.toggle("access-hidden",!permitted.has(btn.dataset.jumpPage));
     });
 
     document.querySelectorAll("[data-jump-situation]").forEach(btn=>{
@@ -4692,7 +4707,11 @@ if(docs.length) renderDoc(docs[0]);
     }
 
     const searchTitle=document.querySelector(".smart-search-title span");
-    if(searchTitle && academy)searchTitle.textContent="Поиск по основаниям и документам";
+    if(searchTitle){
+      searchTitle.textContent=academy
+        ?"Поиск по основаниям и документам"
+        :"Поиск по памятке и документам";
+    }
   }
 
   function filterDepartments(){
@@ -4792,7 +4811,7 @@ if(docs.length) renderDoc(docs[0]);
     if(!mount)return;
 
     if(session.role==="academy"){
-      mount.innerHTML='<div class="access-denied-card"><b>Раздел недоступен в профиле Академии</b><span>На аттестации используются Основания, Коды и Документы без готовых ситуационных алгоритмов.</span></div>';
+      mount.innerHTML='<div class="access-denied-card"><b>Раздел недоступен курсантам Академии</b><span>На аттестации используются Основания, Коды и Документы без готовых ситуационных алгоритмов.</span></div>';
       return;
     }
 
@@ -4812,7 +4831,7 @@ if(docs.length) renderDoc(docs[0]);
   async function activate(data,token){
     session={
       role:data.role,
-      roleName:data.roleName||ROLE_META[data.role]?.name||data.role,
+      roleName:ROLE_META[data.role]?.name||data.roleName||data.role,
       permissions:data.permissions||[],
       token
     };
@@ -4821,7 +4840,7 @@ if(docs.length) renderDoc(docs[0]);
     rolePill.title="Профиль: "+session.roleName;
     profileControls.hidden=false;
 
-    hideAcademyExtras();
+    applyRoleVisibility();
     filterDepartments();
     guardPageNavigation();
 
