@@ -2206,6 +2206,31 @@ body.access-pending .footer{visibility:hidden}
 .role-doc-error span{font-size:10px;color:var(--muted)}
 .secret-doc-access em{font-style:normal}
 </style>
+<style id="uk-memos-catalog-style">
+/* УК — каталог внутренних памяток */
+.uk-memos-page{padding-bottom:48px}
+.uk-memos-head{align-items:flex-end}
+.uk-memos-kicker{margin-bottom:6px;color:var(--accent);font-size:9px;font-weight:950;letter-spacing:.12em}
+.uk-memos-count{flex:0 0 auto;border:1px solid color-mix(in srgb,var(--accent) 34%,var(--line));background:color-mix(in srgb,var(--accent) 7%,var(--panel));color:var(--accent);border-radius:999px;padding:7px 10px;font-size:9px;font-weight:900;letter-spacing:.05em}
+.uk-memos-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px}
+.uk-memo-library-card{display:grid;grid-template-columns:58px 1fr;gap:16px;width:100%;min-height:210px;padding:20px;text-align:left;border:1px solid var(--line);border-radius:16px;background:var(--panel);color:var(--text);cursor:pointer;transition:.18s ease;box-shadow:0 12px 34px rgba(0,0,0,.05)}
+.uk-memo-library-card:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--accent) 55%,var(--line));box-shadow:0 18px 42px rgba(0,0,0,.09)}
+.uk-memo-library-index{width:58px;height:58px;border-radius:14px;display:grid;place-items:center;background:var(--text);color:var(--bg);font-size:16px;font-weight:950;letter-spacing:.03em}
+.uk-memo-library-body{display:flex;min-width:0;flex-direction:column}
+.uk-memo-library-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:11px}
+.uk-memo-library-meta>span:first-child{color:var(--accent);font-size:8px;font-weight:950;letter-spacing:.11em}
+.uk-memo-library-author{padding:4px 7px;border:1px solid color-mix(in srgb,var(--accent) 28%,var(--line));border-radius:999px;color:var(--text);background:color-mix(in srgb,var(--accent) 6%,var(--panel2));font-size:8px!important;font-weight:900!important;letter-spacing:.015em!important;white-space:nowrap}
+.uk-memo-library-card h3{margin:0;font-size:18px;line-height:1.2;letter-spacing:-.015em}
+.uk-memo-library-card p{margin:9px 0 17px;color:var(--muted);font-size:10px;line-height:1.55}
+.uk-memo-library-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:12px;border-top:1px solid var(--line);color:var(--accent);font-size:9px;font-weight:900;letter-spacing:.035em}
+.uk-memo-library-foot b{font-size:18px;line-height:1}
+.uk-memo-author-footer{align-items:center!important;margin-top:18px!important;padding:14px 16px!important;border:1px solid var(--line);border-radius:13px;background:var(--panel)!important;font-size:9px!important}
+.uk-memo-author{display:flex;align-items:baseline;gap:9px}
+.uk-memo-author small{color:var(--muted);font-size:8px;font-weight:900;letter-spacing:.1em}
+.uk-memo-author strong{color:var(--accent);font-size:15px;font-weight:950;letter-spacing:.01em;font-style:italic}
+@media(max-width:800px){.uk-memos-grid{grid-template-columns:1fr}.uk-memo-library-card{min-height:0}}
+@media(max-width:540px){.uk-memos-head{align-items:flex-start;flex-direction:column}.uk-memo-library-card{grid-template-columns:1fr}.uk-memo-library-index{width:48px;height:48px}.uk-memo-library-meta{align-items:flex-start;flex-direction:column}.uk-memo-author-footer{align-items:flex-start!important;flex-direction:column}.uk-memo-author{align-items:flex-start;flex-direction:column;gap:4px}}
+</style>
 <style id="uk-interview-embedded-style">
 /* УК — полноэкранная внутренняя памятка собеседования */
 .uk-interview-page{padding-bottom:48px}
@@ -2304,6 +2329,7 @@ body.access-pending .footer{visibility:hidden}
 <nav class="nav" id="mainNav">
 <button class="active" data-page="home">Памятка</button><button data-page="basis">Основания</button><button data-page="situations">Ситуации</button>
 <button data-page="departments">Подразделения</button>
+<button data-page="uk-memos">Памятки УК</button>
 <button data-page="process">Задержание и права</button>
 <button data-page="terms">Термины</button>
 <button data-page="territories">Гос. территории</button>
@@ -3175,8 +3201,7 @@ body.access-pending .footer{visibility:hidden}
 УК не вправе самостоятельно назначать дисциплинарные взыскания, увольнять сотрудников либо принимать
 решения, которые отнесены к компетенции Директора или иного уполномоченного руководителя, кроме
 случаев прямого делегирования полномочий.</div>
-<div class="refs"><b>Связанные нормы</b><button class="ref-link open-doc" data-doc="charter">ст. 6.1 — задачи УК</button><button class="ref-link open-doc" data-doc="charter">ст. 17–23 — дисциплина и кадровые вопросы</button><button class="ref-link open-doc" data-doc="gservice">ФЗ «О государственной службе РО»</button><button class="ref-link open-doc" data-doc="ethics">Кодекс этики</button><button class="ref-link open-doc" data-doc="state_rules">Правила государственных организаций</button></div>
-<div class="refs uk-internal-material" data-uk-internal=""><b>Памятки УК</b><button class="ref-link" data-jump-page="uk-interview">Проведение собеседования при приёме во ФСО</button></div></div>
+<div class="refs"><b>Связанные нормы</b><button class="ref-link open-doc" data-doc="charter">ст. 6.1 — задачи УК</button><button class="ref-link open-doc" data-doc="charter">ст. 17–23 — дисциплина и кадровые вопросы</button><button class="ref-link open-doc" data-doc="gservice">ФЗ «О государственной службе РО»</button><button class="ref-link open-doc" data-doc="ethics">Кодекс этики</button><button class="ref-link open-doc" data-doc="state_rules">Правила государственных организаций</button></div></div>
 </article><article class="dept-card">
 <div class="dept-code">УЛО</div><div><h3>Управление личной охраны</h3>
 <div class="exact-text">Статья 6.2. Управление личной охраны (УЛО)
@@ -3272,10 +3297,27 @@ body.access-pending .footer{visibility:hidden}
 уничтожения доказательств или давления на сотрудника.</div>
 <div class="refs"><b>Связанные нормы</b><button class="ref-link open-doc" data-doc="charter">ст. 16 — полномочия УВК</button><button class="ref-link open-doc" data-doc="charter">ст. 17–22 — дисциплинарная процедура</button><button class="ref-link open-doc" data-doc="fso">ст. 43–44 — контроль и ответственность</button><button class="ref-link open-doc" data-doc="ethics">Кодекс этики</button><button class="ref-link open-doc" data-doc="state_rules">Правила государственных организаций</button></div></div>
 </article></div>
-</section><section class="page uk-interview-page" id="page-uk-interview">
+</section><section class="page uk-memos-page" id="page-uk-memos">
+<div class="section-head uk-memos-head">
+<div><div class="uk-memos-kicker">УПРАВЛЕНИЕ КАДРОВ</div><h2>Памятки УК</h2><p>Внутренние рабочие памятки Управления кадров. Здесь будут размещаться отдельные инструкции по направлениям работы УК.</p></div>
+<span class="uk-memos-count">1 памятка</span>
+</div>
+<div class="uk-memos-grid">
+<button class="uk-memo-library-card" data-jump-page="uk-interview" type="button">
+<div class="uk-memo-library-index">01</div>
+<div class="uk-memo-library-body">
+<div class="uk-memo-library-meta"><span>ПРИЁМ НА СЛУЖБУ</span><span class="uk-memo-library-author">by Amurskiyrrk</span></div>
+<h3>Проведение собеседования при приёме во ФСО</h3>
+<p>Порядок собеседования, проверка кандидата, общие вопросы и действия сотрудника УК после успешного прохождения.</p>
+<div class="uk-memo-library-foot"><span>Открыть памятку</span><b>→</b></div>
+</div>
+</button>
+</div>
+</section>
+<section class="page uk-interview-page" id="page-uk-interview">
 <div class="uk-memo-shell">
 <div class="uk-memo-topbar">
-<button class="uk-memo-back" data-jump-page="departments" type="button">← Управление кадров</button>
+<button class="uk-memo-back" data-jump-page="uk-memos" type="button">← Памятки УК</button>
 <span class="uk-memo-badge">УК · ВНУТРЕННЯЯ ПАМЯТКА</span>
 </div>
 <header class="uk-memo-hero">
@@ -3387,7 +3429,7 @@ body.access-pending .footer{visibility:hidden}
 <p>Цель собеседования — определить, способен ли человек понимать RP, соблюдать правила, выполнять обязанности, работать в коллективе и соблюдать дисциплину.</p>
 <b>Кандидат должен оцениваться объективно.</b>
 </section>
-<footer class="uk-memo-footer"><span>Управление кадров ФСО</span><i>by Amurskiyrrk</i></footer>
+<footer class="uk-memo-footer uk-memo-author-footer"><span>Управление кадров ФСО</span><div class="uk-memo-author"><small>АВТОР ПАМЯТКИ</small><strong>by Amurskiyrrk</strong></div></footer>
 </div>
 </section>
 <section class="page" id="page-process">
@@ -3768,12 +3810,13 @@ function searchMatch(text,q){
 }
 function showPage(name,updateHash=true){
   $$('.page').forEach(p=>p.classList.toggle('active',p.id==='page-'+name));
-  $$('.nav button[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
+  const navPage=name==='uk-interview'?'uk-memos':name;
+  $$('.nav button[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===navPage));
   if(updateHash) history.replaceState(null,'','#'+name);
   window.scrollTo({top:0,behavior:'smooth'});
 }
 $$('.nav button[data-page]').forEach(b=>b.onclick=()=>showPage(b.dataset.page));
-const initPage=location.hash.replace('#',''); if(['home','basis','situations','departments','uk-interview','process','terms','territories','convoys','codes','rules','laws'].includes(initPage)) showPage(initPage,false);
+const initPage=location.hash.replace('#',''); if(['home','basis','situations','departments','uk-memos','uk-interview','process','terms','territories','convoys','codes','rules','laws'].includes(initPage)) showPage(initPage,false);
 
 const themeBtn=$('#themeBtn');
 function setTheme(t){document.documentElement.dataset.theme=t;try{localStorage.setItem('fso-theme',t);}catch(e){} themeBtn.textContent=t==='dark'?'☀':'◐';}
@@ -4689,9 +4732,9 @@ if(docs.length) renderDoc(docs[0]);
   };
 
   const ACADEMY_PAGES=new Set(["home","basis","departments","territories","codes","laws"]);
-  const UK_PAGES=new Set(["home","basis","situations","departments","uk-interview","process","terms","territories","codes","rules","laws"]);
+  const UK_PAGES=new Set(["home","basis","situations","departments","uk-memos","uk-interview","process","terms","territories","codes","rules","laws"]);
   const NORMAL_PAGES=new Set(["home","basis","situations","departments","process","terms","territories","convoys","codes","rules","laws"]);
-  const LEADERSHIP_PAGES=new Set([...NORMAL_PAGES,"uk-interview"]);
+  const LEADERSHIP_PAGES=new Set([...NORMAL_PAGES,"uk-memos","uk-interview"]);
 
   let selectedRole="";
   let session=null;
