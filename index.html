@@ -2282,7 +2282,93 @@ body.access-pending .footer{visibility:hidden}
 .uk-memo-footer{display:flex;justify-content:space-between;gap:12px;margin-top:14px;padding:0 3px;color:var(--muted);font-size:9px}.uk-memo-footer i{font-style:italic}
 @media(max-width:800px){.uk-memo-hero{grid-template-columns:58px 1fr;padding:18px}.uk-memo-emblem{width:58px;height:58px;border-radius:13px;font-size:18px}.uk-memo-hero h2{font-size:22px}.uk-memo-checklist,.uk-question-list,.uk-evaluation-grid,.uk-memo-actions,.uk-memo-grid-3,.uk-memo-checklist.compact{grid-template-columns:1fr}}
 @media(max-width:540px){.uk-memo-topbar{align-items:flex-start;flex-direction:column}.uk-memo-section{padding:14px}.uk-memo-hero{grid-template-columns:1fr}.uk-memo-emblem{display:none}.uk-memo-hero h2{font-size:20px}.uk-memo-actions>div{align-items:flex-start;flex-direction:column}.uk-memo-note{flex-direction:column}}
-</style></head><body class="access-pending">
+</style>
+<style id="search-autocomplete-territory-v2">
+/* Живые поисковые подсказки */
+.smart-search-box,.basis-search{position:relative}
+.search-suggest-panel{
+  position:absolute;left:0;right:0;top:calc(100% + 7px);z-index:80;
+  display:none;overflow:hidden;
+  border:1px solid var(--line);border-radius:12px;
+  background:color-mix(in srgb,var(--panel) 97%,transparent);
+  box-shadow:0 18px 48px rgba(0,0,0,.28);
+  backdrop-filter:blur(14px)
+}
+.search-suggest-panel.open{display:block}
+.search-suggest-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:8px 10px;border-bottom:1px solid var(--line);
+  color:var(--muted);font-size:9px;font-weight:850;letter-spacing:.05em
+}
+.search-suggest-head b{color:var(--text);font-size:10px;letter-spacing:0}
+.search-suggest-list{display:grid;padding:5px}
+.search-suggest-item{
+  width:100%;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;
+  padding:9px 10px;border:0;border-radius:8px;background:transparent;color:var(--text);
+  text-align:left;cursor:pointer
+}
+.search-suggest-item:hover,.search-suggest-item.active{
+  background:color-mix(in srgb,var(--accent) 10%,var(--panel2))
+}
+.search-suggest-item span{min-width:0;font-size:11px;font-weight:760;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.search-suggest-item small{
+  color:var(--muted);font-size:8px;font-weight:850;text-transform:uppercase;letter-spacing:.05em
+}
+.search-suggest-item mark{
+  background:transparent;color:var(--accent);font-weight:950
+}
+.search-suggest-empty{padding:11px;color:var(--muted);font-size:10px}
+@media(max-width:650px){
+  .search-suggest-item{grid-template-columns:1fr;padding:9px}
+  .search-suggest-item small{display:none}
+}
+
+/* Быстрый перечень режимов государственных территорий */
+.territory-index{
+  margin-top:14px;padding:14px;border:1px solid var(--line);border-radius:14px;
+  background:color-mix(in srgb,var(--panel) 94%,transparent)
+}
+.territory-index-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:11px}
+.territory-index-head small{display:block;color:var(--accent);font-size:8px;font-weight:900;letter-spacing:.09em;margin-bottom:4px}
+.territory-index-head h3{margin:0;font-size:17px}
+.territory-index-head p{margin:4px 0 0;color:var(--muted);font-size:10px;line-height:1.45;max-width:760px}
+.territory-index-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.territory-index-card{
+  border:1px solid var(--line);border-radius:11px;background:var(--panel2);padding:11px 12px
+}
+.territory-index-card.white{border-top:2px solid #cfd6df}
+.territory-index-card.yellow{border-top:2px solid #d9b85f}
+.territory-index-card.red{border-top:2px solid #d36a6a}
+.territory-index-card.blue{border-top:2px solid #5f98df}
+.territory-index-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.territory-index-title b{font-size:12px}
+.territory-index-title button,.territory-split-example button{
+  border:1px solid var(--line);border-radius:7px;background:var(--bg2);color:var(--muted);
+  font-size:8px;font-weight:850;padding:5px 7px;cursor:pointer
+}
+.territory-index-card ol{margin:0;padding-left:20px;display:grid;gap:5px}
+.territory-index-card li{color:var(--muted);font-size:10px;line-height:1.45;padding-left:2px}
+.territory-index-card li b{color:var(--text)}
+.territory-split-example{
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:11px;
+  margin-top:10px;padding:11px 12px;border:1px solid color-mix(in srgb,var(--accent) 40%,var(--line));
+  border-radius:11px;background:color-mix(in srgb,var(--accent) 6%,var(--panel2))
+}
+.territory-split-example>span{
+  display:grid;place-items:center;width:34px;height:34px;border-radius:9px;
+  background:var(--bg2);font-size:17px
+}
+.territory-split-example b{display:block;font-size:11px;margin-bottom:3px}
+.territory-split-example p{margin:0;color:var(--muted);font-size:10px;line-height:1.48}
+.territory-split-actions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
+@media(max-width:850px){
+  .territory-index-grid{grid-template-columns:1fr}
+  .territory-split-example{grid-template-columns:auto 1fr}
+  .territory-split-actions{grid-column:1/-1;justify-content:flex-start}
+}
+</style>
+
+</head><body class="access-pending">
 <div aria-hidden="false" class="access-gate" id="accessGate">
 <div class="access-gate-card">
 <div class="access-gate-brand">
@@ -3299,7 +3385,7 @@ body.access-pending .footer{visibility:hidden}
 </article></div>
 </section><section class="page uk-memos-page" id="page-uk-memos">
 <div class="section-head uk-memos-head">
-<div><div class="uk-memos-kicker">УПРАВЛЕНИЕ КАДРОВ</div><h2>Памятки УК</h2><p>Внутренние памятки Управления кадров. Здесь будут размещаться отдельные инструкции по направлениям работы УК.</p></div>
+<div><div class="uk-memos-kicker">УПРАВЛЕНИЕ КАДРОВ</div><h2>Памятки УК</h2><p>Внутренние рабочие памятки Управления кадров. Здесь будут размещаться отдельные инструкции по направлениям работы УК.</p></div>
 <span class="uk-memos-count">1 памятка</span>
 </div>
 <div class="uk-memos-grid">
@@ -3307,7 +3393,7 @@ body.access-pending .footer{visibility:hidden}
 <div class="uk-memo-library-index">01</div>
 <div class="uk-memo-library-body">
 <div class="uk-memo-library-meta"><span>ПРИЁМ НА СЛУЖБУ</span><span class="uk-memo-library-author">by Amurskiyrrk</span></div>
-<h3>Регламент собеседования при приёме на службу в ФСО</h3>
+<h3>Проведение собеседования при приёме во ФСО</h3>
 <p>Порядок собеседования, проверка кандидата, общие вопросы и действия сотрудника УК после успешного прохождения.</p>
 <div class="uk-memo-library-foot"><span>Открыть памятку</span><b>→</b></div>
 </div>
@@ -3324,7 +3410,7 @@ body.access-pending .footer{visibility:hidden}
 <div class="uk-memo-emblem">УК</div>
 <div>
 <small>ФЕДЕРАЛЬНАЯ СЛУЖБА ОХРАНЫ РО</small>
-<h2>Регламент собеседования при приёме на службу в ФСО</h2>
+<h2>Проведение собеседования при приёме во ФСО</h2>
 <p>Памятка сотруднику Управления кадров</p>
 </div>
 </header>
@@ -3502,6 +3588,78 @@ body.access-pending .footer{visibility:hidden}
 <div class="territory-mini-links"><button data-territory-article="39" type="button">ст. 39</button><button data-territory-article="41" type="button">ст. 41</button></div>
 </article>
 </div>
+
+<div class="territory-index">
+  <div class="territory-index-head">
+    <div>
+      <small>БЫСТРЫЙ ПЕРЕЧЕНЬ</small>
+      <h3>Что относится к каждому режиму</h3>
+      <p>Не только определение режима, а конкретные зоны и объекты. Для точной проверки нажми на статью — откроется действующая норма.</p>
+    </div>
+  </div>
+
+  <div class="territory-index-grid">
+    <article class="territory-index-card white">
+      <div class="territory-index-title"><b>⚪ Охраняемые территории</b><button data-territory-article="12" type="button">ст. 12</button></div>
+      <ol>
+        <li>Холлы, тамбуры, приёмные и другие <b>открытые для посетителей зоны</b> государственных органов и организаций.</li>
+        <li><b>Открытые территории государственных медицинских организаций.</b></li>
+        <li>Обозначенные служебные парковочные места и посадочные площадки, если им не присвоен другой режим.</li>
+        <li>Открытые участки перед КПП закрытых территорий и режимных объектов.</li>
+        <li>Иные территории, прямо отнесённые к охраняемым законом или государственным реестром.</li>
+      </ol>
+    </article>
+
+    <article class="territory-index-card yellow">
+      <div class="territory-index-title"><b>🟡 Закрытые территории</b><button data-territory-article="18" type="button">ст. 18</button></div>
+      <ol>
+        <li>Служебные помещения Правительства РО и федеральных министерств, кроме открытых зон приёма.</li>
+        <li>Внутренняя территория Кутузовского районного суда, кроме холла и открытых для посетителей помещений.</li>
+        <li><b>Административные, лечебно-процедурные, складские, технические и служебные помещения государственных медорганизаций</b>, а также их ограждённые парковки.</li>
+        <li>Служебные помещения МВД и ГИБДД, кроме холлов.</li>
+        <li>Служебные помещения государственных СМИ и других госорганизаций: архивы, технические этажи, крыши, лифтовые и иные служебные зоны.</li>
+        <li>Государственные пристани, ангары, гаражи и другие объекты, если им не присвоен режим режимного объекта.</li>
+        <li>Иные территории, прямо указанные в государственном реестре на основании федерального закона.</li>
+      </ol>
+    </article>
+
+    <article class="territory-index-card red">
+      <div class="territory-index-title"><b>🔴 Режимные объекты</b><button data-territory-article="33" type="button">ст. 31–33</button></div>
+      <ol>
+        <li>Территория ФСБ РО внутри установленного периметра, включая внутренние помещения.</li>
+        <li>Территория воинской части за КПП, ограждением или иным установленным периметром; отдельно определённые военные склады, командные пункты и служебные ангары.</li>
+        <li>Государственные учреждения содержания под стражей внутри внешнего ограждения.</li>
+        <li><b>Специально определённые объекты ФСО РО.</b></li>
+        <li>Государственные хранилища оружия, боеприпасов, взрывчатых веществ и материалов, составляющих государственную тайну.</li>
+        <li>Охраняемые узлы связи и критически важные государственные объекты, включённые в государственный реестр.</li>
+        <li>Иные объекты, прямо отнесённые федеральным законом к режимным.</li>
+      </ol>
+    </article>
+
+    <article class="territory-index-card blue">
+      <div class="territory-index-title"><b>🔵 Территории с особым статусом</b><button data-territory-article="39" type="button">ст. 39</button></div>
+      <ol>
+        <li><b>Кремль.</b></li>
+        <li><b>Красная площадь.</b></li>
+        <li>Иные территории, прямо определённые федеральным законом.</li>
+      </ol>
+    </article>
+  </div>
+
+  <div class="territory-split-example">
+    <span>✚</span>
+    <div>
+      <b>Один объект может содержать зоны с разным режимом — пример больницы</b>
+      <p>Открытая территория и холл государственной больницы относятся к охраняемым зонам, а административные, лечебно-процедурные, складские, технические и служебные помещения, а также ограждённая парковка — к закрытым. Поэтому всегда смотри не только на название объекта, но и на конкретную зону.</p>
+    </div>
+    <div class="territory-split-actions">
+      <button data-territory-article="12" type="button">ст. 12</button>
+      <button data-territory-article="18" type="button">ст. 18</button>
+      <button data-territory-article="19" type="button">ст. 19</button>
+    </div>
+  </div>
+</div>
+
 <div class="territory-common-card">
 <div>
 <small>ВРЕМЕННЫЙ ОСОБЫЙ РЕЖИМ</small>
@@ -3515,7 +3673,7 @@ body.access-pending .footer{visibility:hidden}
 <div class="territory-card-head regime-white-head"><div><small>⚪ ОХРАНЯЕМАЯ</small><h3>Кто и зачем может находиться</h3></div><button data-territory-article="13" type="button">ст. 13</button></div>
 <div class="territory-points">
 <p><b>Законные цели:</b> обращение в государственный орган, государственная или медицинская услуга, участие в судебном заседании, трудоустройство, исполнение обязанности, встреча с уполномоченным сотрудником либо иная законная цель.</p>
-<p><b>Типичные зоны:</b> холлы, тамбуры, приёмные и другие открытые зоны госорганов; открытые территории государственных медорганизаций; обозначенные служебные парковочные места и посадочные площадки, если им не присвоен иной режим; открытые участки перед КПП.</p>
+<p><b>Перечень по ст. 12:</b> холлы, тамбуры, приёмные и другие открытые зоны госорганов; открытые территории государственных медорганизаций; обозначенные служебные парковочные места и посадочные площадки, если им не присвоен иной режим; открытые участки перед КПП.</p>
 <p><b>Важно:</b> наличие охраны не превращает территорию в закрытую или режимную.</p>
 </div>
 <div class="territory-actions"><button data-territory-article="11" type="button">ст. 11</button><button data-territory-article="12" type="button">ст. 12</button><button data-territory-article="14" type="button">ст. 14 · холлы</button></div>
@@ -3719,7 +3877,7 @@ body.access-pending .footer{visibility:hidden}
 </div>
 <p class="footer-disclaimer">Неофициальная памятка. При расхождении приоритет имеют действующие нормативные акты проекта.</p>
 <div class="footer-update-row">
-<small class="footer-updated">Последнее обновление: 08.09.2026</small>
+<small class="footer-updated">Последнее обновление: 10.09.2026</small>
 <button class="updates-btn" id="updatesBtn" type="button">Обновления</button>
 </div>
 </div>
@@ -3739,6 +3897,18 @@ body.access-pending .footer{visibility:hidden}
 <button aria-label="Закрыть" class="updates-close" id="updatesClose" type="button">×</button>
 </div>
 <div class="updates-body">
+
+<article class="update-entry">
+<div class="update-date">10.09.2026</div>
+<h4>Живые подсказки поиска и перечни государственных территорий</h4>
+<ul>
+<li>Добавлены автоподсказки с третьей буквы: поиск предлагает реальные термины, слова, названия документов и формулировки из нормативной базы.</li>
+<li>Поиск по неполным словам унифицирован: «непри» находит варианты с «неприкосновенностью», «проц» — варианты с «процессом» и «процессуальными» формулировками.</li>
+<li>В раздел «Гос. территории» добавлен явный перечень объектов и зон для охраняемой, закрытой, режимной территории и территории с особым статусом.</li>
+<li>Добавлено отдельное разъяснение на примере государственной больницы: открытая и служебная части могут иметь разный правовой режим.</li>
+</ul>
+</article>
+
 <article class="update-entry">
 <div class="update-date">08.09.2026</div>
 <h4>Актуализация законки и памятки ФСО</h4>
@@ -3802,11 +3972,58 @@ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function rx(s){return String(s).replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
 
-function searchNorm(s){return String(s||'').toLowerCase().replace(/ё/g,'е').replace(/[^a-zа-я0-9.]+/gi,' ').replace(/\s+/g,' ').trim();}
+function searchNorm(s){
+  return String(s||'')
+    .toLowerCase()
+    .replace(/ё/g,'е')
+    /* Точки сохраняем только внутри номеров статей: 17.6, 12.6.1 и т.п. */
+    .replace(/\.(?!\d)/g,' ')
+    .replace(/[^a-zа-я0-9.]+/gi,' ')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+
+const SEARCH_ENDINGS=[
+  'иями','ениями','аниями','ениями','остью','ениями',
+  'ения','ание','аний','ению','анием','ении',
+  'иями','иях','иям','ией','ию','ия',
+  'ости','остью','ость',
+  'ствами','ством','ствах','ствам','стве','ству','ства','ство',
+  'ями','ами','ого','его','ому','ему','ыми','ими',
+  'ую','юю','ая','яя','ое','ее','ые','ие','ый','ий','ой',
+  'ов','ев','ей','ам','ям','ах','ях','ом','ем',
+  'ать','ять','ить','ться',
+  'а','я','ы','и','у','ю','е','о'
+].sort((a,b)=>b.length-a.length);
+
+function searchStem(word){
+  let w=searchNorm(word);
+  if(w.length<=4 || /^\d+(?:\.\d+)*$/.test(w))return w;
+  for(const end of SEARCH_ENDINGS){
+    if(w.endsWith(end) && w.length-end.length>=4)return w.slice(0,-end.length);
+  }
+  return w;
+}
+
+function searchTokenMatch(hayWord,queryWord){
+  const h=searchNorm(hayWord), q=searchNorm(queryWord);
+  if(!q)return true;
+  if(h===q)return true;
+
+  /* Главное исправление: неполное слово считается префиксом.
+     "неприкос" -> "неприкосновенность", "процессуал" -> "процессуальный". */
+  if(q.length>=3 && h.startsWith(q))return true;
+
+  if(q.length<=4 || h.length<=4)return false;
+  const hs=searchStem(h), qs=searchStem(q);
+  return hs===qs || (qs.length>=3 && hs.startsWith(qs));
+}
+
 function searchMatch(text,q){
-  const hay=searchNorm(text), needle=searchNorm(q); if(!needle)return true;
-  const words=needle.split(' ').filter(Boolean), hayWords=new Set(hay.split(' '));
-  return words.every(w=>w.length<=3?hayWords.has(w):hay.includes(w));
+  const needle=searchNorm(q); if(!needle)return true;
+  const hayWords=searchNorm(text).split(' ').filter(Boolean);
+  const queryWords=needle.split(' ').filter(Boolean);
+  return queryWords.every(qw=>hayWords.some(hw=>searchTokenMatch(hw,qw)));
 }
 function showPage(name,updateHash=true){
   $$('.page').forEach(p=>p.classList.toggle('active',p.id==='page-'+name));
@@ -4072,10 +4289,9 @@ if(docs.length) renderDoc(docs[0]);
   let bf='all'; const bi=document.getElementById('matrixSearch');
   function basisMatch(card,q){
     if(!q)return true;
-    const keys=n(card.dataset.keywords||'');
-    const full=n(card.dataset.search||'');
-    if(q.length<=3) return keys.split('|').map(x=>x.trim()).some(x=>x===q||x.startsWith(q+' '));
-    return keys.includes(q)||full.includes(q);
+    const keys=(card.dataset.keywords||'');
+    const full=(card.dataset.search||'');
+    return searchMatch(keys+' '+full,q);
   }
   function applyB(){const q=n(bi?.value);document.querySelectorAll('.basis-section').forEach(sec=>{const groupOk=bf==='all'||sec.dataset.basisGroup===bf;let v=0;sec.querySelectorAll('.basis-card').forEach(c=>{const ok=groupOk&&basisMatch(c,q);c.classList.toggle('is-hidden',!ok);if(ok)v++;});sec.classList.toggle('is-hidden',v===0);});}
   document.querySelectorAll('.basis-tab').forEach(b=>b.addEventListener('click',()=>{bf=b.dataset.basisFilter;document.querySelectorAll('.basis-tab').forEach(x=>x.classList.toggle('active',x===b));applyB();}));bi?.addEventListener('input',applyB);applyB();
@@ -4214,6 +4430,265 @@ if(docs.length) renderDoc(docs[0]);
     push();
   });
 
+
+  /* ===== ЖИВЫЕ ПОДСКАЗКИ ПОИСКА ===== */
+  const AUTOCOMPLETE_STOP=new Set([
+    "это","как","для","при","или","либо","если","что","также","только","может","могут","должен","должна",
+    "должны","имеет","имеют","является","являются","который","которая","которые","этой","этого","этим",
+    "после","перед","между","всех","своей","своего","своих","иной","иное","иные","один","одна","часть",
+    "статья","пункт","глава","настоящего","федерального","закона","россия","онлайн","форум","нового",
+    "пользователи","закрыто","ответов","лидер","организации","государственной","государственный"
+  ]);
+
+  const autocompleteMap=new Map();
+
+  function cleanSuggestionLabel(v){
+    return String(v||"").replace(/\s+/g," ").trim().replace(/^[·—–:;,.\s]+|[·—–:;,.\s]+$/g,"");
+  }
+
+  function addAutocomplete(label,type="слово",weight=1){
+    label=cleanSuggestionLabel(label);
+    if(!label)return;
+    const norm=searchNorm(label);
+    if(!norm || norm.length<3 || norm.length>90)return;
+    if(/^\d+(?:\.\d+)*$/.test(norm))return;
+
+    const key=norm;
+    const old=autocompleteMap.get(key);
+    if(old){
+      old.weight+=weight;
+      if(weight>old.bestWeight){
+        old.label=label; old.type=type; old.bestWeight=weight;
+      }
+      return;
+    }
+    autocompleteMap.set(key,{label,type,weight,bestWeight:weight,norm});
+  }
+
+  function addAutocompleteWords(text,type="слово",weight=1){
+    const words=String(text||"").match(/[A-Za-zА-Яа-яЁё][A-Za-zА-Яа-яЁё-]{2,}/g)||[];
+    words.forEach(raw=>{
+      const word=raw.replace(/^-+|-+$/g,"");
+      const norm=searchNorm(word);
+      if(norm.length<3 || norm.length>34 || AUTOCOMPLETE_STOP.has(norm))return;
+      if(/[a-z]/i.test(word) && word.length<4)return;
+      addAutocomplete(word.toLowerCase(),type,weight);
+    });
+  }
+
+  /* Сильные источники: названия документов, алиасы, понятия, карточки и заголовки. */
+  docs.filter(d=>!d.hidden).forEach(d=>{
+    addAutocomplete(d.title,"документ",95);
+    (DOC_ALIASES[d.id]||[]).forEach(x=>addAutocomplete(x,"документ",110));
+  });
+
+  CONCEPTS.forEach(g=>{
+    g.add.forEach(x=>addAutocomplete(x,x.includes(" ")?"фраза":"термин",85));
+    g.find.forEach(x=>addAutocompleteWords(x,"термин",15));
+  });
+
+  document.querySelectorAll("#page-basis .basis-card").forEach(card=>{
+    try{
+      const d=JSON.parse(card.dataset.norm);
+      addAutocomplete(d.t,"памятка",115);
+      addAutocompleteWords(d.t,"термин",24);
+    }catch(_){}
+    String(card.dataset.keywords||"").split("|").forEach(x=>{
+      if(searchNorm(x).length>=3)addAutocomplete(x,"ключевое",55);
+      addAutocompleteWords(x,"ключевое",7);
+    });
+  });
+
+  document.querySelectorAll(".term-card h3").forEach(el=>{
+    addAutocomplete(el.textContent,"термин",120);
+    addAutocompleteWords(el.textContent,"термин",30);
+  });
+
+  document.querySelectorAll("#page-territories h2,#page-territories h3,#page-territories b").forEach(el=>{
+    const t=cleanSuggestionLabel(el.textContent);
+    if(t.length>=3 && t.length<=65){
+      addAutocomplete(t,"территории",45);
+      addAutocompleteWords(t,"территории",13);
+    }
+  });
+
+  articleIndex.forEach(a=>{
+    /* Заголовок статьи как фраза без «Статья 12.» */
+    const heading=String(a.heading||"").replace(/^(?:Статья|Пункт)\s+\d+(?:\.\d+)*\.\s*/i,"");
+    if(heading) addAutocomplete(heading,"статья",70);
+    addAutocompleteWords(heading,"статья",18);
+
+    /* Обычные слова из текста дают охват, но имеют низкий приоритет,
+       поэтому не вытесняют юридические термины и названия документов. */
+    addAutocompleteWords(a.text,"слово",1);
+  });
+
+  /* Важные общеупотребительные варианты, которыми реально будут искать нормы. */
+  [
+    ["процесс","термин",130],["процессуальный","термин",135],["процессуальные права","фраза",140],
+    ["неприкосновенность","термин",150],["охраняемая территория","территории",150],
+    ["закрытая территория","территории",145],["режимный объект","территории",145],
+    ["территория с особым статусом","территории",135],["больница","территории",120],
+    ["задержание","термин",135],["досмотр","термин",135],["обыск","термин",125],
+    ["удостоверение","термин",125],["полномочия","термин",125],["субординация","термин",115]
+  ].forEach(x=>addAutocomplete(x[0],x[1],x[2]));
+
+  const autocompleteEntries=[...autocompleteMap.values()];
+
+  function autocompletePrefixInfo(value){
+    const raw=String(value||"");
+    const m=raw.match(/(^|\s)([A-Za-zА-Яа-яЁё-]{1,})$/);
+    if(!m)return null;
+    return {prefix:searchNorm(m[2]),rawPrefix:m[2],base:raw.slice(0,raw.length-m[2].length)};
+  }
+
+  function autocompleteScore(entry,prefix){
+    const words=entry.norm.split(" ");
+    let pos=-1,matched="";
+    for(const w of words){
+      if(w.startsWith(prefix)){pos=0;matched=w;break;}
+      if(prefix.length>=4 && searchStem(w).startsWith(searchStem(prefix))){pos=1;matched=w;break;}
+    }
+    if(pos<0)return -Infinity;
+
+    let score=entry.weight;
+    if(entry.norm.startsWith(prefix))score+=420;
+    else score+=260;
+    if(entry.norm===prefix)score+=220;
+    if(entry.type==="термин"||entry.type==="документ"||entry.type==="памятка")score+=55;
+    if(entry.label.includes(" "))score+=18;
+    score-=Math.min(90,Math.max(0,entry.norm.length-prefix.length)*0.8);
+    return score;
+  }
+
+  function getAutocomplete(value,limit=8){
+    const info=autocompletePrefixInfo(value);
+    if(!info || info.prefix.length<3)return {info,items:[]};
+
+    const scored=[];
+    for(const entry of autocompleteEntries){
+      const score=autocompleteScore(entry,info.prefix);
+      if(Number.isFinite(score))scored.push({entry,score});
+    }
+    scored.sort((a,b)=>b.score-a.score || a.entry.label.length-b.entry.label.length);
+
+    /* Не показываем почти одинаковые варианты подряд. */
+    const out=[],seenStem=new Set();
+    for(const x of scored){
+      const first=x.entry.norm.split(" ").find(w=>w.startsWith(info.prefix))||x.entry.norm;
+      const stem=searchStem(first);
+      const dedupeKey=(x.entry.type==="документ"||x.entry.label.includes(" "))?x.entry.norm:stem;
+      if(seenStem.has(dedupeKey))continue;
+      seenStem.add(dedupeKey);
+      out.push(x.entry);
+      if(out.length>=limit)break;
+    }
+    return {info,items:out};
+  }
+
+  function highlightSuggestion(label,prefix){
+    const safe=esc2(label);
+    const re=new RegExp("("+String(prefix).replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","i");
+    return safe.replace(re,"<mark>$1</mark>");
+  }
+
+  function suggestionPanelFor(input){
+    if(input._suggestPanel && input._suggestPanel.isConnected)return input._suggestPanel;
+    const wrap=input.closest(".smart-search-box,.basis-search")||input.parentElement;
+    const p=document.createElement("div");
+    p.className="search-suggest-panel";
+    p.setAttribute("role","listbox");
+    wrap.appendChild(p);
+    input._suggestPanel=p;
+    input._suggestItems=[];
+    input._suggestIndex=-1;
+    return p;
+  }
+
+  function closeSuggestions(input){
+    const p=input._suggestPanel;
+    if(p){p.classList.remove("open");p.innerHTML="";}
+    input._suggestItems=[];
+    input._suggestIndex=-1;
+  }
+
+  function useSuggestion(input,entry){
+    const info=autocompletePrefixInfo(input.value);
+    if(!info)return;
+    let value;
+    if(entry.label.includes(" ")){
+      /* Фраза/документ заменяет текущий незаконченный фрагмент целиком,
+         а уже введённая предыдущая часть запроса сохраняется. */
+      value=info.base+entry.label;
+    }else{
+      value=info.base+entry.label;
+    }
+    input.value=value;
+    closeSuggestions(input);
+    input.dispatchEvent(new Event("input",{bubbles:true}));
+    input.focus();
+  }
+
+  function paintSuggestionActive(input){
+    const p=input._suggestPanel;if(!p)return;
+    p.querySelectorAll(".search-suggest-item").forEach((b,i)=>b.classList.toggle("active",i===input._suggestIndex));
+  }
+
+  function renderSuggestions(input){
+    const p=suggestionPanelFor(input);
+    const {info,items}=getAutocomplete(input.value,8);
+    if(!info || info.prefix.length<3 || !items.length){
+      closeSuggestions(input);return;
+    }
+
+    input._suggestItems=items;
+    input._suggestIndex=-1;
+    p.innerHTML=`<div class="search-suggest-head"><b>Возможно, вы ищете</b><span>${items.length} вариантов</span></div>`+
+      `<div class="search-suggest-list">`+
+      items.map((e,i)=>`<button class="search-suggest-item" type="button" data-suggest-index="${i}" role="option"><span>${highlightSuggestion(e.label,info.rawPrefix)}</span><small>${esc2(e.type)}</small></button>`).join("")+
+      `</div>`;
+    p.classList.add("open");
+
+    p.querySelectorAll("[data-suggest-index]").forEach(btn=>{
+      btn.addEventListener("mousedown",e=>e.preventDefault());
+      btn.addEventListener("click",()=>useSuggestion(input,items[Number(btn.dataset.suggestIndex)]));
+    });
+  }
+
+  ["homeSmartSearch","matrixSearch"].forEach(id=>{
+    const input=document.getElementById(id);
+    if(!input)return;
+
+    input.addEventListener("input",()=>renderSuggestions(input));
+    input.addEventListener("focus",()=>renderSuggestions(input));
+    input.addEventListener("keydown",e=>{
+      const items=input._suggestItems||[];
+      if(!items.length)return;
+      if(e.key==="ArrowDown"){
+        e.preventDefault();
+        input._suggestIndex=(input._suggestIndex+1)%items.length;
+        paintSuggestionActive(input);
+      }else if(e.key==="ArrowUp"){
+        e.preventDefault();
+        input._suggestIndex=(input._suggestIndex<=0?items.length-1:input._suggestIndex-1);
+        paintSuggestionActive(input);
+      }else if(e.key==="Enter" && input._suggestIndex>=0){
+        e.preventDefault();
+        useSuggestion(input,items[input._suggestIndex]);
+      }else if(e.key==="Escape"){
+        closeSuggestions(input);
+      }
+    });
+  });
+
+  document.addEventListener("click",e=>{
+    ["homeSmartSearch","matrixSearch"].forEach(id=>{
+      const input=document.getElementById(id);
+      if(input && !e.target.closest(".search-suggest-panel") && e.target!==input)closeSuggestions(input);
+    });
+  });
+  /* ===== /ЖИВЫЕ ПОДСКАЗКИ ПОИСКА ===== */
+
   function esc2(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 
   function hasPhrase(text,phrase){
@@ -4258,26 +4733,14 @@ if(docs.length) renderDoc(docs[0]);
   }
 
   function stemWord(word){
-    let w=searchNorm(word);
-    if(w.length<=4)return w;
-    const endings=["иями","ями","ами","ения","ение","ений","ого","его","ому","ему","ыми","ими","ую","юю","ая","яя","ое","ее","ые","ие","ый","ий","ой","ов","ев","ей","ам","ям","ах","ях","ом","ем","ать","ять","ить","ться","ить","а","я","ы","и","у","ю","е","о"];
-    for(const end of endings){
-      if(w.endsWith(end)&&w.length-end.length>=4)return w.slice(0,-end.length);
-    }
-    return w;
+    return searchStem(word);
   }
 
   function wordsMatch(text,q){
-    const nq=searchNorm(q);
-    if(!nq)return true;
-    const words=searchNorm(text).split(" ").filter(Boolean);
-    const exact=new Set(words);
-    const stems=new Set(words.filter(w=>w.length>4).map(stemWord));
-    return nq.split(" ").filter(Boolean).every(word=>{
-      if(exact.has(word))return true;
-      if(word.length<=4)return false;
-      return stems.has(stemWord(word));
-    });
+    /* Один и тот же алгоритм для поиска по документам, карточкам и названиям.
+       Раньше здесь использовалась отдельная логика, из-за чего части слов
+       вроде "неприкос" не находились. */
+    return searchMatch(text,q);
   }
 
   function matchesArticle(a,parsed){
@@ -4339,6 +4802,7 @@ if(docs.length) renderDoc(docs[0]);
     if(parsed.articleNums.includes(String(a.num)))score+=120;
     const content=searchNorm(parsed.content);
     if(content){
+      if(searchMatch(aliasesForDoc(a.doc),content))score+=60;
       if(searchNorm(a.heading).includes(content))score+=45;
       if(searchNorm(a.text).includes(content))score+=30;
       if(searchNorm(a.keywords).includes(content))score+=20;
