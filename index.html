@@ -2733,6 +2733,7 @@ body.access-pending .footer{visibility:hidden}
 </form>
 <div class="access-gate-note">
 <span>Разделы показываются в соответствии с выбранным профилем.</span>
+<span>Доступ к материалам «СЕКРЕТНО» проверяется отдельно.</span>
 </div>
 </div>
 </div>
@@ -3791,7 +3792,6 @@ body.access-pending .footer{visibility:hidden}
   </ul>
 </article>
 
-
 <article class="update-entry">
 <div class="update-date">10.09.2026</div>
 <h4>Подсказки поиска и перечни государственных территорий</h4>
@@ -3843,6 +3843,7 @@ body.access-pending .footer{visibility:hidden}
 <li>Добавлен полнотекстовый поиск по нормативной базе.</li>
 </ul>
 </article>
+
 </div>
 </div>
 </div>
@@ -5180,15 +5181,28 @@ if(docs.length) renderDoc(docs[0]);
   });
 
   async function request(path,options={}){
-    const r=await fetch(ACCESS_API+path,options);
-    let data={};
-    try{data=await r.json();}catch(_){}
-    if(!r.ok){
-      const err=new Error(data.error||("Ошибка "+r.status));
-      err.status=r.status;
+    const controller=new AbortController();
+    const timeout=setTimeout(()=>controller.abort(),10000);
+    try{
+      const r=await fetch(ACCESS_API+path,{...options,signal:controller.signal});
+      let data={};
+      try{data=await r.json();}catch(_){}
+      if(!r.ok){
+        const err=new Error(data.error||("Ошибка "+r.status));
+        err.status=r.status;
+        throw err;
+      }
+      return data;
+    }catch(err){
+      if(err?.name==="AbortError"){
+        const timeoutErr=new Error("Сервер доступа отвечает слишком долго. Попробуйте ещё раз.");
+        timeoutErr.status=408;
+        throw timeoutErr;
+      }
       throw err;
+    }finally{
+      clearTimeout(timeout);
     }
-    return data;
   }
 
   async function login(role,password){
@@ -5399,8 +5413,8 @@ if(docs.length) renderDoc(docs[0]);
     filterDepartments();
     guardPageNavigation();
 
-    await loadSituations();
-
+    /* Вход уже подтверждён — сразу открываем памятку.
+       Защищённые «Ситуации» догружаются отдельно и больше не блокируют весь сайт. */
     document.body.classList.remove("access-pending");
     document.body.classList.add("access-ready");
     gate.hidden=true;
@@ -5409,6 +5423,8 @@ if(docs.length) renderDoc(docs[0]);
     const permitted=allowedPages();
     const current=location.hash.replace("#","")||"home";
     if(!permitted.has(current) && typeof window.showPage==="function")window.showPage("home",false);
+
+    void loadSituations();
   }
 
   form.addEventListener("submit",async e=>{
