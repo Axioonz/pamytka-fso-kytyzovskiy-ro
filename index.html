@@ -2638,6 +2638,71 @@ body.access-pending .footer{visibility:hidden}
 .basis-full-note{margin-top:12px;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:var(--panel2)}
 .basis-full-note b{font-size:10px}.basis-full-note p{margin:4px 0 0;color:var(--muted);font-size:9px;line-height:1.5}
 </style>
+
+<style id="cheatsheet-button-layout-fix-v3">
+/* Действие вынесено из содержимого карточки: сначала материал и статья, затем кнопка. */
+.cheat-source-wrap{
+  position:relative!important;
+  display:block!important;
+  min-width:0;
+}
+.cheat-source-wrap>.basis-card,
+.cheat-source-wrap>.uk-memo-library-card{
+  width:100%!important;
+  height:auto!important;
+}
+.cheat-source-wrap>.cheat-quick-add{
+  position:static!important;
+  display:flex!important;
+  width:max-content!important;
+  max-width:100%;
+  margin:7px 0 0 auto!important;
+  padding:6px 9px!important;
+}
+.cheat-quick-add{
+  position:static!important;
+  right:auto!important;
+  top:auto!important;
+  z-index:auto!important;
+  float:none!important;
+  clear:both;
+  box-shadow:none!important;
+}
+.term-card>.cheat-quick-add,
+.territory-index-card>.cheat-quick-add,
+.territory-detail-card>.cheat-quick-add,
+.rule-card>.cheat-quick-add,
+.dept-card>.cheat-quick-add,
+.box>.cheat-quick-add,
+.protected-cheat-ref>.cheat-quick-add{
+  display:flex!important;
+  width:max-content!important;
+  margin:9px 0 0 auto!important;
+  justify-self:end!important;
+  align-self:end!important;
+}
+.term-card:has(>.cheat-quick-add),
+.territory-index-card:has(>.cheat-quick-add),
+.territory-detail-card:has(>.cheat-quick-add),
+.rule-card:has(>.cheat-quick-add),
+.dept-card:has(>.cheat-quick-add),
+.box:has(>.cheat-quick-add),
+.protected-cheat-ref{
+  padding-right:initial!important;
+}
+@media(max-width:520px){
+  .cheat-source-wrap>.cheat-quick-add,
+  .term-card>.cheat-quick-add,
+  .territory-index-card>.cheat-quick-add,
+  .territory-detail-card>.cheat-quick-add,
+  .rule-card>.cheat-quick-add,
+  .dept-card>.cheat-quick-add,
+  .box>.cheat-quick-add{
+    margin-left:auto!important;
+  }
+}
+</style>
+
 </head><body class="access-pending">
 <div aria-hidden="false" class="access-gate" id="accessGate">
 <div class="access-gate-card">
@@ -3699,6 +3764,18 @@ body.access-pending .footer{visibility:hidden}
 <button aria-label="Закрыть" class="updates-close" id="updatesClose" type="button">×</button>
 </div>
 <div class="updates-body">
+
+<article class="update-entry">
+  <div class="update-date">11.09.2026</div>
+  <h4>Переработан табличный PDF и отображение документов</h4>
+  <ul>
+    <li>«Таблица PDF» теперь использует плотную многоколоночную раскладку без пустых ячеек одинаковой высоты.</li>
+    <li>Количество колонок автоматически меняется в зависимости от размера личной шпаргалки.</li>
+    <li>Кнопка «В шпаргалку» окончательно вынесена после материала и больше не перекрывает статью, подписи или действия карточки.</li>
+    <li>В полном тексте документов дополнительно очищены пробелы перед знаками препинания, пробелы внутри скобок и отдельные артефакты форумной выгрузки.</li>
+  </ul>
+</article>
+
 <article class="update-entry"><div class="update-date">11.09.2026</div><h4>Полная ревизия раздела «Основания»</h4><ul><li>Раздел сокращён с 89 до 52 рабочих карточек: убраны дубли, определения и узкие нормы, которые логичнее искать в «Гос. территориях» или полном тексте документов.</li><li>Доступ сохранён, но собран только в действительно нужные ФСО основания: закрытые территории, режимные объекты, сопровождение и проверка права доступа.</li><li>Процессуальные карточки привязаны к правильным главам Процессуального кодекса, где номера статей повторяются.</li><li>Описания переписаны как краткие рабочие пояснения, без канцелярских шаблонов и искусственного «пересказа ради пересказа».</li></ul></article>
 <article class="update-entry">
 <div class="update-date">11.09.2026</div>
@@ -3872,22 +3949,57 @@ themeBtn.onclick=()=>setTheme(document.documentElement.dataset.theme==='dark'?'l
 function cleanLegalDisplayText(text){
   const raw=String(text||'').replace(/\r/g,'').split('\n');
   const out=[]; let buf='';
-  const flush=()=>{if(buf){out.push(buf.trim());buf='';}};
+
+  const tidy=line=>String(line||'')
+    .replace(/\u00a0/g,' ')
+    .replace(/[ \t]+/g,' ')
+    .replace(/\s+([,.;:!?])/g,'$1')
+    .replace(/([(\[])\s+/g,'$1')
+    .replace(/\s+([)\]])/g,'$1')
+    .replace(/\b(РО|ФСО|ФСБ|МВД|ГИБДД|СК|УК|КоАП|ПК)(?=[а-яё])/g,'$1 ')
+    .trim();
+
+  const isForumJunk=line=>
+       /^<PARSED TEXT FOR PAGE:/i.test(line)
+    || /^ГЛАВНАЯ\s+ФОРУМ\s+ЧТО\s+НОВОГО\s+ПОЛЬЗОВАТЕЛИ/i.test(line)
+    || /^(?:Поделиться|Закладки|Следить|Предыдущая тема|Следующая тема)$/i.test(line);
+
+  const flush=()=>{
+    if(!buf)return;
+    let v=tidy(buf)
+      .replace(/\(\(\s*/g,'((')
+      .replace(/\s*\)\)/g,'))')
+      .replace(/\s+([,.;:!?])/g,'$1')
+      .trim();
+    if(v)out.push(v);
+    buf='';
+  };
+
   const structural=line=>/^(?:Глава|ГЛАВА|Раздел|РАЗДЕЛ|Статья)\s+/.test(line)
     || /^(?:Примечание|Пояснение|Исключение|Наказание|Приоритет розыска|Пример)\s*[:\-]/i.test(line)
     || /^\d+(?:\.\d+)*(?:\.|\))\s+/.test(line)
     || /^[а-яёa-z]\)\s+/i.test(line);
+
   for(let line of raw){
-    line=line.replace(/\s+/g,' ').trim();
-    if(!line || line==='А'){flush();continue;}
-    line=line.replace(/\bРО(?=[а-яё])/g,'РО ');
+    line=tidy(line);
+    if(!line || line==='А' || isForumJunk(line)){flush();continue;}
+
     if(!buf){buf=line;continue;}
+
     const beginsUpper=/^[А-ЯЁA-Z]/.test(line);
     const newPara=structural(line) || ((/[.!?:]$/.test(buf)) && beginsUpper);
-    if(newPara){flush();buf=line;continue;}
+
+    if(newPara){
+      flush();
+      buf=line;
+      continue;
+    }
+
+    /* Строка из PDF, начинающаяся со знака препинания, приклеивается без пробела. */
     if(/^[,.;:!?]/.test(line))buf+=line;
     else buf+=' '+line;
   }
+
   flush();
   return out.join('\n').replace(/\n{2,}/g,'\n').trim();
 }
@@ -6181,34 +6293,232 @@ footer{margin-top:18px;color:#728091;font-size:10px;text-align:center}@media pri
 
   function printTablePdf(){
     if(!exportGuard())return;
+
     const arr=exportableItems();
-    const groups=[];
-    const map=new Map();
-    arr.forEach(x=>{
-      const key=x.category||"Памятка";
-      if(!map.has(key)){const g={name:key,items:[]};map.set(key,g);groups.push(g);}
-      map.get(key).items.push(x);
-    });
-    const sections=groups.map(g=>`<section class="group"><h2>${esc(g.name)}</h2><div class="cells">${g.items.map((x,i)=>`
-      <article class="cell">
-        <div class="cell-head"><b>${esc(x.title)}</b><span>${esc(x.source||"")}</span></div>
-        ${x.content?`<p>${esc(x.content).replace(/\n/g,"<br>")}</p>`:""}
-        ${x.note?`<div class="note"><b>Личная заметка:</b> ${esc(x.note).replace(/\n/g,"<br>")}</div>`:""}
-      </article>`).join("")}</div></section>`).join("");
     const w=window.open("","_blank");
     if(!w)return toast("Браузер заблокировал окно печати.","bad");
-    w.document.write(`<!doctype html><html lang="ru"><head><meta charset="utf-8"><title>Таблица ФСО</title><style>
-      @page{size:A4 landscape;margin:5mm}*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;color:#000;background:#fff;font-size:8pt}
-      header{display:flex;justify-content:space-between;align-items:end;border:1px solid #111;border-bottom:0;padding:5px 7px;background:#fff}
-      header h1{margin:0;font-size:14pt}header p{margin:0;color:#444;font-size:7pt}.group{margin:0;break-inside:auto}.group h2{margin:0;padding:4px 6px;border:1px solid #111;border-bottom:0;background:#9dcbea;text-align:center;font-size:10pt}
-      .cells{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-left:1px solid #111;border-top:1px solid #111}
-      .cell{min-height:36mm;border-right:1px solid #111;border-bottom:1px solid #111;padding:0;break-inside:avoid;background:#fff}
-      .cell-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:5px;padding:4px 5px;border-bottom:1px solid #111;background:#f7f7f7;align-items:start}
-      .cell-head b{font-size:7.8pt;line-height:1.15}.cell-head span{max-width:42mm;text-align:right;font-size:6.7pt;font-weight:700;white-space:normal}
-      .cell p{margin:0;padding:5px;font-size:7pt;line-height:1.28}.note{margin:0 5px 5px;padding:4px;border-top:1px dashed #777;font-size:6.7pt;line-height:1.25}
-      footer{margin-top:4px;display:flex;justify-content:space-between;align-items:end;font-size:6pt;color:#555}.author{font-size:16pt;font-weight:900;color:#0c659c;letter-spacing:.01em}
-      @media print{button{display:none}.group h2{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#9dcbea!important}}
-    </style></head><body><header><div><h1>Личная шпаргалка ФСО</h1><p>${arr.length} ${countWord(arr.length)} · ${new Date().toLocaleString("ru-RU")}</p></div><p>Компактная табличная версия</p></header>${sections}<footer><span>ФСО · Россия Онлайн · Кутузовский</span><span class="author">by Арсений Рубежной</span></footer></body></html>`);
+
+    /*
+      Это не обычная HTML-таблица: обычная строка растягивает все соседние
+      ячейки по самой высокой карточке. Для шпаргалки используется плотная
+      многоколоночная раскладка — каждая карточка имеет только свою высоту.
+    */
+    const cards=arr.map((x,i)=>`
+      <article class="memo-cell">
+        <div class="memo-category">${esc(x.category||"Памятка")}</div>
+        <div class="memo-head">
+          <b>${esc(x.title)}</b>
+          ${x.source?`<span>${esc(x.source)}</span>`:""}
+        </div>
+        ${x.content?`<div class="memo-text">${esc(x.content).replace(/\n/g,"<br>")}</div>`:""}
+        ${x.note?`<div class="memo-note"><b>Личная заметка</b>${esc(x.note).replace(/\n/g,"<br>")}</div>`:""}
+      </article>`).join("");
+
+    /*
+      Количество колонок подстраивается под объём.
+      Маленькая шпаргалка остаётся читаемой, большая становится плотнее.
+    */
+    const columnCount=arr.length<=8?3:(arr.length<=22?4:5);
+
+    w.document.write(`<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Личная шпаргалка ФСО — таблица</title>
+<style>
+@page{size:A4 landscape;margin:5mm}
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  padding:0;
+  background:#fff;
+  color:#000;
+  font-family:Arial,Helvetica,sans-serif;
+}
+body{
+  font-size:7.2pt;
+  line-height:1.24;
+}
+
+.sheet{
+  width:100%;
+}
+
+.sheet-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:end;
+  gap:8mm;
+  padding:0 1px 3px;
+  border-bottom:1.4px solid #111;
+  margin-bottom:3px;
+}
+.sheet-title h1{
+  margin:0;
+  font-size:14.2pt;
+  line-height:1;
+  font-weight:900;
+}
+.sheet-title p{
+  margin:3px 0 0;
+  color:#444;
+  font-size:6.3pt;
+}
+.sheet-meta{
+  text-align:right;
+  white-space:nowrap;
+}
+.sheet-meta small{
+  display:block;
+  color:#555;
+  font-size:5.8pt;
+  margin-bottom:2px;
+}
+.author{
+  color:#09699f;
+  font-size:11pt;
+  font-weight:900;
+  letter-spacing:.01em;
+}
+
+/* Плотная раскладка без общей высоты строки */
+.memo-grid{
+  column-count:${columnCount};
+  column-gap:3px;
+  column-rule:0;
+  width:100%;
+}
+
+.memo-cell{
+  display:inline-block;
+  width:100%;
+  margin:0 0 3px;
+  vertical-align:top;
+  border:1px solid #111;
+  background:#fff;
+  break-inside:avoid;
+  page-break-inside:avoid;
+  overflow:hidden;
+}
+
+.memo-category{
+  margin:0;
+  padding:2px 4px;
+  border-bottom:1px solid #111;
+  background:#9dcbea;
+  text-align:center;
+  font-size:6.7pt;
+  font-weight:900;
+  line-height:1.05;
+}
+
+.memo-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:start;
+  gap:4px;
+  padding:3px 4px;
+  border-bottom:1px solid #111;
+  background:#f7f7f7;
+}
+.memo-head b{
+  min-width:0;
+  font-size:6.7pt;
+  line-height:1.15;
+  overflow-wrap:anywhere;
+}
+.memo-head span{
+  max-width:33mm;
+  text-align:right;
+  color:#111;
+  font-size:5.35pt;
+  line-height:1.15;
+  font-weight:700;
+  overflow-wrap:anywhere;
+}
+
+.memo-text{
+  padding:4px;
+  font-size:6.15pt;
+  line-height:1.25;
+  overflow-wrap:anywhere;
+}
+
+.memo-note{
+  margin:0 4px 4px;
+  padding:3px 4px;
+  border-top:1px dashed #777;
+  background:#fafafa;
+  font-size:5.8pt;
+  line-height:1.22;
+}
+.memo-note b{
+  display:block;
+  margin-bottom:2px;
+  font-size:5.25pt;
+  text-transform:uppercase;
+}
+
+.sheet-foot{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:2px;
+  padding-top:2px;
+  border-top:1px solid #999;
+  color:#666;
+  font-size:5.2pt;
+}
+
+/* Если элементов совсем мало — не растягиваем их искусственно. */
+.memo-cell,.memo-text,.memo-head{
+  min-height:0!important;
+  height:auto!important;
+}
+
+@media print{
+  .memo-category{
+    background:#9dcbea!important;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+  .memo-head{
+    background:#f7f7f7!important;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+  .memo-note{
+    background:#fafafa!important;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+}
+</style>
+</head>
+<body>
+<main class="sheet">
+  <header class="sheet-head">
+    <div class="sheet-title">
+      <h1>Личная шпаргалка ФСО</h1>
+      <p>${arr.length} ${countWord(arr.length)} · ${new Date().toLocaleString("ru-RU")}</p>
+    </div>
+    <div class="sheet-meta">
+      <small>Компактная табличная версия</small>
+      <div class="author">by Арсений Рубежной</div>
+    </div>
+  </header>
+
+  <section class="memo-grid">${cards}</section>
+
+  <footer class="sheet-foot">
+    <span>ФСО · Россия Онлайн · Кутузовский</span>
+    <span>Сформировано из «Моей шпаргалки»</span>
+  </footer>
+</main>
+</body>
+</html>`);
+
     w.document.close();
     setTimeout(()=>{w.focus();w.print()},300);
   }
