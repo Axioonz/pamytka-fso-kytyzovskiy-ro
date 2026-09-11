@@ -5180,9 +5180,9 @@ if(docs.length) renderDoc(docs[0]);
     if(b)chooseRole(b.dataset.accessRole);
   });
 
-  async function request(path,options={}){
+  async function request(path,options={},timeoutMs=20000){
     const controller=new AbortController();
-    const timeout=setTimeout(()=>controller.abort(),10000);
+    const timeout=setTimeout(()=>controller.abort(),timeoutMs);
     try{
       const r=await fetch(ACCESS_API+path,{...options,signal:controller.signal});
       const raw=await r.text();
@@ -5211,7 +5211,11 @@ if(docs.length) renderDoc(docs[0]);
       return data;
     }catch(err){
       if(err?.name==="AbortError"){
-        const timeoutErr=new Error("Сервер доступа отвечает слишком долго. Попробуйте ещё раз.");
+        const timeoutErr=new Error(
+          path.startsWith("/content/")
+            ?"Защищённый материал загружается слишком долго. Основная памятка продолжает работать."
+            :"Сервер доступа не ответил вовремя. Попробуйте ещё раз."
+        );
         timeoutErr.status=408;
         throw timeoutErr;
       }
@@ -5226,13 +5230,13 @@ if(docs.length) renderDoc(docs[0]);
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({role,password})
-    });
+    },20000);
   }
 
   async function checkToken(token){
     return request("/session",{
       headers:{"Authorization":"Bearer "+token}
-    });
+    },20000);
   }
 
   function securePayloadContent(data){
@@ -5260,7 +5264,7 @@ if(docs.length) renderDoc(docs[0]);
   async function getSecureContent(key){
     const data=await request("/content/"+encodeURIComponent(key),{
       headers:{"Authorization":"Bearer "+session.token}
-    });
+    },30000);
 
     return {
       ...((data&&typeof data==="object")?data:{}),
