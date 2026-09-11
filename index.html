@@ -5185,13 +5185,29 @@ if(docs.length) renderDoc(docs[0]);
     const timeout=setTimeout(()=>controller.abort(),10000);
     try{
       const r=await fetch(ACCESS_API+path,{...options,signal:controller.signal});
-      let data={};
-      try{data=await r.json();}catch(_){}
+      const raw=await r.text();
+
+      let data=null;
+      if(raw){
+        try{data=JSON.parse(raw);}
+        catch(_){
+          /* Worker может вернуть защищённый HTML/текст напрямую. */
+          data={ok:r.ok,content:raw};
+        }
+      }else{
+        data={};
+      }
+
       if(!r.ok){
-        const err=new Error(data.error||("Ошибка "+r.status));
+        const err=new Error(
+          (data&&typeof data==="object"&&data.error)
+          ?data.error
+          :("Ошибка "+r.status)
+        );
         err.status=r.status;
         throw err;
       }
+
       return data;
     }catch(err){
       if(err?.name==="AbortError"){
@@ -5219,10 +5235,37 @@ if(docs.length) renderDoc(docs[0]);
     });
   }
 
+  function securePayloadContent(data){
+    if(typeof data==="string")return data;
+    if(!data||typeof data!=="object")return "";
+
+    const candidates=[
+      data.content,
+      data.html,
+      data.value,
+      data.text,
+      data.body,
+      data.data?.content,
+      data.data?.html,
+      data.data?.value,
+      data.data?.text
+    ];
+
+    for(const value of candidates){
+      if(typeof value==="string"&&value.trim())return value;
+    }
+    return "";
+  }
+
   async function getSecureContent(key){
-    return request("/content/"+encodeURIComponent(key),{
+    const data=await request("/content/"+encodeURIComponent(key),{
       headers:{"Authorization":"Bearer "+session.token}
     });
+
+    return {
+      ...((data&&typeof data==="object")?data:{}),
+      content:securePayloadContent(data)
+    };
   }
 
   function allowedPages(){
@@ -5386,7 +5429,13 @@ if(docs.length) renderDoc(docs[0]);
 
     try{
       const data=await getSecureContent("situations");
-      mount.innerHTML=data.content;
+      const content=String(data.content||"").trim();
+
+      if(!content){
+        throw new Error("Сервер подтвердил доступ, но не вернул содержимое раздела «Ситуации».");
+      }
+
+      mount.innerHTML=content;
       bindLoadedSituations();
     }catch(err){
       mount.innerHTML='<div class="access-denied-card"><b>Ситуации пока не загружены</b><span>'+escapeHtml(err.message||"Не удалось получить материал")+'</span></div>';
@@ -5546,12 +5595,28 @@ if(docs.length) renderDoc(docs[0]);
       headers:{"Authorization":"Bearer "+token}
     });
 
-    let data={};
-    try{data=await r.json();}catch(_){}
-    if(!r.ok||!data.ok){
-      const err=new Error(data.error||("HTTP "+r.status));
+    const raw=await r.text();
+    let data=null;
+    try{data=raw?JSON.parse(raw):{};}
+    catch(_){data={ok:r.ok,content:raw};}
+
+    if(!r.ok || (data&&typeof data==="object"&&data.ok===false)){
+      const err=new Error((data&&data.error)||("HTTP "+r.status));
       err.status=r.status;
       throw err;
+    }
+
+    const content=(()=>{
+      if(typeof data==="string")return data;
+      const values=[
+        data?.content,data?.html,data?.value,data?.text,data?.body,
+        data?.data?.content,data?.data?.html,data?.data?.value,data?.data?.text
+      ];
+      return values.find(v=>typeof v==="string"&&v.trim())||"";
+    })();
+
+    if(!content.trim()){
+      throw new Error("Сервер подтвердил доступ, но не вернул содержимое документа.");
     }
 
     const doc={
@@ -5559,7 +5624,7 @@ if(docs.length) renderDoc(docs[0]);
       secretId:id,
       title:META[id]?.title||id,
       category:META[id]?.category||"СЕКРЕТНО",
-      text:String(data.content||"")
+      text:String(content)
     };
     cache.set(id,doc);
     return doc;
