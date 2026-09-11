@@ -5180,49 +5180,16 @@ if(docs.length) renderDoc(docs[0]);
     if(b)chooseRole(b.dataset.accessRole);
   });
 
-  async function request(path,options={},timeoutMs=20000){
-    const controller=new AbortController();
-    const timeout=setTimeout(()=>controller.abort(),timeoutMs);
-    try{
-      const r=await fetch(ACCESS_API+path,{...options,signal:controller.signal});
-      const raw=await r.text();
-
-      let data=null;
-      if(raw){
-        try{data=JSON.parse(raw);}
-        catch(_){
-          /* Worker может вернуть защищённый HTML/текст напрямую. */
-          data={ok:r.ok,content:raw};
-        }
-      }else{
-        data={};
-      }
-
-      if(!r.ok){
-        const err=new Error(
-          (data&&typeof data==="object"&&data.error)
-          ?data.error
-          :("Ошибка "+r.status)
-        );
-        err.status=r.status;
-        throw err;
-      }
-
-      return data;
-    }catch(err){
-      if(err?.name==="AbortError"){
-        const timeoutErr=new Error(
-          path.startsWith("/content/")
-            ?"Защищённый материал загружается слишком долго. Основная памятка продолжает работать."
-            :"Сервер доступа не ответил вовремя. Попробуйте ещё раз."
-        );
-        timeoutErr.status=408;
-        throw timeoutErr;
-      }
+  async function request(path,options={}){
+    const r=await fetch(ACCESS_API+path,options);
+    let data={};
+    try{data=await r.json();}catch(_){}
+    if(!r.ok){
+      const err=new Error(data.error||("Ошибка "+r.status));
+      err.status=r.status;
       throw err;
-    }finally{
-      clearTimeout(timeout);
     }
+    return data;
   }
 
   async function login(role,password){
@@ -5230,13 +5197,13 @@ if(docs.length) renderDoc(docs[0]);
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({role,password})
-    },20000);
+    });
   }
 
   async function checkToken(token){
     return request("/session",{
       headers:{"Authorization":"Bearer "+token}
-    },20000);
+    });
   }
 
   function securePayloadContent(data){
@@ -5262,9 +5229,28 @@ if(docs.length) renderDoc(docs[0]);
   }
 
   async function getSecureContent(key){
-    const data=await request("/content/"+encodeURIComponent(key),{
+    /*
+      Вход и проверка сессии используют старый стабильный request().
+      Гибкий разбор нужен только для защищённого контента, потому что Worker
+      может вернуть его как JSON или обычный текст/HTML.
+    */
+    const r=await fetch(ACCESS_API+"/content/"+encodeURIComponent(key),{
       headers:{"Authorization":"Bearer "+session.token}
-    },30000);
+    });
+
+    const raw=await r.text();
+    let data={};
+
+    if(raw){
+      try{data=JSON.parse(raw);}
+      catch(_){data={content:raw};}
+    }
+
+    if(!r.ok){
+      const err=new Error(data.error||("Ошибка "+r.status));
+      err.status=r.status;
+      throw err;
+    }
 
     return {
       ...((data&&typeof data==="object")?data:{}),
