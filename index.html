@@ -4375,6 +4375,28 @@ if(docs.length) renderDoc(docs[0]);
     push();
   });
 
+  /*
+   * Синонимы из CONCEPTS должны работать не только в полнотекстовом индексе,
+   * но и в карточках «Оснований». Иначе автоподсказка знает запрос
+   * («без одежды», «голый», «ксива» и т.п.), а нужная карточка не появляется.
+   */
+  document.querySelectorAll("#page-basis .basis-card").forEach(card=>{
+    try{
+      const d=JSON.parse(card.dataset.norm||"{}");
+      const num=String(d.a||"");
+      const chapter=String(d.chapter||"");
+      const article=articleIndex.find(a=>
+        a.doc===d.doc && String(a.num)===num && String(a.chapter||"")===chapter
+      ) || articleIndex.find(a=>a.doc===d.doc && String(a.num)===num);
+      if(!article?.keywords)return;
+
+      const aliases=String(article.keywords).trim();
+      if(!aliases)return;
+      card.dataset.search=((card.dataset.search||"")+" "+aliases).trim();
+      card.dataset.keywords=((card.dataset.keywords||"")+" | "+aliases).trim();
+    }catch(_){}
+  });
+
 
   /* ===== ЖИВЫЕ ПОДСКАЗКИ ПОИСКА ===== */
   const AUTOCOMPLETE_STOP=new Set([
