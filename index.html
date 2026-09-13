@@ -6179,13 +6179,85 @@ footer{margin-top:18px;color:#728091;font-size:10px;text-align:center}@media pri
     return paras.filter(Boolean);
   }
 
-  function cheatWordSet(text){
-    return new Set(
-      clean(text).toLowerCase().replace(/ё/g,"е")
-        .split(/[^а-яa-z0-9.]+/i)
-        .map(x=>x.trim())
-        .filter(x=>x.length>=4&&!/^(статья|когда|котор|этот|если|лицо|может|нужно|норма|само|своих|своей|также|либо|только|прямо|проверяй)$/i.test(x))
-    );
+  function cheatReferenceParts(x){
+    const norm=cheatBasisNormForItem(x);
+    const ref=[x?.source||"",norm?.r||""].filter(Boolean).join(" ");
+    const point=(ref.match(/(?:^|\s)п\.\s*(\d+(?:\.\d+)*)/i)||[])[1]||"";
+    const part=(ref.match(/(?:^|\s)ч\.\s*(\d+(?:\.\d+)*)/i)||[])[1]||"";
+    return {point,part,norm};
+  }
+
+  function cheatArticleBodyLines(article){
+    const lines=String(article||"").split("\n").map(x=>String(x).trim());
+    if(lines.length&&/^Статья\s+/i.test(lines[0]))lines.shift();
+    while(lines.length&&!lines[0])lines.shift();
+    while(lines.length&&!lines[lines.length-1])lines.pop();
+    return lines;
+  }
+
+  function cheatPartRx(num){
+    const escNum=String(num||"").replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+    return new RegExp("^"+escNum+"\\.\\s");
+  }
+
+  function cheatPointRx(num){
+    const escNum=String(num||"").replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+    return new RegExp("^"+escNum+"\\)\\s");
+  }
+
+  function cheatAnyPartLine(line){
+    return /^\d+(?:\.\d+)*\.\s/.test(String(line||"").trim());
+  }
+
+  function cheatAnyPointLine(line){
+    return /^\d+(?:\.\d+)*\)\s/.test(String(line||"").trim());
+  }
+
+  function cheatJoinLegalLines(lines){
+    const out=[];
+    for(const raw of lines){
+      const line=String(raw||"").trim();
+      if(!line)continue;
+      const startsNumber=cheatAnyPartLine(line)||cheatAnyPointLine(line);
+      if(startsNumber||!out.length)out.push(line);
+      else out[out.length-1]+=" "+line;
+    }
+    return out.join("\n").trim();
+  }
+
+  function cheatPreamble(lines){
+    let end=0;
+    while(end<lines.length&&!cheatAnyPartLine(lines[end])&&!cheatAnyPointLine(lines[end]))end++;
+    return cheatJoinLegalLines(lines.slice(0,end));
+  }
+
+  function cheatPointBlock(lines,start,limit){
+    let end=start+1;
+    while(end<limit){
+      if(cheatAnyPointLine(lines[end])||cheatAnyPartLine(lines[end]))break;
+      end++;
+    }
+    return cheatJoinLegalLines(lines.slice(start,end));
+  }
+
+  function cheatPartBounds(lines,part){
+    const rx=cheatPartRx(part);
+    const start=lines.findIndex(line=>rx.test(String(line||"").trim()));
+    if(start<0)return null;
+    let end=lines.length;
+    for(let i=start+1;i<lines.length;i++){
+      if(cheatAnyPartLine(lines[i])){
+        end=i;
+        break;
+      }
+    }
+    return {start,end};
+  }
+
+  function cheatPartLead(lines,start,end){
+    let leadEnd=start+1;
+    while(leadEnd<end&&!cheatAnyPointLine(lines[leadEnd])&&!cheatAnyPartLine(lines[leadEnd]))leadEnd++;
+    return cheatJoinLegalLines(lines.slice(start,leadEnd));
   }
 
   function cheatRealLegalText(x){
@@ -6193,45 +6265,78 @@ footer{margin-top:18px;color:#728091;font-size:10px;text-align:center}@media pri
     const article=cheatRawArticle(x);
     if(!article)return "";
 
-    const paras=cheatLegalParagraphs(article);
-    const ref=[x.source,cheatBasisNormForItem(x)?.r].filter(Boolean).join(" ");
-    const point=(ref.match(/\bп\.\s*(\d+(?:\.\d+)*)/i)||[])[1]||"";
-    const part=(ref.match(/\bч\.\s*(\d+(?:\.\d+)*)/i)||[])[1]||"";
+    const lines=cheatArticleBodyLines(article);
+    if(!lines.length)return "";
 
-    // Сначала пытаемся достать именно тот пункт/часть, на который ссылается карточка.
-    if(point){
-      const pointRx=new RegExp("^"+point.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"\\)\\s");
-      const hit=paras.find(p=>pointRx.test(p));
-      if(hit)return hit;
-    }
+    const {point,part,norm}=cheatReferenceParts(x);
+
     if(part){
-      const partRx=new RegExp("^"+part.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"\\.\\s");
-      const hit=paras.find(p=>partRx.test(p));
-      if(hit)return hit;
+      const bounds=cheatPartBounds(lines,part);
+      if(bounds){
+        if(point){
+          const pointRx=cheatPointRx(point);
+          let pointStart=-1;
+          for(let i=bounds.start+1;i<bounds.end;i++){
+            if(pointRx.test(String(lines[i]||"").trim())){
+              pointStart=i;
+              break;
+            }
+          }
+          if(pointStart>=0){
+            const parent=cheatPartLead(lines,bounds.start,bounds.end);
+            const item=cheatPointBlock(lines,pointStart,bounds.end);
+            return [parent,item].filter(Boolean).join("\n");
+          }
+        }
+        return cheatJoinLegalLines(lines.slice(bounds.start,bounds.end));
+      }
     }
 
-    // Если в карточке нет номера части/пункта, выбираем наиболее подходящий
-    // реальный абзац статьи по названию, краткому описанию и ключевым словам.
-    const norm=cheatBasisNormForItem(x);
-    const queryWords=cheatWordSet([
-      x.title,x.content,norm?._keywords||"",norm?.h||""
-    ].join(" "));
+    if(point){
+      const pointRx=cheatPointRx(point);
+      const pointStart=lines.findIndex(line=>pointRx.test(String(line||"").trim()));
+      if(pointStart>=0){
+        let limit=lines.length;
+        for(let i=pointStart+1;i<lines.length;i++){
+          if(cheatAnyPointLine(lines[i])||cheatAnyPartLine(lines[i])){
+            limit=i;
+            break;
+          }
+        }
 
-    let best="",bestScore=-1;
-    for(const p of paras){
-      const words=cheatWordSet(p);
-      let score=0;
-      queryWords.forEach(w=>{if(words.has(w))score+=1});
-      if(norm?.h&&clean(p).toLowerCase().includes(clean(norm.h).toLowerCase()))score+=8;
-      if(score>bestScore){bestScore=score;best=p}
+        let parent="";
+        let nearestPart=-1;
+        for(let i=pointStart-1;i>=0;i--){
+          if(cheatAnyPartLine(lines[i])){
+            nearestPart=i;
+            break;
+          }
+        }
+        if(nearestPart>=0){
+          let nextPart=lines.length;
+          for(let i=nearestPart+1;i<lines.length;i++){
+            if(cheatAnyPartLine(lines[i])){
+              nextPart=i;
+              break;
+            }
+          }
+          if(pointStart<nextPart)parent=cheatPartLead(lines,nearestPart,nextPart);
+        }
+        if(!parent)parent=cheatPreamble(lines);
+
+        const item=cheatPointBlock(lines,pointStart,limit);
+        return [parent,item].filter(Boolean).join("\n");
+      }
     }
-    if(best&&bestScore>0)return best;
 
-    // Последний безопасный вариант: реальная формулировка из карточки, если она задана.
-    if(norm?.h)return clean(norm.h);
+    if(norm?.h){
+      const needle=clean(norm.h).toLowerCase().replace(/ё/g,"е");
+      const body=cheatJoinLegalLines(lines);
+      const normalized=body.toLowerCase().replace(/ё/g,"е");
+      if(needle&&normalized.includes(needle))return body;
+    }
 
-    // Иначе не выдумываем текст закона — показываем начало самой статьи.
-    return paras[0]||"";
+    return cheatJoinLegalLines(lines);
   }
 
   function printTablePdf(){
