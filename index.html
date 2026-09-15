@@ -2703,6 +2703,61 @@ body.access-pending .footer{visibility:hidden}
 }
 </style>
 
+
+<style id="leadership-memos-style">
+/* Руководство — практические процедуры по кадровым и дисциплинарным решениям */
+.leadership-page{padding-bottom:52px}
+.leadership-head{align-items:flex-end}
+.leadership-kicker{margin-bottom:6px;color:var(--accent);font-size:9px;font-weight:950;letter-spacing:.12em}
+.leadership-source-badge{flex:0 0 auto;max-width:420px;border:1px solid color-mix(in srgb,var(--accent) 34%,var(--line));background:color-mix(in srgb,var(--accent) 7%,var(--panel));color:var(--accent);border-radius:999px;padding:7px 10px;font-size:9px;font-weight:900;letter-spacing:.035em;text-align:center}
+.leadership-principles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin:16px 0}
+.leadership-principle{min-height:108px;padding:13px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.leadership-principle small{display:block;margin-bottom:5px;color:var(--accent);font-size:8px;font-weight:950;letter-spacing:.08em}
+.leadership-principle b{display:block;font-size:12px;line-height:1.25}
+.leadership-principle p{margin:6px 0 0;color:var(--muted);font-size:9px;line-height:1.45}
+.leadership-toolbar{display:grid;grid-template-columns:1fr minmax(250px,390px) auto;gap:10px;align-items:center;margin:15px 0 13px}
+.leadership-filters{display:flex;gap:6px;flex-wrap:wrap}
+.leadership-filters button,.leadership-expand{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:8px;padding:8px 10px;font:850 9px/1 Inter,Segoe UI,Arial,sans-serif;cursor:pointer}
+.leadership-filters button.active{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--panel));color:var(--accent)}
+.leadership-search{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:9px;background:var(--panel);padding:0 10px}
+.leadership-search span{color:var(--muted);font-size:14px}
+.leadership-search input{width:100%;border:0;outline:0;background:transparent;color:var(--text);padding:9px 0;font:700 10px/1.2 Inter,Segoe UI,Arial,sans-serif}
+.leadership-expand:hover,.leadership-filters button:hover{border-color:var(--accent)}
+.leadership-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start}
+.leadership-card{position:relative;border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden;box-shadow:0 10px 28px rgba(0,0,0,.035)}
+.leadership-card[open]{border-color:color-mix(in srgb,var(--accent) 35%,var(--line));box-shadow:0 14px 34px rgba(0,0,0,.07)}
+.leadership-card.is-hidden{display:none!important}
+.leadership-card summary{list-style:none;display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px;cursor:pointer}
+.leadership-card summary::-webkit-details-marker{display:none}
+.leadership-card summary:hover{background:color-mix(in srgb,var(--accent) 4%,var(--panel))}
+.leadership-index{width:40px;height:40px;display:grid;place-items:center;border-radius:10px;background:var(--text);color:var(--bg);font-size:10px;font-weight:950}
+.leadership-card-head small{display:block;margin-bottom:3px;color:var(--accent);font-size:7px;font-weight:950;letter-spacing:.1em}
+.leadership-card-head h3{margin:0;font-size:14px;line-height:1.22;letter-spacing:-.01em}
+.leadership-card-head p{margin:5px 0 0;color:var(--muted);font-size:9px;line-height:1.42}
+.leadership-chevron{width:28px;height:28px;display:grid;place-items:center;border:1px solid var(--line);border-radius:8px;color:var(--muted);font-weight:900;transition:.18s}
+.leadership-card[open] .leadership-chevron{transform:rotate(180deg);color:var(--accent);border-color:color-mix(in srgb,var(--accent) 40%,var(--line))}
+.leadership-card-body{padding:0 14px 14px;border-top:1px solid var(--line)}
+.leadership-block{margin-top:11px;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--panel2)}
+.leadership-block>strong{display:block;margin-bottom:6px;font-size:8px;letter-spacing:.08em}
+.leadership-block ul,.leadership-block ol{margin:0;padding-left:18px;font-size:10px;line-height:1.5}
+.leadership-block li+li{margin-top:4px}
+.leadership-block.check>strong{color:#b78a29}
+.leadership-block.do>strong{color:#368b5b}
+.leadership-block.stop>strong{color:#bc4b50}
+.leadership-block.note>strong{color:var(--accent)}
+.leadership-block.stop{border-color:color-mix(in srgb,#bc4b50 32%,var(--line));background:color-mix(in srgb,#bc4b50 5%,var(--panel2))}
+.leadership-block.do{border-color:color-mix(in srgb,#368b5b 30%,var(--line));background:color-mix(in srgb,#368b5b 5%,var(--panel2))}
+.leadership-refs{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px;padding-top:10px;border-top:1px dashed var(--line)}
+.leadership-refs>span{width:100%;color:var(--muted);font-size:8px;font-weight:950;letter-spacing:.08em}
+.leadership-refs .open-doc{border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:7px;padding:6px 8px;cursor:pointer;font-size:9px;font-weight:800}
+.leadership-refs .open-doc:hover{border-color:var(--accent);color:var(--accent)}
+.leadership-note{margin-top:14px;padding:13px 14px;border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line));border-radius:11px;background:color-mix(in srgb,var(--accent) 5%,var(--panel));font-size:10px;line-height:1.5;color:var(--muted)}
+.leadership-note b{color:var(--text)}
+#page-leadership .leadership-card>.cheat-quick-add{margin:0 14px 14px auto}
+@media(max-width:1100px){.leadership-principles{grid-template-columns:repeat(3,1fr)}.leadership-toolbar{grid-template-columns:1fr 1fr}.leadership-expand{grid-column:1/-1;justify-self:end}}
+@media(max-width:820px){.leadership-grid{grid-template-columns:1fr}.leadership-principles{grid-template-columns:1fr 1fr}.leadership-toolbar{grid-template-columns:1fr}.leadership-expand{grid-column:auto;justify-self:stretch}.leadership-source-badge{max-width:none}}
+@media(max-width:540px){.leadership-head{align-items:flex-start;flex-direction:column}.leadership-principles{grid-template-columns:1fr}.leadership-card summary{grid-template-columns:36px minmax(0,1fr) auto;padding:12px}.leadership-index{width:34px;height:34px}.leadership-card-head h3{font-size:13px}}
+</style>
 </head><body class="access-pending">
 <div aria-hidden="false" class="access-gate" id="accessGate">
 <div class="access-gate-card">
@@ -2751,6 +2806,7 @@ body.access-pending .footer{visibility:hidden}
 <button class="active" data-page="home">Памятка</button><button data-page="cheats">Моя шпаргалка <span class="cheat-nav-count" id="cheatNavCount">0</span></button><button data-page="basis">Основания</button><button data-page="situations">Ситуации</button>
 <button data-page="departments">Подразделения</button>
 <button data-page="uk-memos">Памятки УК</button>
+<button data-page="leadership">Руководство</button>
 <button data-page="process">Задержание и права</button>
 <button data-page="terms">Термины</button>
 <button data-page="territories">Гос. территории</button>
@@ -3267,6 +3323,187 @@ body.access-pending .footer{visibility:hidden}
 <footer class="uk-memo-footer uk-memo-author-footer"><span>Управление кадров ФСО</span><div class="uk-memo-author"><small>АВТОР ПАМЯТКИ</small><strong>by Amurskiyrrk</strong></div></footer>
 </div>
 </section>
+
+<section class="page leadership-page" id="page-leadership">
+  <div class="section-head leadership-head">
+    <div>
+      <div class="leadership-kicker">РУКОВОДСТВО ФСО · РАБОЧАЯ ПАМЯТКА</div>
+      <h2>Кадровые и дисциплинарные решения</h2>
+      <p>Не пересказ законов, а порядок проверки решения: что установить, что сделать, чего не делать и где открыть точную норму.</p>
+    </div>
+    <span class="leadership-source-badge">ФЗ «О ФСО» · ТК · ФЗ «О государственной службе» · Устав ФСО · ПК</span>
+  </div>
+
+  <div class="leadership-principles">
+    <article class="leadership-principle"><small>01 · КОМПЕТЕНЦИЯ</small><b>Сначала — кто вправе решить</b><p>Назначение, перевод, взыскание, отстранение и увольнение должны исходить от компетентного должностного лица.</p></article>
+    <article class="leadership-principle"><small>02 · СПЕЦНОРМА</small><b>Для госслужбы профильная норма сильнее общей</b><p>Если специальный ФЗ или Устав устанавливает иной порядок, сначала применяется именно он.</p></article>
+    <article class="leadership-principle"><small>03 · ФАКТЫ</small><b>Не решение «по ощущению»</b><p>Для дисциплинарной меры нужны установленные обстоятельства и конкретное основание, а не предположение.</p></article>
+    <article class="leadership-principle"><small>04 · ПРОЦЕДУРА</small><b>Объяснение и проверка — когда требуются</b><p>Если обстоятельства спорные или неочевидные, нельзя перепрыгивать через предусмотренную процедуру.</p></article>
+    <article class="leadership-principle"><small>05 · МОТИВИРОВКА</small><b>Решение должно быть проверяемым</b><p>Фиксируй факты, правовое основание, принятое решение и мотив выбора меры.</p></article>
+  </div>
+
+  <div class="leadership-toolbar">
+    <div class="leadership-filters" aria-label="Фильтр памяток руководства">
+      <button class="active" data-lead-filter="all" type="button">Все</button>
+      <button data-lead-filter="staff" type="button">Кадры</button>
+      <button data-lead-filter="discipline" type="button">Дисциплина</button>
+      <button data-lead-filter="orders" type="button">Приказы</button>
+      <button data-lead-filter="incident" type="button">Инциденты</button>
+    </div>
+    <label class="leadership-search"><span>⌕</span><input id="leadershipSearch" autocomplete="off" placeholder="Например: увольнение, перевод, проверка, приказ..."></label>
+    <button class="leadership-expand" id="leadershipExpandAll" type="button">Раскрыть все</button>
+  </div>
+
+  <div class="leadership-grid" id="leadershipGrid">
+
+    <details class="leadership-card" data-lead-group="staff" data-search="прием приём поступление назначение документы кандидат допуск испытание стажировка трудоустройство">
+      <summary><span class="leadership-index">01</span><div class="leadership-card-head"><small>КАДРЫ</small><h3>Приём на службу и назначение</h3><p>Кто оформляет, что можно потребовать и что должно произойти до самостоятельной службы.</p></div><span class="leadership-chevron">⌄</span></summary>
+      <div class="leadership-card-body">
+        <div class="leadership-block check"><strong>СНАЧАЛА ПРОВЕРЬ</strong><ul><li>Есть ли у лица, принимающего решение, кадровые полномочия.</li><li>Какие документы объективно нужны именно для этой должности и какие специальные требования установлены профильными нормами.</li><li>Не подменяется ли специальный порядок государственной службы обычным трудовым приёмом.</li></ul></div>
+        <div class="leadership-block do"><strong>ЧТО ДЕЛАТЬ</strong><ol><li>Проверить предусмотренные законом и реально необходимые документы.</li><li>Оформить поступление/назначение уполномоченным лицом.</li><li>Если есть испытание или стажировка — заранее сообщить основные критерии прохождения.</li><li>До самостоятельного исполнения обязанностей ознакомить сотрудника с Уставом, должностными обязанностями, правилами обращения с оружием и служебным имуществом.</li></ol></div>
+        <div class="leadership-block stop"><strong>НЕЛЬЗЯ</strong><ul><li>Требовать документы, не связанные с работой и не предусмотренные законом или объективной необходимостью.</li><li>Считать фактический допуск лицом без кадровых полномочий полноценным назначением сам по себе.</li></ul></div>
+        <div class="leadership-refs"><span>ОТКРЫТЬ НОРМЫ</span><button class="open-doc" data-doc="labor" data-article="17">ТК ст. 17</button><button class="open-doc" data-doc="labor" data-article="18">ТК ст. 18</button><button class="open-doc" data-doc="labor" data-article="19">ТК ст. 19</button><button class="open-doc" data-doc="gservice" data-article="12">ФЗ о госслужбе ст. 12</button><button class="open-doc" data-doc="charter" data-article="23">Устав ст. 23</button></div>
+      </div>
+    </details>
+
+    <details class="leadership-card" data-lead-group="staff" data-search="испытание стажировка критерии академия непрохождение прием приём">
+      <summary><span class="leadership-index">02</span><div class="leadership-card-head"><small>КАДРЫ</small><h3>Испытание или стажировка</h3><p>Как не превратить испытание в произвольный способ увольнения.</p></div><span class="leadership-chevron">⌄</span></summary>
+      <div class="leadership-card-body">
+        <div class="leadership-block check"><strong>СНАЧАЛА ПРОВЕРЬ</strong><ul><li>Предусмотрено ли испытание локальным актом, договором или специальными правилами службы.</li><li>Были ли сотруднику заранее известны основные критерии прохождения.</li></ul></div>
+        <div class="leadership-block do"><strong>ЧТО ДЕЛАТЬ</strong><ol><li>Зафиксировать понятные критерии до начала испытания.</li><li>Оценивать фактический результат, а не личное отношение.</li><li>При непрохождении опираться на установленные результаты и профильный порядок государственной службы.</li></ol></div>
+        <div class="leadership-block stop"><strong>НЕЛЬЗЯ</strong><ul><li>Придумывать критерии после начала испытания.</li><li>Использовать непрохождение как формальное прикрытие дискриминационного или личного решения.</li></ul></div>
+        <div class="leadership-refs"><span>ОТКРЫТЬ НОРМЫ</span><button class="open-doc" data-doc="labor" data-article="19">ТК ст. 19</button><button class="open-doc" data-doc="gservice" data-article="12">ФЗ о госслужбе ст. 12</button></div>
+      </div>
+    </details>
+
+    <details class="leadership-card" data-lead-group="staff" data-search="перевод подразделение межведомственный другая организация должность согласие понижение самовольный переход">
+      <summary><span class="leadership-index">03</span><div class="leadership-card-head"><small>КАДРЫ</small><h3>Перевод сотрудника</h3><p>Внутри ФСО и между государственными организациями — разные проверки.</p></div><span class="leadership-chevron">⌄</span></summary>
+      <div class="leadership-card-body">
+        <div class="leadership-block check"><strong>СНАЧАЛА ПРОВЕРЬ</strong><ul><li>Это временное изменение обязанностей или постоянный перевод.</li><li>Есть ли согласие сотрудника там, где оно требуется.</li><li>Кто уполномочен согласовать перевод и какая должность будет предоставлена принимающей стороной.</li></ul></div>
+        <div class="leadership-block do"><strong>ЧТО ДЕЛАТЬ</strong><ol><li>Для постоянной смены трудовой функции проверить правила ТК и специального законодательства.</li><li>Для межведомственного перевода получить согласие компетентных лиц обеих организаций и самого служащего.</li><li>Определить новую должность с учётом квалификации, опыта, звания/чина и вакансий.</li><li>Организовать передачу дел, имущества, документов, оружия, спецсредств и техники.</li></ol></div>
+        <div class="leadership-block stop"><strong>НЕЛЬЗЯ</strong><ul><li>Допускать самовольный переход сотрудника в другое подразделение.</li><li>Использовать изменение условий или перевод как скрытую дисциплинарную меру.</li><li>Считать, что прежняя должность, звание и полномочия сохраняются автоматически.</li></ul></div>
+        <div class="leadership-refs"><span>ОТКРЫТЬ НОРМЫ</span><button class="open-doc" data-doc="labor" data-article="20">ТК ст. 20</button><button class="open-doc" data-doc="labor" data-article="21">ТК ст. 21</button><button class="open-doc" data-doc="labor" data-article="61">ТК ст. 61</button><button class="open-doc" data-doc="labor" data-article="62">ТК ст. 62</button><button class="open-doc" data-doc="charter" data-article="23">Устав ст. 23</button></div>
+      </div>
+    </details>
+
+    <details class="leadership-card" data-lead-group="discipline" data-search="отстранение временно снять обязанности проверка риск имущество безопасность обвинение задержание">
+      <summary><span class="leadership-index">04</span><div class="leadership-card-head"><small>ДИСЦИПЛИНА</small><h3>Временное отстранение</h3><p>Мера безопасности и обеспечения проверки, а не признание вины.</p></div><span class="leadership-chevron">⌄</span></summary>
+      <div class="leadership-card-body">
+        <div class="leadership-block check"><strong>СНАЧАЛА ПРОВЕРЬ</strong><ul><li>Есть ли самостоятельное законное основание.</li><li>Создаёт ли дальнейшее исполнение полномочий реальный риск для проверки, имущества, безопасности, законности или участников.</li></ul></div>
+        <div class="leadership-block do"><strong>ЧТО ДЕЛАТЬ</strong><ol><li>Зафиксировать конкретную причину отстранения.</li><li>Ограничить меру необходимым объёмом и не подменять ею взыскание.</li><li>После отпадения основания прекратить отстранение, если нет иного самостоятельного основания.</li></ol></div>
+        <div class="leadership-block stop"><strong>НЕЛЬЗЯ</strong><ul><li>Считать отстранение доказательством вины.</li><li>Автоматически увольнять только из-за расследования, задержания, подозрения или обвинения.</li></ul></div>
+        <div class="leadership-refs"><span>ОТКРЫТЬ НОРМЫ</span><button class="open-doc" data-doc="labor" data-article="22">ТК ст. 22</button><button class="open-doc" data-doc="labor" data-article="60">ТК ст. 60</button><button class="open-doc" data-doc="gservice" data-article="17">ФЗ о госслужбе ст. 17</button></div>
+      </div>
+    </details>
+
+    <details class="leadership-card" data-lead-group="discipline" data-search="служебная проверка увк объяснение доказательства материалы вина спорные обстоятельства нарушение">
+      <summary><span class="leadership-index">05</span><div class="leadership-card-head"><small>ДИСЦИПЛИНА</small><h3>Служебная проверка</h3><p>Когда она обязательна перед серьёзной мерой и что должно быть установлено.</p></div><span class="leadership-chevron">⌄</span></summary>
+      <div class="leadership-card-body">
+        <div class="leadership-block check"><strong>КОГДА НУЖНА</strong><ul><li>Обстоятельства предполагаемого нарушения неочевидны.</li><li>Сотрудник оспаривает нарушение.</li><li>Перед понижением или увольнением требуется установить спорные факты.</li></ul></div>
+        <div class="leadership-block do"><strong>ЧТО ДЕЛАТЬ</strong><ol><li>Установить фактические обстоятельства, вину и относящиеся к делу материалы.</li><li>Дать сотруднику возможность представить объяснение и доказательства.</li><li>Получить мотивированный результат проверки.</li><li>При признаках преступления/административного правонарушения передать материалы компетентному органу.</li></ol></div>
+        <div class="leadership-block stop"><strong>НЕЛЬЗЯ</strong><ul><li>Использовать проверку для давления, сокрытия жалобы, фальсификации или уничтожения материалов.</li><li>Считать служебную проверку заменой уголовного или административного производства.</li><li>Считать, что УВК автоматически принимает финальное решение о взыскании или увольнении без соответствующего полномочия.</li></ul></div>
+        <div class="leadership-refs"><span>ОТКРЫТЬ НОРМЫ</span><button class="open-doc" data-doc="gservice" data-article="16">ФЗ о госслужбе ст. 16</button><button class="open-doc" data-doc="charter" data-article="16">Устав ст. 16</button><button class="open-doc" data-doc="charter" data-article="19">Устав ст. 19</button></div>
+      </div>
+    </details>
+
+    <details class="leadership-card" data-lead-group="discipline" data-search="дисциплинарное взыскание замечание выговор понижение увольнение наказание объяснение соразмерность двойное наказание">
+      <summary><span class="leadership-index">06</span><div class="leadership-card-head"><small>ДИСЦИПЛИНА</small><h3>Дисциплинарное взыскание</h3><p>Основание → факты → процедура → соразмерность → мотивированное решение.</p></div><span class="leadership-chevron">⌄</span></summary>
+      <div class="leadership-card-body">
+        <div class="leadership-block check"><strong>СНАЧАЛА ПРОВЕРЬ</strong><ul><li>Есть ли виновное неисполнение/ненадлежащее исполнение обязанностей, нарушение законного приказа или установленного ограничения.</li><li>Какая мера предусмотрена именно профильным законодательством ФСО.</li><li>Кто вправе её назначить.</li></ul></div>
+        <div class="leadership-block do"><strong>ЧТО ДЕЛАТЬ</strong><ol><li>Установить факты и дать объяснение, когда этого требует процедура.</li><li>Оценить характер нарушения, форму вины, последствия, должность, обстоятельства и предыдущую службу.</li><li>Выбрать соразмерную меру и оформить мотивированное решение.</li></ol></div>
+        <div class="leadership-block stop"><strong>НЕЛЬЗЯ</strong><ul><li>Назначать несколько самостоятельных взысканий за одни и те же обстоятельства.</li><li>Наказывать исключительно за законное обжалование, отказ от заведомо незаконного приказа или добросовестное сообщение о нарушении.</li></ul></div>
+        <div class="leadership-refs"><span>ОТКРЫТЬ НОРМЫ</span><button class="open-doc" data-doc="gservice" data-article="14">ФЗ о госслужбе ст. 14</button><button class="open-doc" data-doc="gservice" data-article="15">ст. 15</button><button class="open-doc" data-doc="charter" data-article="17">Устав ст. 17</button><button class="open-doc" data-doc="charter" data-article="18">ст. 18</button><button class="open-doc" data-doc="charter" data-article="19">ст. 19</button><button class="open-doc" data-doc="labor" data-article="53">ТК ст. 53</button></div>
+      </div>
+    </details>
+
+    <details class="leadership-card" data-lead-group="discipline" data-search="дополнительная подготовка проверка знаний обучение наказание скрытое взыскание снять взыскание">
+      <summary><span class="leadership-index">07</span><div class="leadership-card-head"><small>ДИСЦИПЛИНА</small><h3>Дополнительная подготовка ≠ наказание</h3><p>Полезная мера при пробеле в знаниях, но она не заменяет дисциплинарную процедуру.</p></div><span class="leadership-chevron">⌄</span></summary>
+      <div class="leadership-card-body">
+        <div class="leadership-block check"><strong>КОГДА УМЕСТНА</strong><ul><li>Нарушение связано с недостаточным знанием законодательства, Устава, правил охраны, оружия, спецсредств, связи или другой обязательной процедуры.</li></ul></div>
+        <div class="leadership-block do"><strong>КАК ОФОРМИТЬ</strong><ol><li>Мотивировать решение.</li><li>Указать тему, форму, срок прохождения и ответственное должностное лицо.</li><li>Учесть должность и профиль подразделения.</li></ol></div>
+        <div class="leadership-block stop"><strong>НЕЛЬЗЯ</strong><ul><li>Выдавать дополнительную подготовку за самостоятельное дисциплинарное взыскание.</li><li>Использовать её как скрытое наказание или вместо процедуры взыскания.</li></ul></div>
+        <div class="leadership-refs"><span>ОТКРЫТЬ НОРМЫ</span><button class="open-doc" data-doc="charter" data-article="20">Устав ст. 20</button><button class="open-doc" data-doc="charter" data-article="21">Устав ст. 21</button><button class="open-doc" data-doc="labor" data-article="55">ТК ст. 55</button></div>
+      </div>
+    </details>
+
+    <details class="leadership-card" data-lead-group="staff" data-search="увольнение по собственному желанию сам увольняется заявление волеизъявление удерживать передача имущества дела">
+      <summary><span class="leadership-index">08</span><div class="leadership-card-head"><small>КАДРЫ</small><h3>Сотрудник увольняется сам</h3><p>Подтвердить волеизъявление, организовать сдачу имущества и не удерживать бессрочно.</p></div><span class="leadership-chevron">⌄</span></summary>
+      <div class="leadership-card-body">
+        <div class="leadership-block check"><strong>СНАЧАЛА ПРОВЕРЬ</strong><ul><li>Подтверждено ли волеизъявление сотрудника способом, позволяющим установить его желание прекратить службу.</li><li>Есть ли незавершённая передача дел, документов или имущества.</li></ul></div>
+        <div class="leadership-block do"><strong>ЧТО ДЕЛАТЬ</strong><ol><li>Принять и зафиксировать волеизъявление.</li><li>При необходимости потребовать разумные действия по передаче дел и имущества.</li><li>Организовать сдачу документов, оружия, спецсредств, техники и закреплённого имущества.</li></ol></div>
+        <div class="leadership-block stop"><strong>НЕЛЬЗЯ</strong><ul><li>Необоснованно удерживать сотрудника против его воли.</li><li>Использовать незавершённую передачу как основание бессрочно отказывать в увольнении.</li></ul></div>
+        <div class="leadership-refs"><span>ОТКРЫТЬ НОРМЫ</span><button class="open-doc" data-doc="labor" data-article="24">ТК ст. 24</button><button class="open-doc" data-doc="charter" data-article="23">Устав ст. 23</button></div>
+      </div>
+    </details>
+
+    <details class="leadership-card" data-lead-group="staff discipline" data-search="увольнение по инициативе руководства работодателя основания прогул грубое нарушение задержание подозрение утрата доверия">
+      <summary><span class="leadership-index">09</span><div class="leadership-card-head"><small>КАДРЫ · ДИСЦИПЛИНА</small><h3>Увольнение по инициативе руководства</h3><p>Самая рискованная кадровая мера: основание и процедура должны быть конкретными.</p></div><span class="leadership-chevron">⌄</span></summary>
+      <div class="leadership-card-body">
+        <div class="leadership-block check"><strong>ПЕРЕД РЕШЕНИЕМ</strong><ul><li>Есть ли конкретное законное основание и установленные факты.</li><li>Уполномочено ли лицо принимать решение.</li><li>Нужны ли объяснение и служебная проверка.</li><li>Почему выбрана именно мера увольнения, а не иная.</li></ul></div>
+        <div class="leadership-block do"><strong>ЧТО ЗАФИКСИРОВАТЬ</strong><ol><li>Фактические обстоятельства.</li><li>Правовое основание.</li><li>Мотив выбора меры.</li><li>Передачу дел, документов, имущества, оружия, спецсредств и техники после решения.</li></ol></div>
+        <div class="leadership-block stop"><strong>НЕЛЬЗЯ</strong><ul><li>Увольнять автоматически только из-за задержания, сообщения о нарушении, подозрения, обвинения или самой проверки.</li><li>Для сотрудника ФСО ссылаться лишь на личную неприязнь или абстрактную «утрату доверия» без установленных фактов.</li><li>Подменять увольнением незаконное дисциплинарное взыскание.</li></ul></div>
+        <div class="leadership-block note"><strong>ОСОБЫЙ КАДРОВЫЙ ПОРЯДОК</strong><p>До применения обычной процедуры проверь, не замещается ли конкретная должность по специальному порядку назначения и освобождения. Если федеральный закон прямо предоставляет уполномоченному лицу право свободного освобождения от такой государственной должности, обычные основания увольнения и дисциплинарная процедура могут не применяться. Тогда отдельно проверяются само полномочие, обязательная специальная процедура и соответствие акту большей юридической силы.</p></div>
+        <div class="leadership-refs"><span>ОТКРЫТЬ НОРМЫ</span><button class="open-doc" data-doc="labor" data-article="3">ТК ст. 3</button><button class="open-doc" data-doc="labor" data-article="25">ТК ст. 25</button><button class="open-doc" data-doc="labor" data-article="27">ТК ст. 27</button><button class="open-doc" data-doc="labor" data-article="58">ТК ст. 58</button><button class="open-doc" data-doc="gservice" data-article="17">ФЗ о госслужбе ст. 17</button><button class="open-doc" data-doc="charter" data-article="19">Устав ст. 19</button><button class="open-doc" data-doc="charter" data-article="23">Устав ст. 23</button></div>
+      </div>
+    </details>
+
+    <details class="leadership-card" data-lead-group="orders" data-search="приказ законность незаконный приказ письменное подтверждение сомнение отказ исполнение распоряжение">
+      <summary><span class="leadership-index">10</span><div class="leadership-card-head"><small>ПРИКАЗЫ</small><h3>Проверка законности приказа</h3><p>Короткий тест для руководителя до того, как требовать исполнения.</p></div><span class="leadership-chevron">⌄</span></summary>
+      <div class="leadership-card-body">
+        <div class="leadership-block check"><strong>ПРИКАЗ ЗАКОНЕН, ЕСЛИ</strong><ul><li>Его отдаёт компетентный руководитель.</li><li>Он относится к служебным обязанностям подчинённого.</li><li>Он понятен и исполним.</li><li>Он не противоречит законодательству.</li></ul></div>
+        <div class="leadership-block do"><strong>ЕСЛИ ВОЗНИКЛО СОМНЕНИЕ</strong><ol><li>Уточнить содержание приказа.</li><li>При неочевидном сомнении сотрудник вправе запросить письменное подтверждение.</li><li>Если незаконность очевидна — приказ исполнению не подлежит; о нём сообщается вышестоящему руководителю или иному компетентному органу.</li></ol></div>
+        <div class="leadership-block stop"><strong>ВАЖНО</strong><ul><li>Письменное подтверждение не превращает заведомо незаконный приказ в законный.</li><li>Отказ от исполнения заведомо незаконного приказа сам по себе не является дисциплинарным проступком.</li></ul></div>
+        <div class="leadership-refs"><span>ОТКРЫТЬ НОРМЫ</span><button class="open-doc" data-doc="gservice" data-article="9">ФЗ о госслужбе ст. 9</button><button class="open-doc" data-doc="gservice" data-article="10">ст. 10</button><button class="open-doc" data-doc="charter" data-article="11">Устав ст. 11</button><button class="open-doc" data-doc="labor" data-article="59">ТК ст. 59</button></div>
+      </div>
+    </details>
+
+    <details class="leadership-card" data-lead-group="discipline orders" data-search="обжалование жалоба отмена решения взыскание увольнение перевод отстранение восстановление вышестоящий руководитель прокуратура суд">
+      <summary><span class="leadership-index">11</span><div class="leadership-card-head"><small>КОНТРОЛЬ РЕШЕНИЯ</small><h3>Жалоба, пересмотр и отмена</h3><p>Что именно проверять, если сотрудник оспаривает кадровое или дисциплинарное решение.</p></div><span class="leadership-chevron">⌄</span></summary>
+      <div class="leadership-card-body">
+        <div class="leadership-block check"><strong>ПРОВЕРЬ ТРИ ВЕЩИ</strong><ul><li>Компетенцию лица, принявшего решение.</li><li>Фактическое и правовое основание.</li><li>Соблюдение обязательной процедуры.</li></ul></div>
+        <div class="leadership-block do"><strong>ВОЗМОЖНЫЕ ДЕЙСТВИЯ</strong><ol><li>Оставить законное решение в силе.</li><li>Изменить его в пределах полномочий.</li><li>Отменить собственное или нижестоящее незаконное решение.</li><li>Восстановить служебные права в объёме, определённом отменяющим решением, если нет другого самостоятельного основания.</li></ol></div>
+        <div class="leadership-block note"><strong>КУДА МОЖЕТ ОБРАТИТЬСЯ СОТРУДНИК</strong><ul><li>К вышестоящему руководителю.</li><li>В прокуратуру — в пределах её компетенции.</li><li>В суд.</li></ul></div>
+        <div class="leadership-refs"><span>ОТКРЫТЬ НОРМЫ</span><button class="open-doc" data-doc="charter" data-article="22">Устав ст. 22</button><button class="open-doc" data-doc="gservice" data-article="17">ФЗ о госслужбе ст. 17</button><button class="open-doc" data-doc="labor" data-article="66">ТК ст. 66</button><button class="open-doc" data-doc="labor" data-article="68">ТК ст. 68</button></div>
+      </div>
+    </details>
+
+    <details class="leadership-card" data-lead-group="staff discipline" data-search="кто принимает решение директор ук увк кадровые полномочия назначение освобождение дисциплинарное решение руководитель подразделения">
+      <summary><span class="leadership-index">12</span><div class="leadership-card-head"><small>КОМПЕТЕНЦИЯ</small><h3>Кто что решает: Директор, УК, УВК</h3><p>Чтобы подготовка материала не превратилась в решение лица, у которого нет такого полномочия.</p></div><span class="leadership-chevron">⌄</span></summary>
+      <div class="leadership-card-body">
+        <div class="leadership-block check"><strong>ДИРЕКТОР ФСО</strong><ul><li>Является прямым начальником сотрудников ФСО.</li><li>Назначает и освобождает сотрудников в пределах своей кадровой компетенции.</li><li>Издаёт обязательные приказы и распределяет обязанности в пределах закона.</li></ul></div>
+        <div class="leadership-block do"><strong>УПРАВЛЕНИЕ КАДРОВ</strong><ul><li>Организует приём, оформление назначения, перевода и освобождения от должности.</li><li>Ведёт кадровый учёт и готовит кадровые материалы и проекты решений для уполномоченного руководителя.</li><li>Сам факт подготовки документа УК не заменяет решение компетентного должностного лица.</li></ul></div>
+        <div class="leadership-block note"><strong>УВК</strong><ul><li>Может истребовать материалы, получать объяснения, проводить служебные проверки и готовить мотивированные заключения.</li><li>Не принимает окончательное решение о взыскании, понижении или увольнении, если соответствующее полномочие прямо не предоставлено его руководителю.</li></ul></div>
+        <div class="leadership-block stop"><strong>НЕ ПУТАТЬ</strong><ul><li>Воинское звание само по себе не расширяет должностную компетенцию.</li><li>Руководитель подразделения организует работу подчинённых в пределах своей должности, но конкретное кадровое или дисциплинарное решение требует отдельной проверки полномочия.</li></ul></div>
+        <div class="leadership-refs"><span>ОТКРЫТЬ НОРМЫ</span><button class="open-doc" data-doc="fso" data-article="14">ФЗ о ФСО ст. 14</button><button class="open-doc" data-doc="charter" data-article="4">Устав ст. 4</button><button class="open-doc" data-doc="charter" data-article="6.1">Устав ст. 6.1</button><button class="open-doc" data-doc="charter" data-article="16">Устав ст. 16</button></div>
+      </div>
+    </details>
+
+    <details class="leadership-card" data-lead-group="discipline" data-search="снять взыскание досрочно снятие выговора замечания дисциплинарное взыскание три дня 3 дня обжалование">
+      <summary><span class="leadership-index">13</span><div class="leadership-card-head"><small>ДИСЦИПЛИНА</small><h3>Досрочное снятие взыскания</h3><p>Когда взыскание можно снять раньше и почему «три дня» не означают автоматическую отмену.</p></div><span class="leadership-chevron">⌄</span></summary>
+      <div class="leadership-card-body">
+        <div class="leadership-block check"><strong>КТО МОЖЕТ ИНИЦИИРОВАТЬ</strong><ul><li>Уполномоченный руководитель — по собственной инициативе.</li><li>Сам сотрудник — своим обращением.</li><li>Непосредственный руководитель — представлением.</li></ul></div>
+        <div class="leadership-block do"><strong>ЧТО ОЦЕНИТЬ</strong><ol><li>Как сотрудник исполнял обязанности после взыскания.</li><li>Есть ли новое дисциплинарное нарушение.</li><li>Каковы результаты дополнительной подготовки, если она назначалась.</li><li>Оформить снятие либо отказ мотивированным служебным актом.</li></ol></div>
+        <div class="leadership-block note"><strong>ПРО «3 КАЛЕНДАРНЫХ ДНЯ»</strong><p>ТК позволяет после не менее трёх календарных дней добросовестной работы без нового нарушения учитывать это как достаточное основание для досрочного снятия. Это не автоматическое прекращение взыскания: для ФСО всё равно требуется решение уполномоченного руководителя, а специальный закон может устанавливать иной порядок.</p></div>
+        <div class="leadership-block stop"><strong>НЕЛЬЗЯ</strong><ul><li>Считать взыскание автоматически снятым только из-за истечения трёх дней.</li><li>Отказывать без учёта предусмотренных критериев и возможности обжалования решения.</li></ul></div>
+        <div class="leadership-refs"><span>ОТКРЫТЬ НОРМЫ</span><button class="open-doc" data-doc="charter" data-article="21">Устав ст. 21</button><button class="open-doc" data-doc="labor" data-article="55">ТК ст. 55</button></div>
+      </div>
+    </details>
+
+    <details class="leadership-card" data-lead-group="incident discipline" data-search="сотрудника задержали задержание госслужащего прокурор уведомление органа нельзя вмешиваться автоматическое увольнение арест">
+      <summary><span class="leadership-index">14</span><div class="leadership-card-head"><small>ИНЦИДЕНТ</small><h3>Сотрудника ФСО задержали</h3><p>Что должен понимать руководитель: процессуальное решение и служебные последствия — не одно и то же.</p></div><span class="leadership-chevron">⌄</span></summary>
+      <div class="leadership-card-body">
+        <div class="leadership-block check"><strong>СНАЧАЛА</strong><ul><li>Уточнить факт и место задержания, если орган сообщил об этом.</li><li>Не делать вывод о виновности только из самого задержания, подозрения или обвинения.</li></ul></div>
+        <div class="leadership-block do"><strong>ЧТО ПРОИСХОДИТ ПО ПК</strong><ol><li>При задержании государственного служащего действует специальная процедура с обязательным участием прокуратуры, если нет предусмотренного исключения.</li><li>Прокурор самостоятельно оценивает основания, квалификацию, доказательства и соблюдение процессуальных прав и принимает обязательное решение.</li><li>Орган, где служит задержанный, может быть уведомлён информационно.</li><li>Служебные/дисциплинарные последствия решаются отдельно по законодательству о государственной службе.</li></ol></div>
+        <div class="leadership-block stop"><strong>РУКОВОДСТВУ НЕЛЬЗЯ</strong><ul><li>Вмешиваться в оценку доказательств, прокурорское решение или ход расследования только на основании ведомственной подчинённости сотрудника.</li><li>Автоматически увольнять сотрудника лишь потому, что его задержали.</li></ul></div>
+        <div class="leadership-refs"><span>ОТКРЫТЬ НОРМЫ</span><button class="open-doc" data-doc="pk" data-chapter="II" data-article="4">ПК гл. II ст. 4</button><button class="open-doc" data-doc="pk" data-chapter="II" data-article="5">ПК гл. II ст. 5</button><button class="open-doc" data-doc="gservice" data-article="17">ФЗ о госслужбе ст. 17</button><button class="open-doc" data-doc="charter" data-article="23">Устав ст. 23</button></div>
+      </div>
+    </details>
+
+  </div>
+
+  <div class="leadership-note"><b>Важно:</b> эта страница помогает не пропустить процедуру, но не заменяет сам нормативный акт. Если ситуация спорная, открывай статьи по кнопкам внутри карточки и проверяй специальную норму прежде общей.</div>
+</section>
+
 <section class="page" id="page-process">
 <div class="section-head"><div><h2>Задержание сотрудником ФСО</h2><p>Основания, порядок действий, права задержанного и передача компетентному органу.</p></div></div>
 <div class="process-grid">
@@ -3744,7 +3981,7 @@ body.access-pending .footer{visibility:hidden}
 </div>
 <p class="footer-disclaimer">Неофициальная памятка. При расхождении приоритет имеют действующие нормативные акты проекта.</p>
 <div class="footer-update-row">
-<small class="footer-updated">Последнее обновление: 11.09.2026</small>
+<small class="footer-updated">Последнее обновление: 15.09.2026</small>
 <button class="updates-btn" id="updatesBtn" type="button">Обновления</button>
 </div>
 </div>
@@ -3764,6 +4001,19 @@ body.access-pending .footer{visibility:hidden}
 <button aria-label="Закрыть" class="updates-close" id="updatesClose" type="button">×</button>
 </div>
 <div class="updates-body">
+
+<article class="update-entry">
+  <div class="update-date">15.09.2026</div>
+  <h4>Памятка для руководства</h4>
+  <ul>
+    <li>Для профиля <b>«Руководство»</b> добавлен отдельный раздел с кадровыми и дисциплинарными процедурами.</li>
+    <li>Добавлены пошаговые памятки по <b>приёму, переводу, отстранению, служебной проверке, взысканиям, увольнению и законности приказов</b>.</li>
+    <li>В каждой памятке есть блоки <b>«Сначала проверь», «Что делать», «Нельзя»</b> и прямые переходы к точным статьям документов.</li>
+    <li>Добавлено разграничение полномочий <b>Директора, УК и УВК</b>, проверка особого кадрового порядка и отдельная процедура досрочного снятия взыскания.</li>
+    <li>Добавлен отдельный порядок для ситуации, когда <b>сотрудника ФСО задержали</b>: процессуальная процедура и служебные последствия разделены.</li>
+  </ul>
+</article>
+
 
 <article class="update-entry">
   <div class="update-date">11.09.2026</div>
@@ -3917,7 +4167,7 @@ function showPage(name,updateHash=true){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 $$('.nav button[data-page]').forEach(b=>b.onclick=()=>showPage(b.dataset.page));
-const initPage=location.hash.replace('#',''); if(['home','cheats','basis','situations','departments','uk-memos','uk-interview','process','terms','territories','convoys','codes','rules','laws'].includes(initPage)) showPage(initPage,false);
+const initPage=location.hash.replace('#',''); if(['home','cheats','basis','situations','departments','uk-memos','uk-interview','leadership','process','terms','territories','convoys','codes','rules','laws'].includes(initPage)) showPage(initPage,false);
 
 const themeBtn=$('#themeBtn');
 function setTheme(t){document.documentElement.dataset.theme=t;try{localStorage.setItem('fso-theme',t);}catch(e){} themeBtn.textContent=t==='dark'?'☀':'◐';}
@@ -4398,7 +4648,263 @@ if(docs.length) renderDoc(docs[0]);
   });
 
 
-  /* Живые подсказки поиска удалены. */
+  /* ===== ЖИВЫЕ ПОДСКАЗКИ ПОИСКА ===== */
+  const AUTOCOMPLETE_STOP=new Set([
+    "это","как","для","при","или","либо","если","что","также","только","может","могут","должен","должна",
+    "должны","имеет","имеют","является","являются","который","которая","которые","этой","этого","этим",
+    "после","перед","между","всех","своей","своего","своих","иной","иное","иные","один","одна","часть",
+    "статья","пункт","глава","настоящего","федерального","закона","россия","онлайн","форум","нового",
+    "пользователи","закрыто","ответов","лидер","организации","государственной","государственный"
+  ]);
+
+  const autocompleteMap=new Map();
+
+  function cleanSuggestionLabel(v){
+    return String(v||"").replace(/\s+/g," ").trim().replace(/^[·—–:;,.\s]+|[·—–:;,.\s]+$/g,"");
+  }
+
+  function addAutocomplete(label,type="слово",weight=1){
+    label=cleanSuggestionLabel(label);
+    if(!label)return;
+    const norm=searchNorm(label);
+    if(!norm || norm.length<3 || norm.length>90)return;
+    if(/^\d+(?:\.\d+)*$/.test(norm))return;
+
+    const key=norm;
+    const old=autocompleteMap.get(key);
+    if(old){
+      old.weight+=weight;
+      if(weight>old.bestWeight){
+        old.label=label; old.type=type; old.bestWeight=weight;
+      }
+      return;
+    }
+    autocompleteMap.set(key,{label,type,weight,bestWeight:weight,norm});
+  }
+
+  function addAutocompleteWords(text,type="слово",weight=1){
+    const words=String(text||"").match(/[A-Za-zА-Яа-яЁё][A-Za-zА-Яа-яЁё-]{2,}/g)||[];
+    words.forEach(raw=>{
+      const word=raw.replace(/^-+|-+$/g,"");
+      const norm=searchNorm(word);
+      if(norm.length<3 || norm.length>34 || AUTOCOMPLETE_STOP.has(norm))return;
+      if(/[a-z]/i.test(word) && word.length<4)return;
+      addAutocomplete(word.toLowerCase(),type,weight);
+    });
+  }
+
+  /* Сильные источники: названия документов, алиасы, понятия, карточки и заголовки. */
+  docs.filter(d=>!d.hidden).forEach(d=>{
+    addAutocomplete(d.title,"документ",95);
+    (DOC_ALIASES[d.id]||[]).forEach(x=>addAutocomplete(x,"документ",110));
+  });
+
+  CONCEPTS.forEach(g=>{
+    g.add.forEach(x=>addAutocomplete(x,x.includes(" ")?"фраза":"термин",85));
+    g.find.forEach(x=>addAutocompleteWords(x,"термин",15));
+  });
+
+  document.querySelectorAll("#page-basis .basis-card").forEach(card=>{
+    try{
+      const d=JSON.parse(card.dataset.norm);
+      addAutocomplete(d.t,"памятка",115);
+      addAutocompleteWords(d.t,"термин",24);
+    }catch(_){}
+    String(card.dataset.keywords||"").split("|").forEach(x=>{
+      if(searchNorm(x).length>=3)addAutocomplete(x,"ключевое",55);
+      addAutocompleteWords(x,"ключевое",7);
+    });
+  });
+
+  document.querySelectorAll(".term-card h3").forEach(el=>{
+    addAutocomplete(el.textContent,"термин",120);
+    addAutocompleteWords(el.textContent,"термин",30);
+  });
+
+  document.querySelectorAll("#page-territories h2,#page-territories h3,#page-territories b").forEach(el=>{
+    const t=cleanSuggestionLabel(el.textContent);
+    if(t.length>=3 && t.length<=65){
+      addAutocomplete(t,"территории",45);
+      addAutocompleteWords(t,"территории",13);
+    }
+  });
+
+  articleIndex.forEach(a=>{
+    /* Заголовок статьи как фраза без «Статья 12.» */
+    const heading=String(a.heading||"").replace(/^(?:Статья|Пункт)\s+\d+(?:\.\d+)*\.\s*/i,"");
+    if(heading) addAutocomplete(heading,"статья",70);
+    addAutocompleteWords(heading,"статья",18);
+
+    /* Обычные слова из текста дают охват, но имеют низкий приоритет,
+       поэтому не вытесняют юридические термины и названия документов. */
+    addAutocompleteWords(a.text,"слово",1);
+  });
+
+  /* Важные общеупотребительные варианты, которыми реально будут искать нормы. */
+  [
+    ["процесс","термин",130],["процессуальный","термин",135],["процессуальные права","фраза",140],
+    ["неприкосновенность","термин",150],["охраняемая территория","территории",150],
+    ["закрытая территория","территории",145],["режимный объект","территории",145],
+    ["территория с особым статусом","территории",135],["больница","территории",120],
+    ["задержание","термин",135],["досмотр","термин",135],["обыск","термин",125],
+    ["удостоверение","термин",125],["полномочия","термин",125],["субординация","термин",115]
+  ].forEach(x=>addAutocomplete(x[0],x[1],x[2]));
+
+  const autocompleteEntries=[...autocompleteMap.values()];
+
+  function autocompletePrefixInfo(value){
+    const raw=String(value||"");
+    const m=raw.match(/(^|\s)([A-Za-zА-Яа-яЁё-]{1,})$/);
+    if(!m)return null;
+    return {prefix:searchNorm(m[2]),rawPrefix:m[2],base:raw.slice(0,raw.length-m[2].length)};
+  }
+
+  function autocompleteScore(entry,prefix){
+    const words=entry.norm.split(" ");
+    let pos=-1,matched="";
+    for(const w of words){
+      if(w.startsWith(prefix)){pos=0;matched=w;break;}
+      if(prefix.length>=4 && searchStem(w).startsWith(searchStem(prefix))){pos=1;matched=w;break;}
+    }
+    if(pos<0)return -Infinity;
+
+    let score=entry.weight;
+    if(entry.norm.startsWith(prefix))score+=420;
+    else score+=260;
+    if(entry.norm===prefix)score+=220;
+    if(entry.type==="термин"||entry.type==="документ"||entry.type==="памятка")score+=55;
+    if(entry.label.includes(" "))score+=18;
+    score-=Math.min(90,Math.max(0,entry.norm.length-prefix.length)*0.8);
+    return score;
+  }
+
+  function getAutocomplete(value,limit=8){
+    const info=autocompletePrefixInfo(value);
+    if(!info || info.prefix.length<3)return {info,items:[]};
+
+    const scored=[];
+    for(const entry of autocompleteEntries){
+      const score=autocompleteScore(entry,info.prefix);
+      if(Number.isFinite(score))scored.push({entry,score});
+    }
+    scored.sort((a,b)=>b.score-a.score || a.entry.label.length-b.entry.label.length);
+
+    /* Не показываем почти одинаковые варианты подряд. */
+    const out=[],seenStem=new Set();
+    for(const x of scored){
+      const first=x.entry.norm.split(" ").find(w=>w.startsWith(info.prefix))||x.entry.norm;
+      const stem=searchStem(first);
+      const dedupeKey=(x.entry.type==="документ"||x.entry.label.includes(" "))?x.entry.norm:stem;
+      if(seenStem.has(dedupeKey))continue;
+      seenStem.add(dedupeKey);
+      out.push(x.entry);
+      if(out.length>=limit)break;
+    }
+    return {info,items:out};
+  }
+
+  function highlightSuggestion(label,prefix){
+    const safe=esc2(label);
+    const re=new RegExp("("+String(prefix).replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","i");
+    return safe.replace(re,"<mark>$1</mark>");
+  }
+
+  function suggestionPanelFor(input){
+    if(input._suggestPanel && input._suggestPanel.isConnected)return input._suggestPanel;
+    const wrap=input.closest(".smart-search-box,.basis-search")||input.parentElement;
+    const p=document.createElement("div");
+    p.className="search-suggest-panel";
+    p.setAttribute("role","listbox");
+    wrap.appendChild(p);
+    input._suggestPanel=p;
+    input._suggestItems=[];
+    input._suggestIndex=-1;
+    return p;
+  }
+
+  function closeSuggestions(input){
+    const p=input._suggestPanel;
+    if(p){p.classList.remove("open");p.innerHTML="";}
+    input._suggestItems=[];
+    input._suggestIndex=-1;
+  }
+
+  function useSuggestion(input,entry){
+    const info=autocompletePrefixInfo(input.value);
+    if(!info)return;
+    let value;
+    if(entry.label.includes(" ")){
+      /* Фраза/документ заменяет текущий незаконченный фрагмент целиком,
+         а уже введённая предыдущая часть запроса сохраняется. */
+      value=info.base+entry.label;
+    }else{
+      value=info.base+entry.label;
+    }
+    input.value=value;
+    closeSuggestions(input);
+    input.dispatchEvent(new Event("input",{bubbles:true}));
+    input.focus();
+  }
+
+  function paintSuggestionActive(input){
+    const p=input._suggestPanel;if(!p)return;
+    p.querySelectorAll(".search-suggest-item").forEach((b,i)=>b.classList.toggle("active",i===input._suggestIndex));
+  }
+
+  function renderSuggestions(input){
+    const p=suggestionPanelFor(input);
+    const {info,items}=getAutocomplete(input.value,8);
+    if(!info || info.prefix.length<3 || !items.length){
+      closeSuggestions(input);return;
+    }
+
+    input._suggestItems=items;
+    input._suggestIndex=-1;
+    p.innerHTML=`<div class="search-suggest-head"><b>Возможно, вы ищете</b><span>${items.length} вариантов</span></div>`+
+      `<div class="search-suggest-list">`+
+      items.map((e,i)=>`<button class="search-suggest-item" type="button" data-suggest-index="${i}" role="option"><span>${highlightSuggestion(e.label,info.rawPrefix)}</span><small>${esc2(e.type)}</small></button>`).join("")+
+      `</div>`;
+    p.classList.add("open");
+
+    p.querySelectorAll("[data-suggest-index]").forEach(btn=>{
+      btn.addEventListener("mousedown",e=>e.preventDefault());
+      btn.addEventListener("click",()=>useSuggestion(input,items[Number(btn.dataset.suggestIndex)]));
+    });
+  }
+
+  ["homeSmartSearch","matrixSearch"].forEach(id=>{
+    const input=document.getElementById(id);
+    if(!input)return;
+
+    input.addEventListener("input",()=>renderSuggestions(input));
+    input.addEventListener("focus",()=>renderSuggestions(input));
+    input.addEventListener("keydown",e=>{
+      const items=input._suggestItems||[];
+      if(!items.length)return;
+      if(e.key==="ArrowDown"){
+        e.preventDefault();
+        input._suggestIndex=(input._suggestIndex+1)%items.length;
+        paintSuggestionActive(input);
+      }else if(e.key==="ArrowUp"){
+        e.preventDefault();
+        input._suggestIndex=(input._suggestIndex<=0?items.length-1:input._suggestIndex-1);
+        paintSuggestionActive(input);
+      }else if(e.key==="Enter" && input._suggestIndex>=0){
+        e.preventDefault();
+        useSuggestion(input,items[input._suggestIndex]);
+      }else if(e.key==="Escape"){
+        closeSuggestions(input);
+      }
+    });
+  });
+
+  document.addEventListener("click",e=>{
+    ["homeSmartSearch","matrixSearch"].forEach(id=>{
+      const input=document.getElementById(id);
+      if(input && !e.target.closest(".search-suggest-panel") && e.target!==input)closeSuggestions(input);
+    });
+  });
+  /* ===== /ЖИВЫЕ ПОДСКАЗКИ ПОИСКА ===== */
 
   function esc2(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 
@@ -4909,7 +5415,7 @@ if(docs.length) renderDoc(docs[0]);
   const ACADEMY_PAGES=new Set(["home","cheats","basis","departments","territories","codes","laws"]);
   const UK_PAGES=new Set(["home","cheats","basis","situations","departments","uk-memos","uk-interview","process","terms","territories","codes","rules","laws"]);
   const NORMAL_PAGES=new Set(["home","cheats","basis","situations","departments","process","terms","territories","convoys","codes","rules","laws"]);
-  const LEADERSHIP_PAGES=new Set([...NORMAL_PAGES,"uk-memos","uk-interview"]);
+  const LEADERSHIP_PAGES=new Set([...NORMAL_PAGES,"uk-memos","uk-interview","leadership"]);
 
   let selectedRole="";
   let session=null;
@@ -5890,6 +6396,7 @@ if(docs.length) renderDoc(docs[0]);
   function injectStaticButtons(){
     wrapBasisCards();
     wrapUkMemoCards();
+    $$("#page-leadership .leadership-card").forEach(el=>addButtonTo(el,{category:"Памятка руководства"}));
     [
       "#page-terms .term-card",
       "#page-territories .territory-index-card",
@@ -6106,239 +6613,6 @@ footer{margin-top:18px;color:#728091;font-size:10px;text-align:center}@media pri
     setTimeout(()=>{w.focus();w.print()},250);
   }
 
-  function cheatBasisNormForItem(x){
-    if(!x||x.page!=="basis")return null;
-    let found=null;
-    $$("#page-basis .basis-card").some(card=>{
-      let n={};
-      try{n=JSON.parse(card.dataset.norm||"{}")}catch(_){return false}
-      const sameDoc=clean(n.doc||"")===clean(x.doc||"");
-      const sameArticle=clean(n.a||"")===clean(x.article||"");
-      const sameTitle=clean(n.t||titleFor(card))===clean(x.title||"");
-      if(sameDoc&&sameArticle&&sameTitle){
-        found={...n,_keywords:clean(card.dataset.keywords||"")};
-        return true;
-      }
-      return false;
-    });
-    return found;
-  }
-
-  function cheatLawTitle(x){
-    const d=cheatDocMap[x?.doc||""];
-    if(d?.title)return clean(d.title);
-
-    const s=clean(x?.source||"");
-    if(s){
-      const m=s.match(/^(.+?)(?:\s+[—–-]\s+(?:ст\.|гл\.|ч\.|п\.)|$)/i);
-      if(m?.[1]&&m[1].length<=180)return clean(m[1]);
-    }
-    return clean(x?.category||"")||"Памятка";
-  }
-
-  function cheatSourceRef(x){
-    const source=clean(x?.source||"");
-    const law=cheatLawTitle(x);
-    if(!source)return "";
-    if(law&&source.toLowerCase().startsWith(law.toLowerCase())){
-      return clean(source.slice(law.length).replace(/^[\s—–-]+/,""));
-    }
-    return source;
-  }
-
-  function cheatRawArticle(x){
-    const d=cheatDocMap[x?.doc||""];
-    const num=clean(x?.article||"");
-    if(!d?.text||!num)return "";
-    const lines=String(d.text).split("\n");
-    const escaped=num.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
-    const rx=new RegExp("^Статья\\s+"+escaped+"(?=\\s|\\.|\\()");
-    const start=lines.findIndex(line=>rx.test(String(line).trim()));
-    if(start<0)return "";
-    let end=lines.length;
-    for(let i=start+1;i<lines.length;i++){
-      const t=String(lines[i]).trim();
-      if(/^Статья\s+\d+(?:\.\d+)*(?=\s|\.|\()/.test(t)||/^(?:Глава|ГЛАВА|Раздел|РАЗДЕЛ)\s+/.test(t)){
-        end=i;break;
-      }
-    }
-    return lines.slice(start,end).join("\n").replace(/\n{3,}/g,"\n\n").trim();
-  }
-
-  function cheatLegalParagraphs(article){
-    const lines=String(article||"").split("\n").map(x=>x.trim()).filter(Boolean);
-    if(lines.length<=1)return [];
-    const paras=[];
-    let current="";
-    for(const line of lines.slice(1)){
-      const starts=/^(?:\d+(?:\.\d+)*\.\s|\d+(?:\.\d+)*\)\s|Наказание:|Примечание:|Исключение:)/i.test(line);
-      if(starts&&current){paras.push(clean(current));current=line}
-      else current+=(current?" ":"")+line;
-    }
-    if(current)paras.push(clean(current));
-    return paras.filter(Boolean);
-  }
-
-  function cheatReferenceParts(x){
-    const norm=cheatBasisNormForItem(x);
-    const ref=[x?.source||"",norm?.r||""].filter(Boolean).join(" ");
-    const point=(ref.match(/(?:^|\s)п\.\s*(\d+(?:\.\d+)*)/i)||[])[1]||"";
-    const part=(ref.match(/(?:^|\s)ч\.\s*(\d+(?:\.\d+)*)/i)||[])[1]||"";
-    return {point,part,norm};
-  }
-
-  function cheatArticleBodyLines(article){
-    const lines=String(article||"").split("\n").map(x=>String(x).trim());
-    if(lines.length&&/^Статья\s+/i.test(lines[0]))lines.shift();
-    while(lines.length&&!lines[0])lines.shift();
-    while(lines.length&&!lines[lines.length-1])lines.pop();
-    return lines;
-  }
-
-  function cheatPartRx(num){
-    const escNum=String(num||"").replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
-    return new RegExp("^"+escNum+"\\.\\s");
-  }
-
-  function cheatPointRx(num){
-    const escNum=String(num||"").replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
-    return new RegExp("^"+escNum+"\\)\\s");
-  }
-
-  function cheatAnyPartLine(line){
-    return /^\d+(?:\.\d+)*\.\s/.test(String(line||"").trim());
-  }
-
-  function cheatAnyPointLine(line){
-    return /^\d+(?:\.\d+)*\)\s/.test(String(line||"").trim());
-  }
-
-  function cheatJoinLegalLines(lines){
-    const out=[];
-    for(const raw of lines){
-      const line=String(raw||"").trim();
-      if(!line)continue;
-      const startsNumber=cheatAnyPartLine(line)||cheatAnyPointLine(line);
-      if(startsNumber||!out.length)out.push(line);
-      else out[out.length-1]+=" "+line;
-    }
-    return out.join("\n").trim();
-  }
-
-  function cheatPreamble(lines){
-    let end=0;
-    while(end<lines.length&&!cheatAnyPartLine(lines[end])&&!cheatAnyPointLine(lines[end]))end++;
-    return cheatJoinLegalLines(lines.slice(0,end));
-  }
-
-  function cheatPointBlock(lines,start,limit){
-    let end=start+1;
-    while(end<limit){
-      if(cheatAnyPointLine(lines[end])||cheatAnyPartLine(lines[end]))break;
-      end++;
-    }
-    return cheatJoinLegalLines(lines.slice(start,end));
-  }
-
-  function cheatPartBounds(lines,part){
-    const rx=cheatPartRx(part);
-    const start=lines.findIndex(line=>rx.test(String(line||"").trim()));
-    if(start<0)return null;
-    let end=lines.length;
-    for(let i=start+1;i<lines.length;i++){
-      if(cheatAnyPartLine(lines[i])){
-        end=i;
-        break;
-      }
-    }
-    return {start,end};
-  }
-
-  function cheatPartLead(lines,start,end){
-    let leadEnd=start+1;
-    while(leadEnd<end&&!cheatAnyPointLine(lines[leadEnd])&&!cheatAnyPartLine(lines[leadEnd]))leadEnd++;
-    return cheatJoinLegalLines(lines.slice(start,leadEnd));
-  }
-
-  function cheatRealLegalText(x){
-    if(!x||x.page!=="basis"||!x.doc||!x.article)return "";
-    const article=cheatRawArticle(x);
-    if(!article)return "";
-
-    const lines=cheatArticleBodyLines(article);
-    if(!lines.length)return "";
-
-    const {point,part,norm}=cheatReferenceParts(x);
-
-    if(part){
-      const bounds=cheatPartBounds(lines,part);
-      if(bounds){
-        if(point){
-          const pointRx=cheatPointRx(point);
-          let pointStart=-1;
-          for(let i=bounds.start+1;i<bounds.end;i++){
-            if(pointRx.test(String(lines[i]||"").trim())){
-              pointStart=i;
-              break;
-            }
-          }
-          if(pointStart>=0){
-            const parent=cheatPartLead(lines,bounds.start,bounds.end);
-            const item=cheatPointBlock(lines,pointStart,bounds.end);
-            return [parent,item].filter(Boolean).join("\n");
-          }
-        }
-        return cheatJoinLegalLines(lines.slice(bounds.start,bounds.end));
-      }
-    }
-
-    if(point){
-      const pointRx=cheatPointRx(point);
-      const pointStart=lines.findIndex(line=>pointRx.test(String(line||"").trim()));
-      if(pointStart>=0){
-        let limit=lines.length;
-        for(let i=pointStart+1;i<lines.length;i++){
-          if(cheatAnyPointLine(lines[i])||cheatAnyPartLine(lines[i])){
-            limit=i;
-            break;
-          }
-        }
-
-        let parent="";
-        let nearestPart=-1;
-        for(let i=pointStart-1;i>=0;i--){
-          if(cheatAnyPartLine(lines[i])){
-            nearestPart=i;
-            break;
-          }
-        }
-        if(nearestPart>=0){
-          let nextPart=lines.length;
-          for(let i=nearestPart+1;i<lines.length;i++){
-            if(cheatAnyPartLine(lines[i])){
-              nextPart=i;
-              break;
-            }
-          }
-          if(pointStart<nextPart)parent=cheatPartLead(lines,nearestPart,nextPart);
-        }
-        if(!parent)parent=cheatPreamble(lines);
-
-        const item=cheatPointBlock(lines,pointStart,limit);
-        return [parent,item].filter(Boolean).join("\n");
-      }
-    }
-
-    if(norm?.h){
-      const needle=clean(norm.h).toLowerCase().replace(/ё/g,"е");
-      const body=cheatJoinLegalLines(lines);
-      const normalized=body.toLowerCase().replace(/ё/g,"е");
-      if(needle&&normalized.includes(needle))return body;
-    }
-
-    return cheatJoinLegalLines(lines);
-  }
-
   function printTablePdf(){
     if(!exportGuard())return;
 
@@ -6347,45 +6621,25 @@ footer{margin-top:18px;color:#728091;font-size:10px;text-align:center}@media pri
     if(!w)return toast("Браузер заблокировал окно печати.","bad");
 
     /*
-      В табличной версии нормы группируются по конкретному документу.
-      Несколько оснований из одного ФЗ/кодекса идут под одним заголовком.
-      Внутри карточки отдельно показывается краткий смысл и реальная формулировка
-      из встроенного текста документа, если её можно однозначно извлечь.
+      Это не обычная HTML-таблица: обычная строка растягивает все соседние
+      ячейки по самой высокой карточке. Для шпаргалки используется плотная
+      многоколоночная раскладка — каждая карточка имеет только свою высоту.
     */
-    const groups=[];
-    const groupMap=new Map();
-    arr.forEach((x,i)=>{
-      const name=cheatLawTitle(x);
-      if(!groupMap.has(name)){
-        const g={name,items:[]};
-        groupMap.set(name,g);groups.push(g);
-      }
-      groupMap.get(name).items.push({x,i});
-    });
+    const cards=arr.map((x,i)=>`
+      <article class="memo-cell">
+        <div class="memo-category">${esc(x.category||"Памятка")}</div>
+        <div class="memo-head">
+          <b>${esc(x.title)}</b>
+          ${x.source?`<span>${esc(x.source)}</span>`:""}
+        </div>
+        ${x.content?`<div class="memo-text">${esc(x.content).replace(/\n/g,"<br>")}</div>`:""}
+        ${x.note?`<div class="memo-note"><b>Личная заметка</b>${esc(x.note).replace(/\n/g,"<br>")}</div>`:""}
+      </article>`).join("");
 
-    const groupHtml=groups.map(group=>{
-      const cards=group.items.map(({x,i})=>{
-        const ref=cheatSourceRef(x);
-        const legal=cheatRealLegalText(x);
-        return `
-        <article class="memo-cell">
-          <div class="memo-head">
-            <b>${esc(x.title)}</b>
-            ${ref?`<span>${esc(ref)}</span>`:""}
-          </div>
-          ${x.content?`<div class="memo-summary"><b>Кратко</b>${esc(x.content).replace(/\n/g,"<br>")}</div>`:""}
-          ${legal?`<div class="memo-law-text"><b>Формулировка документа</b>${esc(legal).replace(/\n/g,"<br>")}</div>`:""}
-          ${x.note?`<div class="memo-note"><b>Личная заметка</b>${esc(x.note).replace(/\n/g,"<br>")}</div>`:""}
-        </article>`;
-      }).join("");
-
-      return `
-      <section class="memo-law-group">
-        <h2 class="memo-law-title">${esc(group.name)}</h2>
-        <div class="memo-grid">${cards}</div>
-      </section>`;
-    }).join("");
-
+    /*
+      Количество колонок подстраивается под объём.
+      Маленькая шпаргалка остаётся читаемой, большая становится плотнее.
+    */
     const columnCount=arr.length<=8?3:(arr.length<=22?4:5);
 
     w.document.write(`<!doctype html>
@@ -6396,33 +6650,171 @@ footer{margin-top:18px;color:#728091;font-size:10px;text-align:center}@media pri
 <style>
 @page{size:A4 landscape;margin:5mm}
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;background:#fff;color:#000;font-family:Arial,Helvetica,sans-serif}
-body{font-size:7.2pt;line-height:1.24}
-.sheet{width:100%}
-.sheet-head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:8mm;padding:0 1px 3px;border-bottom:1.4px solid #111;margin-bottom:4px}
-.sheet-title h1{margin:0;font-size:14.2pt;line-height:1;font-weight:900}
-.sheet-title p{margin:3px 0 0;color:#444;font-size:6.3pt}
-.sheet-meta{text-align:right;white-space:nowrap}
-.sheet-meta small{display:block;color:#555;font-size:5.8pt;margin-bottom:2px}
-.author{color:#09699f;font-size:11pt;font-weight:900;letter-spacing:.01em}
-.memo-law-group{margin:0 0 5px;break-inside:auto}
-.memo-law-title{margin:0 0 3px;padding:3px 5px;border:1px solid #111;background:#9dcbea;text-align:left;font-size:7.6pt;line-height:1.12;font-weight:900;break-after:avoid;page-break-after:avoid}
-.memo-grid{column-count:${columnCount};column-gap:3px;column-rule:0;width:100%}
-.memo-cell{display:inline-block;width:100%;margin:0 0 3px;vertical-align:top;border:1px solid #111;background:#fff;break-inside:avoid;page-break-inside:avoid;overflow:hidden}
-.memo-head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:4px;padding:3px 4px;border-bottom:1px solid #111;background:#f7f7f7}
-.memo-head b{min-width:0;font-size:6.7pt;line-height:1.15;overflow-wrap:anywhere}
-.memo-head span{max-width:33mm;text-align:right;color:#111;font-size:5.35pt;line-height:1.15;font-weight:700;overflow-wrap:anywhere}
-.memo-summary,.memo-law-text{padding:4px;font-size:6.05pt;line-height:1.24;overflow-wrap:anywhere}
-.memo-summary{border-bottom:1px dashed #999}
-.memo-summary b,.memo-law-text b,.memo-note b{display:block;margin-bottom:2px;font-size:5.15pt;text-transform:uppercase;letter-spacing:.02em}
-.memo-law-text{background:#fff}
-.memo-note{margin:0 4px 4px;padding:3px 4px;border-top:1px dashed #777;background:#fafafa;font-size:5.8pt;line-height:1.22}
-.sheet-foot{display:flex;justify-content:space-between;gap:10px;margin-top:2px;padding-top:2px;border-top:1px solid #999;color:#666;font-size:5.2pt}
-.memo-cell,.memo-summary,.memo-law-text,.memo-head{min-height:0!important;height:auto!important}
+
+html,body{
+  margin:0;
+  padding:0;
+  background:#fff;
+  color:#000;
+  font-family:Arial,Helvetica,sans-serif;
+}
+body{
+  font-size:7.2pt;
+  line-height:1.24;
+}
+
+.sheet{
+  width:100%;
+}
+
+.sheet-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:end;
+  gap:8mm;
+  padding:0 1px 3px;
+  border-bottom:1.4px solid #111;
+  margin-bottom:3px;
+}
+.sheet-title h1{
+  margin:0;
+  font-size:14.2pt;
+  line-height:1;
+  font-weight:900;
+}
+.sheet-title p{
+  margin:3px 0 0;
+  color:#444;
+  font-size:6.3pt;
+}
+.sheet-meta{
+  text-align:right;
+  white-space:nowrap;
+}
+.sheet-meta small{
+  display:block;
+  color:#555;
+  font-size:5.8pt;
+  margin-bottom:2px;
+}
+.author{
+  color:#09699f;
+  font-size:11pt;
+  font-weight:900;
+  letter-spacing:.01em;
+}
+
+/* Плотная раскладка без общей высоты строки */
+.memo-grid{
+  column-count:${columnCount};
+  column-gap:3px;
+  column-rule:0;
+  width:100%;
+}
+
+.memo-cell{
+  display:inline-block;
+  width:100%;
+  margin:0 0 3px;
+  vertical-align:top;
+  border:1px solid #111;
+  background:#fff;
+  break-inside:avoid;
+  page-break-inside:avoid;
+  overflow:hidden;
+}
+
+.memo-category{
+  margin:0;
+  padding:2px 4px;
+  border-bottom:1px solid #111;
+  background:#9dcbea;
+  text-align:center;
+  font-size:6.7pt;
+  font-weight:900;
+  line-height:1.05;
+}
+
+.memo-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:start;
+  gap:4px;
+  padding:3px 4px;
+  border-bottom:1px solid #111;
+  background:#f7f7f7;
+}
+.memo-head b{
+  min-width:0;
+  font-size:6.7pt;
+  line-height:1.15;
+  overflow-wrap:anywhere;
+}
+.memo-head span{
+  max-width:33mm;
+  text-align:right;
+  color:#111;
+  font-size:5.35pt;
+  line-height:1.15;
+  font-weight:700;
+  overflow-wrap:anywhere;
+}
+
+.memo-text{
+  padding:4px;
+  font-size:6.15pt;
+  line-height:1.25;
+  overflow-wrap:anywhere;
+}
+
+.memo-note{
+  margin:0 4px 4px;
+  padding:3px 4px;
+  border-top:1px dashed #777;
+  background:#fafafa;
+  font-size:5.8pt;
+  line-height:1.22;
+}
+.memo-note b{
+  display:block;
+  margin-bottom:2px;
+  font-size:5.25pt;
+  text-transform:uppercase;
+}
+
+.sheet-foot{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:2px;
+  padding-top:2px;
+  border-top:1px solid #999;
+  color:#666;
+  font-size:5.2pt;
+}
+
+/* Если элементов совсем мало — не растягиваем их искусственно. */
+.memo-cell,.memo-text,.memo-head{
+  min-height:0!important;
+  height:auto!important;
+}
+
 @media print{
-  .memo-law-title{background:#9dcbea!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .memo-head{background:#f7f7f7!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .memo-note{background:#fafafa!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .memo-category{
+    background:#9dcbea!important;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+  .memo-head{
+    background:#f7f7f7!important;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+  .memo-note{
+    background:#fafafa!important;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
 }
 </style>
 </head>
@@ -6434,12 +6826,12 @@ body{font-size:7.2pt;line-height:1.24}
       <p>${arr.length} ${countWord(arr.length)} · ${new Date().toLocaleString("ru-RU")}</p>
     </div>
     <div class="sheet-meta">
-      <small>По документам · кратко + формулировка</small>
+      <small>Компактная табличная версия</small>
       <div class="author">by Арсений Рубежной</div>
     </div>
   </header>
 
-  ${groupHtml}
+  <section class="memo-grid">${cards}</section>
 
   <footer class="sheet-foot">
     <span>ФСО · Россия Онлайн · Кутузовский</span>
@@ -6656,6 +7048,49 @@ body{font-size:7.2pt;line-height:1.24}
   injectProtectedButtons(document);
   injectLawArticleButtons();
   load();
+})();
+</script>
+
+
+<script id="leadership-memos-script">
+(function(){
+  const page=document.getElementById('page-leadership');
+  if(!page)return;
+  const input=document.getElementById('leadershipSearch');
+  const expand=document.getElementById('leadershipExpandAll');
+  const filters=[...page.querySelectorAll('[data-lead-filter]')];
+  const cards=[...page.querySelectorAll('.leadership-card')];
+  let group='all';
+
+  const norm=s=>String(s||'').toLowerCase().replace(/ё/g,'е').replace(/[^a-zа-я0-9]+/gi,' ').trim();
+  function matches(card,q){
+    if(group!=='all'&&!String(card.dataset.leadGroup||'').split(/\s+/).includes(group))return false;
+    if(!q)return true;
+    const hay=norm((card.dataset.search||'')+' '+card.textContent);
+    return q.split(/\s+/).filter(Boolean).every(w=>hay.includes(w));
+  }
+  function apply(){
+    const q=norm(input?.value);
+    cards.forEach(card=>card.classList.toggle('is-hidden',!matches(card,q)));
+  }
+  filters.forEach(btn=>btn.addEventListener('click',()=>{
+    group=btn.dataset.leadFilter||'all';
+    filters.forEach(x=>x.classList.toggle('active',x===btn));
+    apply();
+  }));
+  input?.addEventListener('input',apply);
+  expand?.addEventListener('click',()=>{
+    const visible=cards.filter(c=>!c.classList.contains('is-hidden'));
+    const shouldOpen=visible.some(c=>!c.open);
+    visible.forEach(c=>c.open=shouldOpen);
+    expand.textContent=shouldOpen?'Свернуть все':'Раскрыть все';
+  });
+  cards.forEach(card=>card.addEventListener('toggle',()=>{
+    const visible=cards.filter(c=>!c.classList.contains('is-hidden'));
+    if(!visible.length)return;
+    expand.textContent=visible.every(c=>c.open)?'Свернуть все':'Раскрыть все';
+  }));
+  apply();
 })();
 </script>
 
