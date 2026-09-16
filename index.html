@@ -3686,7 +3686,7 @@ body.access-pending .footer{visibility:hidden}
 <div class="cheat-export-grid">
 <button data-cheat-export="html" type="button"><b>HTML</b><small>Отдельный файл</small></button>
 <button data-cheat-export="pdf" type="button"><b>PDF</b><small>Через печать</small></button>
-<button data-cheat-export="tablepdf" type="button"><b>Таблица PDF</b><small>Компактная версия</small></button>
+<button data-cheat-export="tablepdf" type="button"><b>Таблица PDF</b><small>Группировка по документам</small></button>
 <button data-cheat-export="txt" type="button"><b>TXT</b><small>Обычный текст</small></button>
 <button data-cheat-export="md" type="button"><b>MD</b><small>Markdown</small></button>
 </div>
@@ -3783,6 +3783,7 @@ body.access-pending .footer{visibility:hidden}
 <li>Переработаны основные карточки полномочий, государственной охраны и задержания.</li>
 <li>Обновлён раздел государственных территорий.</li>
 <li>Дополнен раздел кортежей.</li>
+<li>Табличный PDF личной шпаргалки теперь группирует пункты по документам.</li>
 </ul>
 </article>
 
@@ -6288,6 +6289,239 @@ footer{margin-top:18px;color:#728091;font-size:10px;text-align:center}@media pri
     setTimeout(()=>{w.focus();w.print()},250);
   }
 
+  function cheatBasisNormForItem(x){
+    if(!x||x.page!=="basis")return null;
+    let found=null;
+    $$("#page-basis .basis-card").some(card=>{
+      let n={};
+      try{n=JSON.parse(card.dataset.norm||"{}")}catch(_){return false}
+      const sameDoc=clean(n.doc||"")===clean(x.doc||"");
+      const sameArticle=clean(n.a||"")===clean(x.article||"");
+      const sameTitle=clean(n.t||titleFor(card))===clean(x.title||"");
+      if(sameDoc&&sameArticle&&sameTitle){
+        found={...n,_keywords:clean(card.dataset.keywords||"")};
+        return true;
+      }
+      return false;
+    });
+    return found;
+  }
+
+  function cheatLawTitle(x){
+    const d=cheatDocMap[x?.doc||""];
+    if(d?.title)return clean(d.title);
+
+    const s=clean(x?.source||"");
+    if(s){
+      const m=s.match(/^(.+?)(?:\s+[—–-]\s+(?:ст\.|гл\.|ч\.|п\.)|$)/i);
+      if(m?.[1]&&m[1].length<=180)return clean(m[1]);
+    }
+    return clean(x?.category||"")||"Памятка";
+  }
+
+  function cheatSourceRef(x){
+    const source=clean(x?.source||"");
+    const law=cheatLawTitle(x);
+    if(!source)return "";
+    if(law&&source.toLowerCase().startsWith(law.toLowerCase())){
+      return clean(source.slice(law.length).replace(/^[\s—–-]+/,""));
+    }
+    return source;
+  }
+
+  function cheatRawArticle(x){
+    const d=cheatDocMap[x?.doc||""];
+    const num=clean(x?.article||"");
+    if(!d?.text||!num)return "";
+    const lines=String(d.text).split("\n");
+    const escaped=num.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+    const rx=new RegExp("^Статья\\s+"+escaped+"(?=\\s|\\.|\\()");
+    const start=lines.findIndex(line=>rx.test(String(line).trim()));
+    if(start<0)return "";
+    let end=lines.length;
+    for(let i=start+1;i<lines.length;i++){
+      const t=String(lines[i]).trim();
+      if(/^Статья\s+\d+(?:\.\d+)*(?=\s|\.|\()/.test(t)||/^(?:Глава|ГЛАВА|Раздел|РАЗДЕЛ)\s+/.test(t)){
+        end=i;break;
+      }
+    }
+    return lines.slice(start,end).join("\n").replace(/\n{3,}/g,"\n\n").trim();
+  }
+
+  function cheatLegalParagraphs(article){
+    const lines=String(article||"").split("\n").map(x=>x.trim()).filter(Boolean);
+    if(lines.length<=1)return [];
+    const paras=[];
+    let current="";
+    for(const line of lines.slice(1)){
+      const starts=/^(?:\d+(?:\.\d+)*\.\s|\d+(?:\.\d+)*\)\s|Наказание:|Примечание:|Исключение:)/i.test(line);
+      if(starts&&current){paras.push(clean(current));current=line}
+      else current+=(current?" ":"")+line;
+    }
+    if(current)paras.push(clean(current));
+    return paras.filter(Boolean);
+  }
+
+  function cheatReferenceParts(x){
+    const norm=cheatBasisNormForItem(x);
+    const ref=[x?.source||"",norm?.r||""].filter(Boolean).join(" ");
+    const point=(ref.match(/(?:^|\s)п\.\s*(\d+(?:\.\d+)*)/i)||[])[1]||"";
+    const part=(ref.match(/(?:^|\s)ч\.\s*(\d+(?:\.\d+)*)/i)||[])[1]||"";
+    return {point,part,norm};
+  }
+
+  function cheatArticleBodyLines(article){
+    const lines=String(article||"").split("\n").map(x=>String(x).trim());
+    if(lines.length&&/^Статья\s+/i.test(lines[0]))lines.shift();
+    while(lines.length&&!lines[0])lines.shift();
+    while(lines.length&&!lines[lines.length-1])lines.pop();
+    return lines;
+  }
+
+  function cheatPartRx(num){
+    const escNum=String(num||"").replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+    return new RegExp("^"+escNum+"\\.\\s");
+  }
+
+  function cheatPointRx(num){
+    const escNum=String(num||"").replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+    return new RegExp("^"+escNum+"\\)\\s");
+  }
+
+  function cheatAnyPartLine(line){
+    return /^\d+(?:\.\d+)*\.\s/.test(String(line||"").trim());
+  }
+
+  function cheatAnyPointLine(line){
+    return /^\d+(?:\.\d+)*\)\s/.test(String(line||"").trim());
+  }
+
+  function cheatJoinLegalLines(lines){
+    const out=[];
+    for(const raw of lines){
+      const line=String(raw||"").trim();
+      if(!line)continue;
+      const startsNumber=cheatAnyPartLine(line)||cheatAnyPointLine(line);
+      if(startsNumber||!out.length)out.push(line);
+      else out[out.length-1]+=" "+line;
+    }
+    return out.join("\n").trim();
+  }
+
+  function cheatPreamble(lines){
+    let end=0;
+    while(end<lines.length&&!cheatAnyPartLine(lines[end])&&!cheatAnyPointLine(lines[end]))end++;
+    return cheatJoinLegalLines(lines.slice(0,end));
+  }
+
+  function cheatPointBlock(lines,start,limit){
+    let end=start+1;
+    while(end<limit){
+      if(cheatAnyPointLine(lines[end])||cheatAnyPartLine(lines[end]))break;
+      end++;
+    }
+    return cheatJoinLegalLines(lines.slice(start,end));
+  }
+
+  function cheatPartBounds(lines,part){
+    const rx=cheatPartRx(part);
+    const start=lines.findIndex(line=>rx.test(String(line||"").trim()));
+    if(start<0)return null;
+    let end=lines.length;
+    for(let i=start+1;i<lines.length;i++){
+      if(cheatAnyPartLine(lines[i])){
+        end=i;
+        break;
+      }
+    }
+    return {start,end};
+  }
+
+  function cheatPartLead(lines,start,end){
+    let leadEnd=start+1;
+    while(leadEnd<end&&!cheatAnyPointLine(lines[leadEnd])&&!cheatAnyPartLine(lines[leadEnd]))leadEnd++;
+    return cheatJoinLegalLines(lines.slice(start,leadEnd));
+  }
+
+  function cheatRealLegalText(x){
+    if(!x||x.page!=="basis"||!x.doc||!x.article)return "";
+    const article=cheatRawArticle(x);
+    if(!article)return "";
+
+    const lines=cheatArticleBodyLines(article);
+    if(!lines.length)return "";
+
+    const {point,part,norm}=cheatReferenceParts(x);
+
+    if(part){
+      const bounds=cheatPartBounds(lines,part);
+      if(bounds){
+        if(point){
+          const pointRx=cheatPointRx(point);
+          let pointStart=-1;
+          for(let i=bounds.start+1;i<bounds.end;i++){
+            if(pointRx.test(String(lines[i]||"").trim())){
+              pointStart=i;
+              break;
+            }
+          }
+          if(pointStart>=0){
+            const parent=cheatPartLead(lines,bounds.start,bounds.end);
+            const item=cheatPointBlock(lines,pointStart,bounds.end);
+            return [parent,item].filter(Boolean).join("\n");
+          }
+        }
+        return cheatJoinLegalLines(lines.slice(bounds.start,bounds.end));
+      }
+    }
+
+    if(point){
+      const pointRx=cheatPointRx(point);
+      const pointStart=lines.findIndex(line=>pointRx.test(String(line||"").trim()));
+      if(pointStart>=0){
+        let limit=lines.length;
+        for(let i=pointStart+1;i<lines.length;i++){
+          if(cheatAnyPointLine(lines[i])||cheatAnyPartLine(lines[i])){
+            limit=i;
+            break;
+          }
+        }
+
+        let parent="";
+        let nearestPart=-1;
+        for(let i=pointStart-1;i>=0;i--){
+          if(cheatAnyPartLine(lines[i])){
+            nearestPart=i;
+            break;
+          }
+        }
+        if(nearestPart>=0){
+          let nextPart=lines.length;
+          for(let i=nearestPart+1;i<lines.length;i++){
+            if(cheatAnyPartLine(lines[i])){
+              nextPart=i;
+              break;
+            }
+          }
+          if(pointStart<nextPart)parent=cheatPartLead(lines,nearestPart,nextPart);
+        }
+        if(!parent)parent=cheatPreamble(lines);
+
+        const item=cheatPointBlock(lines,pointStart,limit);
+        return [parent,item].filter(Boolean).join("\n");
+      }
+    }
+
+    if(norm?.h){
+      const needle=clean(norm.h).toLowerCase().replace(/ё/g,"е");
+      const body=cheatJoinLegalLines(lines);
+      const normalized=body.toLowerCase().replace(/ё/g,"е");
+      if(needle&&normalized.includes(needle))return body;
+    }
+
+    return cheatJoinLegalLines(lines);
+  }
+
   function printTablePdf(){
     if(!exportGuard())return;
 
@@ -6296,25 +6530,45 @@ footer{margin-top:18px;color:#728091;font-size:10px;text-align:center}@media pri
     if(!w)return toast("Браузер заблокировал окно печати.","bad");
 
     /*
-      Это не обычная HTML-таблица: обычная строка растягивает все соседние
-      ячейки по самой высокой карточке. Для шпаргалки используется плотная
-      многоколоночная раскладка — каждая карточка имеет только свою высоту.
+      В табличной версии нормы группируются по конкретному документу.
+      Несколько оснований из одного ФЗ/кодекса идут под одним заголовком.
+      Внутри карточки отдельно показывается краткий смысл и реальная формулировка
+      из встроенного текста документа, если её можно однозначно извлечь.
     */
-    const cards=arr.map((x,i)=>`
-      <article class="memo-cell">
-        <div class="memo-category">${esc(x.category||"Памятка")}</div>
-        <div class="memo-head">
-          <b>${esc(x.title)}</b>
-          ${x.source?`<span>${esc(x.source)}</span>`:""}
-        </div>
-        ${x.content?`<div class="memo-text">${esc(x.content).replace(/\n/g,"<br>")}</div>`:""}
-        ${x.note?`<div class="memo-note"><b>Личная заметка</b>${esc(x.note).replace(/\n/g,"<br>")}</div>`:""}
-      </article>`).join("");
+    const groups=[];
+    const groupMap=new Map();
+    arr.forEach((x,i)=>{
+      const name=cheatLawTitle(x);
+      if(!groupMap.has(name)){
+        const g={name,items:[]};
+        groupMap.set(name,g);groups.push(g);
+      }
+      groupMap.get(name).items.push({x,i});
+    });
 
-    /*
-      Количество колонок подстраивается под объём.
-      Маленькая шпаргалка остаётся читаемой, большая становится плотнее.
-    */
+    const groupHtml=groups.map(group=>{
+      const cards=group.items.map(({x,i})=>{
+        const ref=cheatSourceRef(x);
+        const legal=cheatRealLegalText(x);
+        return `
+        <article class="memo-cell">
+          <div class="memo-head">
+            <b>${esc(x.title)}</b>
+            ${ref?`<span>${esc(ref)}</span>`:""}
+          </div>
+          ${x.content?`<div class="memo-summary"><b>Кратко</b>${esc(x.content).replace(/\n/g,"<br>")}</div>`:""}
+          ${legal?`<div class="memo-law-text"><b>Формулировка документа</b>${esc(legal).replace(/\n/g,"<br>")}</div>`:""}
+          ${x.note?`<div class="memo-note"><b>Личная заметка</b>${esc(x.note).replace(/\n/g,"<br>")}</div>`:""}
+        </article>`;
+      }).join("");
+
+      return `
+      <section class="memo-law-group">
+        <h2 class="memo-law-title">${esc(group.name)}</h2>
+        <div class="memo-grid">${cards}</div>
+      </section>`;
+    }).join("");
+
     const columnCount=arr.length<=8?3:(arr.length<=22?4:5);
 
     w.document.write(`<!doctype html>
@@ -6325,171 +6579,33 @@ footer{margin-top:18px;color:#728091;font-size:10px;text-align:center}@media pri
 <style>
 @page{size:A4 landscape;margin:5mm}
 *{box-sizing:border-box}
-
-html,body{
-  margin:0;
-  padding:0;
-  background:#fff;
-  color:#000;
-  font-family:Arial,Helvetica,sans-serif;
-}
-body{
-  font-size:7.2pt;
-  line-height:1.24;
-}
-
-.sheet{
-  width:100%;
-}
-
-.sheet-head{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) auto;
-  align-items:end;
-  gap:8mm;
-  padding:0 1px 3px;
-  border-bottom:1.4px solid #111;
-  margin-bottom:3px;
-}
-.sheet-title h1{
-  margin:0;
-  font-size:14.2pt;
-  line-height:1;
-  font-weight:900;
-}
-.sheet-title p{
-  margin:3px 0 0;
-  color:#444;
-  font-size:6.3pt;
-}
-.sheet-meta{
-  text-align:right;
-  white-space:nowrap;
-}
-.sheet-meta small{
-  display:block;
-  color:#555;
-  font-size:5.8pt;
-  margin-bottom:2px;
-}
-.author{
-  color:#09699f;
-  font-size:11pt;
-  font-weight:900;
-  letter-spacing:.01em;
-}
-
-/* Плотная раскладка без общей высоты строки */
-.memo-grid{
-  column-count:${columnCount};
-  column-gap:3px;
-  column-rule:0;
-  width:100%;
-}
-
-.memo-cell{
-  display:inline-block;
-  width:100%;
-  margin:0 0 3px;
-  vertical-align:top;
-  border:1px solid #111;
-  background:#fff;
-  break-inside:avoid;
-  page-break-inside:avoid;
-  overflow:hidden;
-}
-
-.memo-category{
-  margin:0;
-  padding:2px 4px;
-  border-bottom:1px solid #111;
-  background:#9dcbea;
-  text-align:center;
-  font-size:6.7pt;
-  font-weight:900;
-  line-height:1.05;
-}
-
-.memo-head{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) auto;
-  align-items:start;
-  gap:4px;
-  padding:3px 4px;
-  border-bottom:1px solid #111;
-  background:#f7f7f7;
-}
-.memo-head b{
-  min-width:0;
-  font-size:6.7pt;
-  line-height:1.15;
-  overflow-wrap:anywhere;
-}
-.memo-head span{
-  max-width:33mm;
-  text-align:right;
-  color:#111;
-  font-size:5.35pt;
-  line-height:1.15;
-  font-weight:700;
-  overflow-wrap:anywhere;
-}
-
-.memo-text{
-  padding:4px;
-  font-size:6.15pt;
-  line-height:1.25;
-  overflow-wrap:anywhere;
-}
-
-.memo-note{
-  margin:0 4px 4px;
-  padding:3px 4px;
-  border-top:1px dashed #777;
-  background:#fafafa;
-  font-size:5.8pt;
-  line-height:1.22;
-}
-.memo-note b{
-  display:block;
-  margin-bottom:2px;
-  font-size:5.25pt;
-  text-transform:uppercase;
-}
-
-.sheet-foot{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  margin-top:2px;
-  padding-top:2px;
-  border-top:1px solid #999;
-  color:#666;
-  font-size:5.2pt;
-}
-
-/* Если элементов совсем мало — не растягиваем их искусственно. */
-.memo-cell,.memo-text,.memo-head{
-  min-height:0!important;
-  height:auto!important;
-}
-
+html,body{margin:0;padding:0;background:#fff;color:#000;font-family:Arial,Helvetica,sans-serif}
+body{font-size:7.2pt;line-height:1.24}
+.sheet{width:100%}
+.sheet-head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:8mm;padding:0 1px 3px;border-bottom:1.4px solid #111;margin-bottom:4px}
+.sheet-title h1{margin:0;font-size:14.2pt;line-height:1;font-weight:900}
+.sheet-title p{margin:3px 0 0;color:#444;font-size:6.3pt}
+.sheet-meta{text-align:right;white-space:nowrap}
+.sheet-meta small{display:block;color:#555;font-size:5.8pt;margin-bottom:2px}
+.author{color:#09699f;font-size:11pt;font-weight:900;letter-spacing:.01em}
+.memo-law-group{margin:0 0 5px;break-inside:auto}
+.memo-law-title{margin:0 0 3px;padding:3px 5px;border:1px solid #111;background:#9dcbea;text-align:left;font-size:7.6pt;line-height:1.12;font-weight:900;break-after:avoid;page-break-after:avoid}
+.memo-grid{column-count:${columnCount};column-gap:3px;column-rule:0;width:100%}
+.memo-cell{display:inline-block;width:100%;margin:0 0 3px;vertical-align:top;border:1px solid #111;background:#fff;break-inside:avoid;page-break-inside:avoid;overflow:hidden}
+.memo-head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:4px;padding:3px 4px;border-bottom:1px solid #111;background:#f7f7f7}
+.memo-head b{min-width:0;font-size:6.7pt;line-height:1.15;overflow-wrap:anywhere}
+.memo-head span{max-width:33mm;text-align:right;color:#111;font-size:5.35pt;line-height:1.15;font-weight:700;overflow-wrap:anywhere}
+.memo-summary,.memo-law-text{padding:4px;font-size:6.05pt;line-height:1.24;overflow-wrap:anywhere}
+.memo-summary{border-bottom:1px dashed #999}
+.memo-summary b,.memo-law-text b,.memo-note b{display:block;margin-bottom:2px;font-size:5.15pt;text-transform:uppercase;letter-spacing:.02em}
+.memo-law-text{background:#fff}
+.memo-note{margin:0 4px 4px;padding:3px 4px;border-top:1px dashed #777;background:#fafafa;font-size:5.8pt;line-height:1.22}
+.sheet-foot{display:flex;justify-content:space-between;gap:10px;margin-top:2px;padding-top:2px;border-top:1px solid #999;color:#666;font-size:5.2pt}
+.memo-cell,.memo-summary,.memo-law-text,.memo-head{min-height:0!important;height:auto!important}
 @media print{
-  .memo-category{
-    background:#9dcbea!important;
-    -webkit-print-color-adjust:exact;
-    print-color-adjust:exact;
-  }
-  .memo-head{
-    background:#f7f7f7!important;
-    -webkit-print-color-adjust:exact;
-    print-color-adjust:exact;
-  }
-  .memo-note{
-    background:#fafafa!important;
-    -webkit-print-color-adjust:exact;
-    print-color-adjust:exact;
-  }
+  .memo-law-title{background:#9dcbea!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .memo-head{background:#f7f7f7!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .memo-note{background:#fafafa!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
 </head>
@@ -6501,12 +6617,12 @@ body{
       <p>${arr.length} ${countWord(arr.length)} · ${new Date().toLocaleString("ru-RU")}</p>
     </div>
     <div class="sheet-meta">
-      <small>Компактная табличная версия</small>
+      <small>По документам · кратко + формулировка</small>
       <div class="author">by Арсений Рубежной</div>
     </div>
   </header>
 
-  <section class="memo-grid">${cards}</section>
+  ${groupHtml}
 
   <footer class="sheet-foot">
     <span>ФСО · Россия Онлайн · Кутузовский</span>
