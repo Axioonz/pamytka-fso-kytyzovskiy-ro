@@ -5132,7 +5132,7 @@ if(docs.length) renderDoc(docs[0]);
 </script>
 <script id="role-access-script">
 (function(){
-  const ACCESS_API="https://fso-access-api.osopoao078.workers.dev";
+  const ACCESS_API="https://functions.yandexcloud.net/d4ek9vu63pp6mp42n4qo";
   const TOKEN_KEY="fso-role-session";
 
   const ROLE_META={
@@ -5184,8 +5184,15 @@ if(docs.length) renderDoc(docs[0]);
     if(b)chooseRole(b.dataset.accessRole);
   });
 
-  async function request(path,options={}){
-    const r=await fetch(ACCESS_API+path,options);
+  function accessApiUrl(action,key=""){
+    const url=new URL(ACCESS_API);
+    url.searchParams.set("action",action);
+    if(key)url.searchParams.set("key",key);
+    return url.toString();
+  }
+
+  async function request(action,options={}){
+    const r=await fetch(accessApiUrl(action),options);
     let data={};
     try{data=await r.json();}catch(_){}
     if(!r.ok){
@@ -5197,7 +5204,7 @@ if(docs.length) renderDoc(docs[0]);
   }
 
   async function login(role,password){
-    return request("/login",{
+    return request("login",{
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({role,password})
@@ -5205,8 +5212,8 @@ if(docs.length) renderDoc(docs[0]);
   }
 
   async function checkToken(token){
-    return request("/session",{
-      headers:{"Authorization":"Bearer "+token}
+    return request("session",{
+      headers:{"X-FSO-Session":token}
     });
   }
 
@@ -5234,12 +5241,12 @@ if(docs.length) renderDoc(docs[0]);
 
   async function getSecureContent(key){
     /*
-      Вход и проверка сессии используют старый стабильный request().
-      Гибкий разбор нужен только для защищённого контента, потому что Worker
-      может вернуть его как JSON или обычный текст/HTML.
+      Вход, проверка сессии и защищённый контент работают через единый API
+      Yandex Cloud Function. Гибкий разбор сохранён для совместимости
+      с JSON-ответами защищённого контента.
     */
-    const r=await fetch(ACCESS_API+"/content/"+encodeURIComponent(key),{
-      headers:{"Authorization":"Bearer "+session.token}
+    const r=await fetch(accessApiUrl("content",key),{
+      headers:{"X-FSO-Session":session.token}
     });
 
     const raw=await r.text();
@@ -5561,7 +5568,7 @@ if(docs.length) renderDoc(docs[0]);
 </script>
 <script id="role-protected-docs-script">
 (function(){
-  const API="https://fso-access-api.osopoao078.workers.dev";
+  const API="https://functions.yandexcloud.net/d4ek9vu63pp6mp42n4qo";
   const TOKEN_KEY="fso-role-session";
   const cache=new Map();
 
@@ -5585,8 +5592,12 @@ if(docs.length) renderDoc(docs[0]);
     const token=sessionStorage.getItem(TOKEN_KEY);
     if(!token)throw new Error("Сессия ФСО не найдена.");
 
-    const r=await fetch(API+"/content/"+encodeURIComponent(id),{
-      headers:{"Authorization":"Bearer "+token}
+    const url=new URL(API);
+    url.searchParams.set("action","content");
+    url.searchParams.set("key",id);
+
+    const r=await fetch(url.toString(),{
+      headers:{"X-FSO-Session":token}
     });
 
     const raw=await r.text();
