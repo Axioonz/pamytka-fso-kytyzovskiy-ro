@@ -1,0 +1,12 @@
+{
+  "originalGrounds": 55,
+  "originalScenarios": 6,
+  "groundJsonMatchesOriginal": true,
+  "scripts": 15,
+  "syntaxErrors": 0,
+  "duplicateIds": 0,
+  "localSyncEndToEnd": "passed",
+  "expiredSessionPreservesBase": "passed",
+  "writeFailureRollback": "passed",
+  "liveAuthorizedHttp": "requires user first login"
+}

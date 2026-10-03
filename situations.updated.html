@@ -1,0 +1,317 @@
+<div class="section-head">
+  <div>
+    <h2>Ситуации</h2>
+    <p>Короткие алгоритмы и готовые формулировки для сопровождения.</p>
+  </div>
+  <div class="count" id="situationCount"></div>
+</div>
+
+<div class="situation-search">
+  <span>⌕</span>
+  <input id="situationSearch" placeholder="Поиск: территория, досмотр, требование, сопровождение..." />
+</div>
+
+<div class="situation-filters">
+  <button class="situation-filter active" data-situation-filter="all">Все</button>
+  <button class="situation-filter" data-situation-filter="access">Доступ</button>
+  <button class="situation-filter" data-situation-filter="inspection">Досмотр</button>
+  <button class="situation-filter" data-situation-filter="demand">Требования</button>
+  <button class="situation-filter" data-situation-filter="order">Порядок</button>
+  <button class="situation-filter" data-situation-filter="escort">Сопровождение</button>
+</div>
+
+<div class="situation-intro">
+  Перед обращением представьтесь и покажите служебное удостоверение: «Здравия желаю. [Должность или звание], сотрудник ФСО [Имя Фамилия]». При непосредственной угрозе сначала обеспечьте безопасность, затем представьтесь, как только это станет возможно.
+</div>
+
+<div id="situationList">
+  <article class="scenario-card" data-group="access" data-search="проверка причины нахождения территория доступ документ пропуск охраняемая закрытая статья 27 статья 10 покинуть территорию" id="scenario-entry-duty">
+    <button class="scenario-head">
+      <div class="scenario-num">01</div>
+      <div class="scenario-head-main">
+        <h2>Проверка причины нахождения на территории</h2>
+        <p>Установить цель посещения и решить, можно ли допустить человека на территорию.</p>
+        <div class="scenario-tags"><span>территория</span><span>документы</span><span>пропуск</span><span>доступ</span></div>
+      </div>
+      <div class="scenario-meta"><b>3 этапа</b><span>Открыть ↓</span></div>
+    </button>
+    <div class="scenario-flow">
+      <section class="scenario-step first-step" id="entry-duty-1">
+        <div class="step-rail"><span>1</span></div>
+        <div class="step-content">
+          <h3>Обратиться к человеку</h3>
+          <div class="step-pair"><div><small>Действие сотрудника</small><p>Представьтесь, покажите служебное удостоверение, узнайте цель посещения и попросите документ или пропуск.</p></div></div>
+          <div class="stage-formula"><b>Простая формулировка</b><p>«Назовите цель посещения и предъявите документ или пропуск, подтверждающий ваше право находиться на территории».</p></div>
+        </div>
+      </section>
+      <section class="scenario-step" id="entry-duty-2">
+        <div class="step-rail"><span>2</span></div>
+        <div class="step-content">
+          <h3>Если человек просит назвать основание</h3>
+          <div class="step-pair">
+            <div><small>Охраняемая территория</small><p>«Вы находитесь на охраняемой территории. На основании статьи 27 Федерального закона “О ФСО РО” требую сообщить цель посещения и предъявить документ или пропуск, подтверждающий ваше право находиться на территории».</p></div>
+            <div><small>Закрытая территория</small><p>«Вы находитесь на закрытой территории. На основании статьи 10 Федерального закона “О государственных территориях РО” требую сообщить цель пребывания и предъявить документ, служебное удостоверение или пропуск».</p></div>
+          </div>
+        </div>
+      </section>
+      <section class="scenario-step" id="entry-duty-3">
+        <div class="step-rail"><span>3</span></div>
+        <div class="step-content">
+          <h3>Принять решение</h3>
+          <div class="step-pair">
+            <div><small>Есть весомая причина</small><p>Проверьте её подтверждение и пропустите человека только на разрешённую территорию или в разрешённую зону.</p></div>
+            <div><small>Весомой причины нет</small><p>Откажите во входе либо потребуйте покинуть территорию.</p></div>
+          </div>
+          <div class="stage-formula"><b>Простая формулировка</b><p>«У вас нет весомой причины находиться на данной территории. Покиньте территорию».</p></div>
+          <div class="stage-formula"><b>С основанием — охраняемая территория</b><p>«Ваше право находиться на охраняемой территории не подтверждено. На основании части 3 статьи 27 Федерального закона “О ФСО РО” требую покинуть территорию».</p></div>
+          <div class="stage-formula"><b>С основанием — закрытая территория</b><p>«У вас нет подтверждённой причины находиться на закрытой территории. На основании части 3 статьи 10 Федерального закона “О государственных территориях РО” требую покинуть территорию».</p></div>
+          <div class="step-grounds">
+            <div class="grounds-title"><b>Основания</b><span>3</span></div>
+            <details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 27</b><i>документы и доступ</i></summary><div class="ground-body"><button class="open-doc" data-doc="fso" data-article="27">Открыть в документе</button></div></details>
+            <details class="ground"><summary><span>ФЗ «О государственных территориях РО»</span><b>ст. 10</b><i>проверка причины пребывания</i></summary><div class="ground-body"><button class="open-doc" data-doc="territory" data-article="10">Открыть в документе</button></div></details>
+            <details class="ground"><summary><span>ФЗ «О государственных территориях РО»</span><b>ст. 20</b><i>право доступа</i></summary><div class="ground-body"><button class="open-doc" data-doc="territory" data-article="20">Открыть в документе</button></div></details>
+          </div>
+        </div>
+      </section>
+    </div>
+  </article>
+
+  <article class="scenario-card" data-group="inspection" data-search="досмотр перед входом отказ запрещенный предмет добровольно сдать статья 28 статья 37" id="scenario-inspection">
+    <button class="scenario-head">
+      <div class="scenario-num">02</div>
+      <div class="scenario-head-main">
+        <h2>Досмотр перед входом</h2>
+        <p>Провести досмотр с согласия и не допустить человека при отказе.</p>
+        <div class="scenario-tags"><span>досмотр</span><span>вход</span><span>отказ</span><span>запрещённый предмет</span></div>
+      </div>
+      <div class="scenario-meta"><b>3 этапа</b><span>Открыть ↓</span></div>
+    </button>
+    <div class="scenario-flow">
+      <section class="scenario-step first-step" id="inspection-1">
+        <div class="step-rail"><span>1</span></div>
+        <div class="step-content">
+          <h3>Предупредить о досмотре</h3>
+          <div class="step-pair"><div><small>Действие сотрудника</small><p>Представьтесь, покажите служебное удостоверение и объясните, что досмотр является условием входа.</p></div></div>
+          <div class="stage-formula"><b>Простая формулировка</b><p>«Для прохода на территорию необходимо пройти досмотр. При отказе я не смогу вас пропустить».</p></div>
+          <div class="stage-formula"><b>Формулировка с основанием</b><p>«На основании статьи 28 Федерального закона “О ФСО РО” досмотр установлен как условие входа на охраняемую территорию. При отказе от досмотра вы не будете допущены на территорию».</p></div>
+        </div>
+      </section>
+      <section class="scenario-step" id="inspection-2">
+        <div class="step-rail"><span>2</span></div>
+        <div class="step-content">
+          <h3>Провести досмотр</h3>
+          <div class="step-pair">
+            <div><small>Есть согласие</small><p>Проведите досмотр в установленном порядке.</p></div>
+            <div><small>Человек отказался</small><p>Не допускайте его на территорию.</p></div>
+          </div>
+          <div class="stage-warning"><b>Важно:</b> отказ от досмотра означает отказ во входе.</div>
+        </div>
+      </section>
+      <section class="scenario-step" id="inspection-3">
+        <div class="step-rail"><span>3</span></div>
+        <div class="step-content">
+          <h3>Обнаружен запрещённый предмет</h3>
+          <div class="step-pair"><div><small>Действие сотрудника</small><p>Предложите добровольно сдать предмет. При отказе не допускайте человека на территорию. Принудительное изъятие возможно только при отдельном законном основании.</p></div></div>
+          <div class="stage-formula"><b>Формулировка</b><p>«Данный предмет запрещён к проносу. Вы можете добровольно сдать его либо покинуть территорию».</p></div>
+          <div class="step-grounds">
+            <div class="grounds-title"><b>Основания</b><span>2</span></div>
+            <details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 28</b><i>досмотр при входе</i></summary><div class="ground-body"><button class="open-doc" data-doc="fso" data-article="28">Открыть в документе</button></div></details>
+            <details class="ground"><summary><span>ФЗ «О государственных территориях РО»</span><b>ст. 37</b><i>досмотр на территории</i></summary><div class="ground-body"><button class="open-doc" data-doc="territory" data-article="37">Открыть в документе</button></div></details>
+          </div>
+        </div>
+      </section>
+    </div>
+  </article>
+
+  <article class="scenario-card" data-group="order" data-search="нарушение порядка рядом с охраняемым лицом крики пристает мешает движению охранная группа статья 26" id="scenario-public-order">
+    <button class="scenario-head">
+      <div class="scenario-num">03</div>
+      <div class="scenario-head-main">
+        <h2>Нарушение порядка рядом с охраняемым лицом</h2>
+        <p>Пресечь конкретную помеху сопровождению или угрозу безопасности.</p>
+        <div class="scenario-tags"><span>порядок</span><span>помеха</span><span>охраняемое лицо</span><span>организация</span></div>
+      </div>
+      <div class="scenario-meta"><b>3 этапа</b><span>Открыть ↓</span></div>
+    </button>
+    <div class="scenario-flow">
+      <section class="scenario-step first-step" id="public-order-1">
+        <div class="step-rail"><span>1</span></div>
+        <div class="step-content">
+          <h3>Оценить происходящее</h3>
+          <div class="step-pair"><div><small>Действие сотрудника</small><p>Определите, мешают ли действия человека сопровождению или создают ли они угрозу охраняемому лицу. При необходимости займите положение между человеком и охраняемым лицом.</p></div></div>
+          <div class="stage-warning"><b>Важно:</b> если конкретная помеха сопровождению или угроза безопасности не установлена, оснований для вмешательства ФСО нет.</div>
+        </div>
+      </section>
+      <section class="scenario-step" id="public-order-2">
+        <div class="step-rail"><span>2</span></div>
+        <div class="step-content">
+          <h3>Потребовать прекратить действие</h3>
+          <div class="stage-formula"><b>Простая формулировка</b><p>«Прекратите [конкретное действие], не мешайте сопровождению и отойдите от охраняемого лица».</p></div>
+          <div class="stage-formula"><b>Формулировка с основанием</b><p>«Ваши действия мешают сопровождению и создают угрозу безопасности охраняемого лица. На основании пункта 6 статьи 26 Федерального закона “О ФСО РО” требую прекратить данные действия».</p></div>
+        </div>
+      </section>
+      <section class="scenario-step" id="public-order-3">
+        <div class="step-rail"><span>3</span></div>
+        <div class="step-content">
+          <h3>Дальнейшие действия</h3>
+          <div class="step-pair">
+            <div><small>Человек прекратил действия</small><p>Если отдельного основания для задержания нет, не задерживайте и не удерживайте его.</p></div>
+            <div><small>Территория другой организации</small><p>Вызовите сотрудников этой организации. На воинской части, территории МВД, ФСБ или другой организации обычное нарушение пресекают её сотрудники.</p></div>
+          </div>
+          <div class="formal-note"><b>Граница полномочий</b><p>ФСО вмешивается, когда поведение связано с безопасностью охраняемого лица или непосредственно мешает сопровождению.</p></div>
+          <div class="step-grounds">
+            <div class="grounds-title"><b>Основания</b><span>4</span></div>
+            <details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 6</b><i>пределы компетенции</i></summary><div class="ground-body"><button class="open-doc" data-doc="fso" data-article="6">Открыть в документе</button></div></details>
+            <details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 26</b><i>законные требования</i></summary><div class="ground-body"><button class="open-doc" data-doc="fso" data-article="26">Открыть в документе</button></div></details>
+            <details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 35</b><i>личная охрана</i></summary><div class="ground-body"><button class="open-doc" data-doc="fso" data-article="35">Открыть в документе</button></div></details>
+            <details class="ground"><summary><span>КоАП РО</span><b>ст. 11, 38, 39</b><i>при наличии состава</i></summary><div class="ground-body"><button class="open-doc" data-doc="koap" data-article="11">Открыть в документе</button></div></details>
+          </div>
+        </div>
+      </section>
+    </div>
+  </article>
+
+  <article class="scenario-card" data-group="demand" data-search="законное требование не выполняется повторить задержание статья 26 статья 30 права видео передача" id="scenario-lawful-demand">
+    <button class="scenario-head">
+      <div class="scenario-num">04</div>
+      <div class="scenario-head-main">
+        <h2>Требование не выполняется</h2>
+        <p>Повторить требование, назвать основание и отдельно проверить возможность задержания.</p>
+        <div class="scenario-tags"><span>требование</span><span>основание</span><span>задержание</span><span>права</span></div>
+      </div>
+      <div class="scenario-meta"><b>3 этапа</b><span>Открыть ↓</span></div>
+    </button>
+    <div class="scenario-flow">
+      <section class="scenario-step first-step" id="lawful-demand-1">
+        <div class="step-rail"><span>1</span></div>
+        <div class="step-content">
+          <h3>Повторить требование</h3>
+          <div class="step-pair"><div><small>Действие сотрудника</small><p>Повторите, какое именно действие необходимо прекратить, и объясните, чему оно мешает.</p></div></div>
+          <div class="stage-formula"><b>Простая формулировка</b><p>«Я повторяю требование: прекратите [конкретное действие]. Вы мешаете [проходу охраняемого лица / работе охранной группы / обеспечению безопасности]».</p></div>
+          <div class="stage-formula"><b>Формулировка с основанием</b><p>«Это законное требование. Ваши действия создают угрозу государственной охране и безопасности охраняемого лица. На основании пункта 6 статьи 26 Федерального закона “О ФСО РО” требую прекратить данные действия».</p></div>
+        </div>
+      </section>
+      <section class="scenario-step" id="lawful-demand-2">
+        <div class="step-rail"><span>2</span></div>
+        <div class="step-content">
+          <h3>Проверить основание задержания</h3>
+          <div class="step-pair">
+            <div><small>Основание есть</small><p>Задержите человека на основании подходящего пункта статьи 30 Федерального закона «О ФСО РО».</p></div>
+            <div><small>Основания нет</small><p>Не ограничивайте свободу человека только потому, что он спорит или задаёт вопросы.</p></div>
+          </div>
+          <div class="stage-formula"><b>Формулировка при задержании</b><p>«Вы задержаны на основании пункта [указать пункт] части 1 статьи 30 Федерального закона “О ФСО РО” за [назвать конкретное действие]».</p></div>
+          <div class="stage-warning"><b>Важно:</b> основание задержания определяется до фактического ограничения свободы человека.</div>
+        </div>
+      </section>
+      <section class="scenario-step" id="lawful-demand-3">
+        <div class="step-rail"><span>3</span></div>
+        <div class="step-content">
+          <h3>Оформить и передать задержанного</h3>
+          <div class="step-pair"><div><small>После задержания</small><p>Сообщите основание, разъясните права, обеспечьте видеофиксацию и передайте человека компетентному органу без необоснованной задержки.</p></div></div>
+          <div class="step-grounds">
+            <div class="grounds-title"><b>Основания</b><span>4</span></div>
+            <details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 26</b><i>законные требования</i></summary><div class="ground-body"><button class="open-doc" data-doc="fso" data-article="26">Открыть в документе</button></div></details>
+            <details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 30</b><i>основания задержания</i></summary><div class="ground-body"><button class="open-doc" data-doc="fso" data-article="30">Открыть в документе</button></div></details>
+            <details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 31</b><i>порядок задержания</i></summary><div class="ground-body"><button class="open-doc" data-doc="fso" data-article="31">Открыть в документе</button></div></details>
+            <details class="ground"><summary><span>Процессуальный кодекс РО</span><b>задержание</b><i>права и видеофиксация</i></summary><div class="ground-body"><button class="open-doc" data-doc="pk">Открыть в документе</button></div></details>
+          </div>
+        </div>
+      </section>
+    </div>
+  </article>
+
+  <article class="scenario-card" data-group="escort" data-search="прибытие территория другой организации государственная организация воинская часть МВД ГИБДД премьер-министр основание сопровождение статья 35" id="scenario-arrival">
+    <button class="scenario-head">
+      <div class="scenario-num">05</div>
+      <div class="scenario-head-main">
+        <h2>Прибытие на территорию другой организации</h2>
+        <p>Подтвердить основание визита и согласовать вход с принимающей стороной.</p>
+        <div class="scenario-tags"><span>прибытие</span><span>госорганизация</span><span>основание визита</span><span>сопровождение</span></div>
+      </div>
+      <div class="scenario-meta"><b>3 этапа</b><span>Открыть ↓</span></div>
+    </button>
+    <div class="scenario-flow">
+      <section class="scenario-step first-step" id="arrival-1">
+        <div class="step-rail"><span>1</span></div>
+        <div class="step-content">
+          <h3>Связаться с принимающей стороной</h3>
+          <div class="step-pair"><div><small>Действие сотрудника</small><p>Старший или назначенный сотрудник связывается с руководителем либо ответственным представителем организации. Сотрудники ФСО представляются и показывают удостоверения.</p></div></div>
+          <div class="stage-formula"><b>Простая формулировка</b><p>«Здравия желаю. [Должность или звание], сотрудник ФСО [Имя Фамилия]. Сопровождаем [должность охраняемого лица]. Свяжитесь, пожалуйста, с руководителем или ответственным сотрудником, который его принимает».</p></div>
+        </div>
+      </section>
+      <section class="scenario-step" id="arrival-2">
+        <div class="step-rail"><span>2</span></div>
+        <div class="step-content">
+          <h3>Подтвердить основание нахождения</h3>
+          <div class="step-pair">
+            <div><small>Основание подтверждено</small><p>Сопровождайте охраняемое лицо необходимым составом, соблюдая режим территории и не мешая работе принимающей организации.</p></div>
+            <div><small>Основание не подтверждено</small><p>Старший связывается с руководством и уточняет основание визита до дальнейшего прохода.</p></div>
+          </div>
+          <div class="stage-formula"><b>Формулировка с основанием</b><p>«[Должность охраняемого лица] имеет право находиться на данной территории на основании статьи [указать статью]. Сотрудники ФСО осуществляют его сопровождение в соответствии со статьёй 35 Федерального закона “О ФСО РО” и статьёй 24 Федерального закона “О государственных территориях РО”».</p></div>
+          <div class="stage-warning"><b>Важно:</b> для нахождения охраняемого лица на территории должно быть отдельное законное основание. Сопровождение ФСО подтверждает полномочия охранной группы, но не заменяет основание нахождения самого охраняемого лица.</div>
+        </div>
+      </section>
+      <section class="scenario-step" id="arrival-3">
+        <div class="step-rail"><span>3</span></div>
+        <div class="step-content">
+          <h3>Выбрать основание для конкретного лица</h3>
+          <div class="step-pair">
+            <div><small>Министр внутренних дел</small><p>Территория МВД или ГИБДД — часть 3 статьи 22; военный объект — часть 2 статьи 35 Федерального закона «О государственных территориях РО».</p></div>
+            <div><small>Премьер-министр</small><p>Закрытая территория — статья 21; режимный объект — статья 35 Федерального закона «О государственных территориях РО».</p></div>
+            <div><small>Иное охраняемое лицо</small><p>Служебные полномочия, приглашение, сопровождение или пропуск — статья 20 Федерального закона «О государственных территориях РО».</p></div>
+          </div>
+          <div class="step-grounds">
+            <div class="grounds-title"><b>Основания</b><span>7</span></div>
+            <details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 19, 35</b><i>охраняемые лица и сопровождение</i></summary><div class="ground-body"><button class="open-doc" data-doc="fso" data-article="35">Открыть статью 35</button></div></details>
+            <details class="ground"><summary><span>ФЗ «О государственных территориях РО»</span><b>ст. 20–24, 35</b><i>основания доступа</i></summary><div class="ground-body"><button class="open-doc" data-doc="territory" data-article="20">Открыть в документе</button></div></details>
+          </div>
+        </div>
+      </section>
+    </div>
+  </article>
+
+  <article class="scenario-card" data-group="escort" data-search="человек приближается охраняемое лицо мешает сопровождению соблюдать дистанцию охранная группа статья 26" id="scenario-protected-approach">
+    <button class="scenario-head">
+      <div class="scenario-num">06</div>
+      <div class="scenario-head-main">
+        <h2>Человек приближается к охраняемому лицу или мешает сопровождению</h2>
+        <p>Обозначить дистанцию, когда действия человека действительно мешают или создают угрозу.</p>
+        <div class="scenario-tags"><span>дистанция</span><span>приближение</span><span>строй</span><span>сопровождение</span></div>
+      </div>
+      <div class="scenario-meta"><b>3 этапа</b><span>Открыть ↓</span></div>
+    </button>
+    <div class="scenario-flow">
+      <section class="scenario-step first-step" id="protected-approach-1">
+        <div class="step-rail"><span>1</span></div>
+        <div class="step-content">
+          <h3>Закрыть направление и обозначить дистанцию</h3>
+          <div class="step-pair"><div><small>Действие сотрудника</small><p>Займите положение между человеком и охраняемым лицом. Потребуйте соблюдать дистанцию, если человек идёт через строй, следует за охраняемым лицом или мешает движению группы.</p></div></div>
+          <div class="stage-formula"><b>Простая формулировка</b><p>«Соблюдайте дистанцию и не мешайте сопровождению охраняемого лица».</p></div>
+        </div>
+      </section>
+      <section class="scenario-step" id="protected-approach-2">
+        <div class="step-rail"><span>2</span></div>
+        <div class="step-content">
+          <h3>Если человек просит назвать основание</h3>
+          <div class="stage-formula"><b>Это просьба или требование?</b><p>«Это требование. Вы мешаете безопасному сопровождению охраняемого лица».</p></div>
+          <div class="stage-formula"><b>Формулировка с основанием</b><p>«Ваши действия мешают движению охранной группы и создают угрозу безопасности охраняемого лица. На основании пункта 6 статьи 26 Федерального закона “О ФСО РО” требую соблюдать дистанцию».</p></div>
+        </div>
+      </section>
+      <section class="scenario-step" id="protected-approach-3">
+        <div class="step-rail"><span>3</span></div>
+        <div class="step-content">
+          <h3>Если человек продолжает мешать</h3>
+          <div class="step-pair"><div><small>Действие сотрудника</small><p>Повторите требование с основанием. При необходимости вызовите сотрудников организации. Задержание допускается только при наличии отдельного основания, предусмотренного статьёй 30 Федерального закона «О ФСО РО».</p></div></div>
+          <div class="stage-warning"><b>Важно:</b> законное общение с охраняемым лицом нельзя ограничивать без причины. Требование соблюдать дистанцию предъявляется, когда действия человека действительно мешают сопровождению или создают угрозу безопасности.</div>
+          <div class="step-grounds">
+            <div class="grounds-title"><b>Основания</b><span>4</span></div>
+            <details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 26</b><i>законные требования</i></summary><div class="ground-body"><button class="open-doc" data-doc="fso" data-article="26">Открыть в документе</button></div></details>
+            <details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 30</b><i>основания задержания</i></summary><div class="ground-body"><button class="open-doc" data-doc="fso" data-article="30">Открыть в документе</button></div></details>
+            <details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 31</b><i>порядок задержания</i></summary><div class="ground-body"><button class="open-doc" data-doc="fso" data-article="31">Открыть в документе</button></div></details>
+            <details class="ground"><summary><span>ФЗ «О ФСО РО»</span><b>ст. 35</b><i>личная охрана</i></summary><div class="ground-body"><button class="open-doc" data-doc="fso" data-article="35">Открыть в документе</button></div></details>
+          </div>
+        </div>
+      </section>
+    </div>
+  </article>
+</div>
