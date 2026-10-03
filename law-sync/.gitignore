@@ -1,0 +1,4 @@
+.session/
+backups/
+reports/
+__pycache__/

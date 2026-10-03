@@ -1,0 +1,258 @@
+{
+  "memo": "../index.html",
+  "loginUrl": "https://forum.russia.online/login/login",
+  "documents": [
+    {
+      "id": "fso",
+      "title": "ФЗ «О Федеральной службе охраны РО»",
+      "url": "https://forum.russia.online/threads/federal-nyi-zakon-o-federal-noi-sluzhbe-okhrany-ro.5360/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "charter",
+      "title": "Внутренний устав ФСО РО",
+      "url": "",
+      "enabled": false,
+      "postIndex": 0
+    },
+    {
+      "id": "territory",
+      "title": "ФЗ «О государственных территориях РО»",
+      "url": "https://forum.russia.online/threads/federal-nyi-zakon-o-gosudarstvennykh-territoriyakh-ro.4981/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "pk",
+      "title": "Процессуальный кодекс РО",
+      "url": "https://forum.russia.online/threads/protsessual-nyi-kodeks-ro.4910/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "uk",
+      "title": "Уголовный кодекс РО",
+      "url": "https://forum.russia.online/threads/ugolovnyi-kodeks-ro.4805/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "koap",
+      "title": "Кодекс РО об административных правонарушениях",
+      "url": "https://forum.russia.online/threads/kodeks-ro-ob-administrativnykh-pravonarusheniyakh.4930/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "ethics",
+      "title": "Кодекс этики и служебного поведения",
+      "url": "https://forum.russia.online/threads/kodeks-etiki-i-sluzhebnogo-povedeniya-gosudarstvennykh-sluzhashchikh-ro.5393/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "labor",
+      "title": "Трудовой кодекс РО",
+      "url": "https://forum.russia.online/threads/trudovoi-kodeks-ro.4943/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "gservice",
+      "title": "ФЗ «О государственной службе РО»",
+      "url": "https://forum.russia.online/threads/federal-nyi-zakon-o-gosudarstvennoi-sluzhbe-ro.4971/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "secret",
+      "title": "ФЗ «О государственной тайне»",
+      "url": "https://forum.russia.online/threads/federal-nyi-zakon-o-gosudarstvennoi-taine.5320/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "weapons",
+      "title": "ФЗ «Об оружии»",
+      "url": "https://forum.russia.online/threads/federal-nyi-zakon-ob-oruzhii.5343/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "police",
+      "title": "ФЗ «О полиции»",
+      "url": "https://forum.russia.online/threads/federal-nyi-zakon-o-politsii.5257/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "gibdd",
+      "title": "ФЗ «О ГИБДД РО»",
+      "url": "https://forum.russia.online/threads/federal-nyi-zakon-o-gosudarstvennoi-inspektsii-bezopasnosti-dorozhnogo-dvizheniya.5250/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "fsb",
+      "title": "ФЗ «О Федеральной службе безопасности РО»",
+      "url": "https://forum.russia.online/threads/federal-nyi-zakon-o-federal-noi-sluzhbe-bezopasnosti-ro.5310/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "sk",
+      "title": "ФЗ «О Следственном комитете РО»",
+      "url": "https://forum.russia.online/threads/federal-nyi-zakon-o-sledstvennom-komitete-ro.5245/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "prosecution",
+      "title": "ФЗ «О прокуратуре РО»",
+      "url": "https://forum.russia.online/threads/federal-nyi-zakon-o-prokurature-ro.5234/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "army",
+      "title": "ФЗ «О Вооружённых Силах РО»",
+      "url": "https://forum.russia.online/threads/federal-nyi-zakon-o-vooruzhennykh-silakh-ro.5338/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "constitution",
+      "title": "Конституция РО",
+      "url": "https://forum.russia.online/threads/konstitutsiya-ro.4707/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "pm",
+      "title": "ФКЗ «О Премьер-министре РО и Правительстве РО»",
+      "url": "https://forum.russia.online/threads/federal-nyi-konstitutsionnyi-zakon-o-prem-yer-ministre-ro-i-pravitel-stve-ro.4958/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "duma",
+      "title": "ФКЗ «О Государственной Думе РО»",
+      "url": "https://forum.russia.online/threads/fkz-o-gosudarstvennoi-dume-ro.4751/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "judiciary",
+      "title": "ФКЗ «О судебной системе РО»",
+      "url": "https://forum.russia.online/threads/federal-nyi-konstitutsionnyi-zakon-o-sudebnoi-sisteme-ro.4892/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "ministries",
+      "title": "ФКЗ «О федеральных министерствах РО»",
+      "url": "https://forum.russia.online/threads/federal-nyi-konstitutsionnyi-zakon-o-federal-nykh-ministerstvakh-ro.4949/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "immunity",
+      "title": "ФЗ «О неприкосновенности должностных лиц»",
+      "url": "https://forum.russia.online/threads/federal-nyi-zakon-o-neprikosnovennosti-dolzhnostnykh-lits-ro.4967/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "advocacy",
+      "title": "ФЗ «Об адвокатуре и адвокатской деятельности»",
+      "url": "https://forum.russia.online/threads/federal-nyi-zakon-ob-advokature-i-advokat-skoi-deyatel-nosti.4975/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "health",
+      "title": "ФЗ «Об охране здоровья граждан»",
+      "url": "https://forum.russia.online/threads/federal-nyi-zakon-ob-okhrane-zdorov-ya-grazhdan.4972/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "emergency",
+      "title": "ФКЗ «О чрезвычайном и военном положении»",
+      "url": "https://forum.russia.online/threads/federal-nyi-konstitutsionnyi-zakon-o-chrezvychainom-i-voyennom-polozhenii.4964/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "pdd",
+      "title": "Правила дорожного движения РО",
+      "url": "https://forum.russia.online/threads/pravila-dorozhnogo-dvizheniya-ro.5269/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "state_rules",
+      "title": "Правила государственных организаций",
+      "url": "https://forum.russia.online/threads/pravila-gosudarstvennykh-organizatsii.11/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "project_rules",
+      "title": "Основные правила проекта",
+      "url": "https://forum.russia.online/threads/osnovnyye-pravila-proyekta.1/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "martial_rules",
+      "title": "Правила военного положения",
+      "url": "https://forum.russia.online/threads/pravila-voyennogo-polozheniya.14/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "criminal_rules",
+      "title": "Правила криминальных организаций",
+      "url": "https://forum.russia.online/threads/pravila-kriminal-nykh-organizatsii.12",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "robbery_rules",
+      "title": "Правила ограблений и похищений",
+      "url": "https://forum.russia.online/threads/pravila-ograblenii-i-pokhishchenii.5/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "supply_rules",
+      "title": "Правила перехвата поставок",
+      "url": "https://forum.russia.online/threads/pravila-perekhvata-postavok.3",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "business",
+      "title": "Закон «О предпринимательской деятельности РО»",
+      "url": "https://forum.russia.online/threads/zakon-o-predprinimatel-skoi-deyatel-nosti-ro.17087/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "parties",
+      "title": "ФЗ «О политических партиях»",
+      "url": "https://forum.russia.online/threads/federal-nyi-zakon-o-politicheskikh-partiyakh.5385/",
+      "enabled": true,
+      "postIndex": 0
+    },
+    {
+      "id": "leader_rules",
+      "title": "Правила для лидеров фракций",
+      "url": "https://forum.russia.online/threads/pravila-dlya-liderov-fraktsii.2/",
+      "enabled": true,
+      "postIndex": 0
+    }
+  ]
+}
