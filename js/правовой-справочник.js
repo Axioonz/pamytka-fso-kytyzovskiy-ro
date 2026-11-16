@@ -104,7 +104,10 @@
       const point=!title?line.match(/^(\d+(?:\.\d+)?)\)\s+/):null;
       if(part)activePart=part[1];
       const selectedPart=Boolean(part&&target.parts.has(part[1]));
-      const selectedPoint=Boolean(point&&target.points.has(point[1])&&(!target.parts.size||target.parts.has(activePart)||!activePart));
+      /* ПДД и ПГО нумеруют саму норму как пункт, а не часть внутри статьи. */
+      const unitIsPoint=title && /^(?:ПДД|ПГО)\b/i.test(String(x.r||""))
+        && item.doc===x.doc && referencesFor(x).some(ref=>ref.article===String(item.article));
+      const selectedPoint=Boolean(unitIsPoint||(point&&target.points.has(point[1])&&(!target.parts.size||target.parts.has(activePart)||!activePart)));
       return {line,index,kind:title?"heading":part?"part":point?"point":"text",number:part?.[1]||point?.[1]||"",selectedPart,selectedPoint,selected:selectedPart||selectedPoint};
     });
   }
