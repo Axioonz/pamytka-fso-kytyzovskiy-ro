@@ -37,7 +37,7 @@
   const sourceTitle=document.createElement("b");
   sourceHeader.append(sourceKicker,sourceTitle);
   content.append(sourceHeader,article);
-  grid.append(nav,content);
+  grid.append(content);
   form.after(grid);
   const relatedWrap=document.createElement("section");
   relatedWrap.className="nm-related-wrap";
@@ -122,7 +122,6 @@
       ).join("")+'</div>':"");
   }
   function paintArticle(){
-    makeArticleList();
     const item=currentSource,doc=documents[item.doc];
     sourceKicker.textContent=(doc?.title||"Документ")+(item.chapter?" · глава "+item.chapter:"");
     sourceTitle.textContent=label(item);
@@ -139,13 +138,18 @@
     }
     activeLineData=classifyLines(unit,activeNorm,item);
     const focus=focusReference(activeNorm);
-    const wholeArticle=item.doc===activeNorm.doc && String(item.article)===String(activeNorm.a) && !focus.parts.size && !focus.points.size;
+    const isPrimary=item.doc===activeNorm.doc && String(item.article)===String(activeNorm.a);
+    const numbered=activeLineData.filter(row=>row.kind==="part"||row.kind==="point");
+    const allNumberedSelected=numbered.length>0 && numbered.every(row=>row.selected);
+    // Ссылка на всю статью, включая случаи, когда явно перечислены ВСЕ её части.
+    const wholeArticle=isPrimary && ((!focus.parts.size&&!focus.points.size) || allNumberedSelected);
     article.classList.toggle("nm-whole-article",wholeArticle);
-    article.innerHTML=activeLineData.map(row=>
-      '<div class="nm-line nm-'+row.kind+(row.selectedPart?" nm-selected":"")+(row.selectedPoint?" nm-selected-point":"")+'" data-nm-index="'+row.index+'">'+html(row.line)+'</div>'
-    ).join("");
-    makePartList();
-    const first=activeLineData.find(r=>r.selectedPoint)||activeLineData.find(r=>r.selectedPart);
+    article.innerHTML=wholeArticle
+      ? '<div class="nm-whole-block">'+html(unit.text)+'</div>'
+      : activeLineData.map(row=>
+          '<div class="nm-line nm-'+row.kind+(row.selectedPart?" nm-selected":"")+(row.selectedPoint?" nm-selected-point":"")+'" data-nm-index="'+row.index+'">'+html(row.line)+'</div>'
+        ).join("");
+    const first=wholeArticle?null:(activeLineData.find(r=>r.selectedPoint)||activeLineData.find(r=>r.selectedPart));
     if(first){
       requestAnimationFrame(()=>{
         const target=article.querySelector('[data-nm-index="'+first.index+'"]');
