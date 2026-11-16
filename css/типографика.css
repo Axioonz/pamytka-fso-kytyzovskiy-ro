@@ -1,0 +1,229 @@
+/*
+  Иерархия типографики портала
+  Display: Unbounded | Короткие крупные названия: Dela Gothic One
+  Служебные заголовки: Manrope | Текст и управление: IBM Plex Sans
+  Все три добавленных семейства имеют кириллицу и распространяются по OFL.
+*/
+:root{
+  --fso-type-display:"Unbounded","Manrope",sans-serif;
+  --fso-type-poster:"Dela Gothic One","Unbounded",sans-serif;
+  --fso-type-heading:"Manrope","IBM Plex Sans",system-ui,sans-serif;
+  --fso-type-body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+}
+
+/* Главная. Выразительное, но умеренное по размеру наборное пятно. */
+html.nv-preview .nv-hero h1,
+#home-title,
+.portal-hero h1,
+.intro h1{
+  font-family:var(--fso-type-display);
+  font-size:clamp(37px,4.1vw,64px);
+  font-weight:600;
+  letter-spacing:-.055em;
+  line-height:1.17;
+  text-wrap:balance;
+}
+html.nv-preview .nv-hero h1{max-width:690px}
+html.nv-preview .nv-hero h1 em,
+.portal-hero h1 strong,
+.intro h1 strong{font-weight:inherit}
+
+/* Крупные заголовки разделов. Шрифт шире обычного, поэтому размеры снижены. */
+#section-title,
+.subpage h1,
+.work-header h1,
+.tg-header h1,
+.escort-banner h1,
+.service-header h1,
+.det-head h1,
+.reference-head h1,
+.law-top h1,
+.cheat-head h1,
+.sdept-intro h1,
+.sdept-detail-hero h2,
+#territories-title,
+#escort-title,
+#service-title,
+#favorites-title{
+  font-family:var(--fso-type-display);
+  font-weight:600;
+  font-size:clamp(29px,3.35vw,51px);
+  line-height:1.21;
+  letter-spacing:-.05em;
+  text-wrap:balance;
+  overflow-wrap:break-word;
+}
+
+/* Карточки подразделений: только короткие названия, без декоративных подписей. */
+#departments-screen .sdept-card strong{
+  display:block;
+  max-width:100%;
+  font-family:var(--fso-type-poster);
+  font-size:clamp(42px,4.2vw,69px);
+  font-weight:400;
+  letter-spacing:-.035em;
+  line-height:1.15;
+  text-align:center;
+  text-wrap:balance;
+  overflow-wrap:break-word;
+}
+#departments-screen .sdept-card[data-sdept="Академия"] strong{
+  font-size:clamp(31px,3.15vw,52px);
+  letter-spacing:-.04em;
+}
+
+/* Второй уровень. Не используем декоративную гарнитуру в списках и документах. */
+html.nv-preview .nv-section h2,
+html.nv-preview .nv-hero-side h2,
+.portal-section-heading h2,
+.escort-section-heading h2,
+.tg-part-head h2,
+.tg-objects h2,
+.service-panel h2,
+.work-step-body h2,
+.det-step h2,
+.det-speech-heading h2,
+.law-reader h2,
+.reference-modal h2,
+.cheat-side-panel h2,
+.cheat-editor h2,
+.quiz-panel h2,
+.sdept-material h3,
+.sdept-public h3,
+.sdept-news-head h3,
+.sdept-news-item h4,
+.about-cover-copy h2{
+  font-family:var(--fso-type-heading);
+  font-weight:750;
+  letter-spacing:-.035em;
+  line-height:1.3;
+}
+
+/* Основной интерфейс, документы, формы и таблицы: IBM Plex Sans.
+   При этом Unbounded, Dela и Manrope остаются у выделенных заголовков. */
+html body,
+html button,
+html input,
+html textarea,
+html select,
+html option,
+html table,
+html summary,
+html label,
+html.cb-next body,
+html.nv-preview body,
+html.nv-preview button,
+html.nv-preview input,
+html.nv-preview textarea,
+html.nv-preview select {
+  font-family:var(--fso-type-body);
+}
+
+/* Адаптация широких наборных гарнитур под узкий экран. */
+@media(max-width:1000px){
+  html.nv-preview .nv-hero h1,
+  #home-title,
+  .portal-hero h1,
+  .intro h1{font-size:clamp(33px,4.8vw,53px);line-height:1.19}
+}
+@media(max-width:700px){
+  html.nv-preview .nv-hero h1,
+  #home-title,
+  .portal-hero h1,
+  .intro h1{
+    font-size:clamp(29px,7.7vw,42px);
+    letter-spacing:-.053em;
+    line-height:1.2;
+    overflow-wrap:break-word;
+  }
+  #section-title,
+  .subpage h1,
+  .work-header h1,
+  .tg-header h1,
+  .escort-banner h1,
+  .service-header h1,
+  .det-head h1,
+  .reference-head h1,
+  .law-top h1,
+  .cheat-head h1,
+  .sdept-intro h1,
+  .sdept-detail-hero h2,
+  #territories-title,
+  #escort-title,
+  #service-title,
+  #favorites-title{
+    font-size:clamp(25px,6vw,34px);
+    line-height:1.24;
+    letter-spacing:-.055em;
+  }
+  #departments-screen .sdept-card strong{font-size:clamp(38px,9.5vw,55px)}
+  #departments-screen .sdept-card[data-sdept="Академия"] strong{font-size:clamp(30px,7.3vw,43px)}
+}
+@media(prefers-reduced-motion:reduce){
+  /* Выбор шрифтов не должен менять существующую настройку анимации. */
+}
+
+
+/*
+  Адаптация типографики "Тверского" для структуры "Кутузовского".
+  Оригинальные размеры карточек, меню и элементов управления сохраняются.
+*/
+html body,
+html button,
+html input,
+html textarea,
+html select,
+html option,
+html table,
+html summary,
+html label,
+html .nav button,
+html .topbar,
+html .access-gate,
+html .access-role-grid,
+html .ro-about-panel {
+  font-family:var(--fso-type-body);
+}
+
+/* Первый уровень, как на "Тверском": Unbounded. */
+html body h1,
+html body .hero h1,
+html body .access-gate-brand h1,
+html body .ro-about-cover h2 {
+  font-family:var(--fso-type-display);
+  font-weight:600;
+  letter-spacing:-.045em;
+  line-height:1.2;
+  text-wrap:balance;
+  overflow-wrap:break-word;
+}
+
+/* Второй уровень: Manrope. */
+html body h2,
+html body h3,
+html body h4,
+html body h5,
+html body h6,
+html body .ro-about-section h3,
+html body .ro-about-top b {
+  font-family:var(--fso-type-heading);
+  letter-spacing:-.025em;
+}
+
+/* Акцент подразделений: Dela Gothic One. */
+html body .dept-code {
+  font-family:var(--fso-type-poster);
+  font-weight:400;
+}
+
+/* Текстовые блоки, где исходный CSS явно устанавливал Inter. */
+html body .ground-body pre,
+html body .uk-memo-actions b,
+html body .uk-memo-actions kbd,
+html body .ro-about-author {
+  font-family:var(--fso-type-body);
+}
+html body .scenario-article-body pre,
+html body .scenario-legal-text {
+  font-family:var(--fso-type-body)!important;
+}
