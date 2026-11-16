@@ -90,3 +90,9 @@
 /* Кнопка шпаргалки создаётся отдельным скриптом index.html. */
 #normModal #modalAddCheat { padding:5px 8px !important; font-size:10px !important; line-height:1.2 !important; min-height:0 !important; width:auto !important; flex:0 0 auto; font-weight:700 !important; }
 #normModal .cheat-modal-actions { align-items:center; }
+
+/* Без боковой панели. Вся статья выделяется одним общим блоком. */
+#normModal .nm-grid { grid-template-columns:minmax(0,1fr) !important; }
+#normModal .nm-nav { display:none !important; }
+#normModal #modalArticle.nm-whole-article { box-shadow:none; background:transparent; }
+#normModal #modalArticle .nm-whole-block { display:block; border-left:3px solid var(--accent); border-radius:9px; padding:14px 16px; background:color-mix(in srgb,var(--accent) 13%,var(--panel)); white-space:pre-wrap; line-height:1.8; overflow-wrap:anywhere; }
