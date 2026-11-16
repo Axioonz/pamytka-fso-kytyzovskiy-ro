@@ -4557,7 +4557,7 @@ body.ro-about-open{overflow:hidden}
 <p class="footer-disclaimer">Неофициальная памятка. Приоритет — за действующими нормативными актами проекта.</p>
 <div class="footer-update-row">
 <small class="footer-updated">Последнее обновление памятки: 28.10.2026</small>
-<button class="updates-btn" id="updatesBtn" type="button">Обновления</button>
+
 </div>
 </div>
 
@@ -4595,7 +4595,7 @@ body.ro-about-open{overflow:hidden}
     <section class="ro-about-section">
      <h3>История изменений</h3>
      <p>История изменений памятки.</p>
-     <button class="ro-about-updates" id="roAboutUpdates" type="button">Посмотреть обновления</button>
+     <button class="ro-about-updates" id="updatesBtn" type="button">Посмотреть обновления</button>
     </section>
    </div>
   </div>
@@ -4611,7 +4611,7 @@ body.ro-about-open{overflow:hidden}
 <button aria-label="Закрыть" class="updates-close" id="updatesClose" type="button">×</button>
 </div>
 <div class="updates-body">
-<article class="update-entry"><div><div class="update-date">03.10.2026</div><h4>Восстановление содержания</h4><p>Возвращены 55 прежних оснований и 6 ситуаций. Поиск, навигация и технические исправления сохранены. Добавлена отдельная бесплатная локальная проверка законодательства law-sync.</p></div></article><article class="update-entry">
+<article class="update-entry">
 <div class="update-date">20.09.2026</div>
 <h4>Актуализация законодательства</h4>
 <ul>
@@ -7639,8 +7639,8 @@ body{font-size:7.2pt;line-height:1.24}
    copyStatus.textContent='Discord скопирован';
   }catch(e){copyStatus.textContent='Discord: kapi9090';}
  });
- const update=document.getElementById('roAboutUpdates');
- if(update)update.addEventListener('click',function(){hide();document.getElementById('updatesBtn')?.click();});
+ const update=document.getElementById('updatesBtn');
+ if(update)update.addEventListener('click',hide);
 })();
 </script>
 <script src="./js/правовой-справочник.js?v=20261117-basis-ui-4"></script>
