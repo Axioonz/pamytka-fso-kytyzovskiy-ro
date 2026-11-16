@@ -86,3 +86,7 @@
 #normModal #modalArticle.nm-whole-article { box-shadow:inset 3px 0 0 var(--accent); background:color-mix(in srgb,var(--accent) 7%,var(--panel)); }
 #normModal #modalArticle.nm-whole-article .nm-line { border-left:0; background:transparent; padding-left:11px; }
 #normModal #modalArticle.nm-whole-article .nm-heading { background:var(--panel2); }
+
+/* Кнопка шпаргалки создаётся отдельным скриптом index.html. */
+#normModal #modalAddCheat { padding:5px 8px !important; font-size:10px !important; line-height:1.2 !important; min-height:0 !important; width:auto !important; flex:0 0 auto; font-weight:700 !important; }
+#normModal .cheat-modal-actions { align-items:center; }
