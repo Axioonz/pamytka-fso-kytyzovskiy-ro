@@ -91,7 +91,7 @@
     return (d?.category==="Правила проекта"?"п. ":"ст. ")+item.article;
   }
   function makeArticleList(){
-    navArticles.innerHTML='<span class="nm-nav-label">Статьи и документы</span><div class="nm-nav-list">'+
+    navArticles.innerHTML='<div class="nm-nav-list">'+
       sourceItems.map(item=>'<button type="button" data-nm-source="'+html(key(item))+'" class="'+(currentSource&&key(currentSource)===key(item)?"active":"")+'" aria-pressed="'+(currentSource&&key(currentSource)===key(item))+'">'+html(label(item))+'<small>'+html(documents[item.doc]?.title||item.doc)+'</small></button>').join("")+'</div>';
   }
   function classifyLines(unit,x,item){
@@ -114,7 +114,7 @@
   function makePartList(){
     const items=activeLineData.filter(item=>item.kind==="part"||item.kind==="point");
     const note=items.length?"":'<div class="nm-nav-note">В статье нет отдельно пронумерованных частей или пунктов.</div>';
-    navParts.innerHTML='<hr class="nm-nav-divider"><span class="nm-nav-label">Части и пункты</span>'+note+
+    navParts.innerHTML='<hr class="nm-nav-divider">'+note+
       (items.length?'<div class="nm-nav-list">'+items.map(item=>
         '<button type="button" data-nm-line="'+item.index+'" class="'+(item.selected?"nm-focus":"")+'" title="'+html(item.line)+'">'+
         (item.kind==="point"?"Пункт ":"Часть ")+html(item.number)+
@@ -127,15 +127,20 @@
     sourceKicker.textContent=(doc?.title||"Документ")+(item.chapter?" · глава "+item.chapter:"");
     sourceTitle.textContent=label(item);
     if(!doc){
+      article.classList.remove("nm-whole-article");
       article.innerHTML='<div class="nm-article-note">Документ отсутствует в базе памятки.</div>';
       activeLineData=[];makePartList();return;
     }
     const unit=findLegalUnit(doc.text,item.article,item.chapter||"");
     if(!unit){
+      article.classList.remove("nm-whole-article");
       article.innerHTML='<div class="nm-article-note">Не удалось однозначно найти эту статью в сохранённом документе. Проверьте её в разделе «Документы».</div>';
       activeLineData=[];makePartList();return;
     }
     activeLineData=classifyLines(unit,activeNorm,item);
+    const focus=focusReference(activeNorm);
+    const wholeArticle=item.doc===activeNorm.doc && String(item.article)===String(activeNorm.a) && !focus.parts.size && !focus.points.size;
+    article.classList.toggle("nm-whole-article",wholeArticle);
     article.innerHTML=activeLineData.map(row=>
       '<div class="nm-line nm-'+row.kind+(row.selectedPart?" nm-selected":"")+(row.selectedPoint?" nm-selected-point":"")+'" data-nm-index="'+row.index+'">'+html(row.line)+'</div>'
     ).join("");
@@ -169,18 +174,10 @@
       if(target.article && !findLegalUnit(documents[target.doc].text,target.article,target.chapter))continue;
       const k=key(target);if(seen.has(k))continue;seen.add(k);norms.push(target);
     }
-    const linked=cards.map((card,index)=>({index,x:JSON.parse(card.dataset.norm)}))
-      .filter(y=>y.x.t!==x.t&&y.x.doc===x.doc&&String(y.x.a)===mainArticle&&(y.x.chapter||"")===(x.chapter||""))
-      .slice(0,8);
     let out="";
     if(norms.length){
       out+='<div class="nm-related-section"><h4>Связанные нормы</h4><div class="nm-related-list">'+norms.map(r=>
         '<button class="nm-related-link" type="button" data-nm-doc="'+html(r.doc)+'" data-nm-article="'+html(r.article)+'" data-nm-chapter="'+html(r.chapter)+'"><b>'+html(r.label||label(r))+'</b><small>'+html(r.note||documents[r.doc]?.title||"")+'</small></button>'
-      ).join("")+'</div></div>';
-    }
-    if(linked.length){
-      out+='<div class="nm-related-section"><h4>Другие основания по этой статье</h4><div class="nm-related-list">'+linked.map(y=>
-        '<button class="nm-related-link" type="button" data-nm-card="'+y.index+'"><b>'+html(y.x.t)+'</b><small>'+html(y.x.r||"")+'</small></button>'
       ).join("")+'</div></div>';
     }
     if(x.rel)out+='<p class="nm-related-note"><b>Дополнительные ссылки из основания</b> · '+html(x.rel)+'</p>';
@@ -213,6 +210,8 @@
     modal.classList.add("open");
     modal.querySelector(".modal-close")?.focus();
   }
+  /* Кнопка добавления остаётся прежней по действию, меняется только размер. */
+  [...modal.querySelectorAll("button")].filter(button=>/в мою шпаргалку/i.test(button.textContent||"")).forEach(button=>button.classList.add("nm-save-compact"));
   cards.forEach(card=>{card.onclick=()=>openBasisPanel(card);});
   nav.addEventListener("click",e=>{
     const source=e.target.closest("button[data-nm-source]");
