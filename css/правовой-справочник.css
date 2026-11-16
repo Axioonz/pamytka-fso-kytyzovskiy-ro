@@ -1,0 +1,82 @@
+/* Правовой справочник: карточки и окно просмотра норм. */
+#page-basis .basis-card .keyword-row { display:none !important; }
+#page-basis .basis-card-main p { margin-bottom:0; }
+
+#normModal { padding:18px; align-items:center; justify-content:center; }
+#normModal.open { display:flex; }
+#normModal .modal-card {
+  width:min(1080px,100%); max-height:min(94vh,980px); overflow-y:auto;
+  padding:0; border-radius:17px; background:var(--panel);
+  border:1px solid var(--line); box-shadow:0 30px 80px rgba(0,0,0,.36);
+}
+#normModal .modal-top {
+  display:flex;align-items:flex-start;gap:20px;padding:25px 27px 18px;
+  border-bottom:1px solid var(--line);background:var(--panel);
+}
+#normModal .modal-top>div:first-child { min-width:0; flex:1; }
+#normModal .modal-top h3 {font-size:clamp(21px,2.2vw,30px);line-height:1.2;letter-spacing:-.035em;}
+#normModal .modal-ref { margin-top:9px;font-size:12px;font-weight:600;line-height:1.5;color:var(--muted); }
+#normModal .modal-close { flex:0 0 38px;width:38px;height:38px;border-radius:10px;font-size:23px; }
+#normModal .modal-close:focus-visible,
+#normModal button:focus-visible {outline:2px solid var(--accent);outline-offset:2px;}
+#normModal .modal-short {margin:0;padding:19px 27px 13px;color:var(--text);font-size:13px;line-height:1.65;}
+#normModal #modalFormula {padding:0 27px;}
+#normModal #modalFormula:empty {display:none;}
+#normModal #modalFormula .formula {font-size:12px;margin:0 0 15px;}
+#normModal .nm-grid {display:grid;grid-template-columns:235px minmax(0,1fr);gap:0;margin:8px 27px 0;border:1px solid var(--line);border-radius:13px;overflow:hidden;min-height:250px;}
+#normModal .nm-nav {padding:17px 12px;background:var(--panel2);border-right:1px solid var(--line);}
+#normModal .nm-nav-label {display:block;margin:2px 9px 10px;color:var(--muted);font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:800;}
+#normModal .nm-nav-list {display:flex;flex-direction:column;gap:5px;}
+#normModal .nm-nav button {width:100%;padding:10px 11px;border:1px solid transparent;border-radius:9px;background:transparent;color:var(--text);font-size:12px;text-align:left;cursor:pointer;line-height:1.35;}
+#normModal .nm-nav button small {display:block;margin-top:4px;color:var(--muted);font-size:10px;}
+#normModal .nm-nav button:hover {background:var(--panel);border-color:var(--line);}
+#normModal .nm-nav button.active {background:var(--blue2);color:var(--accent);border-color:color-mix(in srgb,var(--accent) 35%,var(--line));font-weight:700;}
+#normModal .nm-nav button.nm-focus {border-left:3px solid var(--accent);}
+#normModal .nm-nav-divider {margin:17px 8px;border:0;border-top:1px solid var(--line);}
+#normModal .nm-content {min-width:0;background:var(--panel);}
+#normModal .nm-article-heading {padding:17px 20px 13px;border-bottom:1px solid var(--line);}
+#normModal .nm-article-kicker {font-size:10px;letter-spacing:.075em;text-transform:uppercase;color:var(--muted);font-weight:700;}
+#normModal .nm-article-heading b {display:block;margin-top:6px;font-size:14px;line-height:1.5;color:var(--accent);}
+#normModal #modalArticle {max-height:51vh;min-height:165px;overflow:auto;padding:16px 20px 19px;background:transparent;border:0;border-radius:0;white-space:normal;overflow-wrap:break-word;font-size:12px;line-height:1.68;}
+#normModal .nm-line {padding:8px 11px;margin:0 0 5px;border-radius:8px;white-space:pre-wrap;scroll-margin-top:12px;overflow-wrap:anywhere;}
+#normModal .nm-line.nm-heading {font-size:13px;font-weight:800;color:var(--text);background:var(--panel2);padding:12px;}
+#normModal .nm-line.nm-part {font-weight:500;}
+#normModal .nm-line.nm-point {margin-left:13px;font-size:12px;}
+#normModal .nm-line.nm-selected {border-left:3px solid var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--panel));padding-left:9px;}
+#normModal .nm-line.nm-selected-point {border-left:3px solid var(--accent);background:color-mix(in srgb,var(--accent) 19%,var(--panel));padding-left:9px;font-weight:650;}
+#normModal .nm-line.nm-selected mark {background:var(--mark);color:inherit;}
+#normModal .nm-nav-note, #normModal .nm-article-note {padding:12px;font-size:12px;color:var(--muted);line-height:1.5;}
+#normModal .nm-related-wrap {padding:20px 27px 0;}
+#normModal .nm-related-wrap h4 {margin:0 0 10px;font-size:13px;letter-spacing:-.015em;}
+#normModal #modalRelated {display:block !important;margin:0 !important;}
+#normModal .nm-related-section {margin-bottom:17px;}
+#normModal .nm-related-list {display:flex;flex-wrap:wrap;gap:8px;}
+#normModal .nm-related-link {display:inline-flex;flex-direction:column;align-items:flex-start;gap:3px;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--panel2);color:var(--text);font-size:12px;text-align:left;cursor:pointer;max-width:100%;line-height:1.45;}
+#normModal .nm-related-link:hover {border-color:var(--accent);background:var(--blue2);}
+#normModal .nm-related-link small {font-size:10px;color:var(--muted);}
+#normModal .nm-related-note {font-size:11px;color:var(--muted);margin:0 0 13px;}
+#normModal #modalOpenDoc {margin:8px 27px 24px;padding:12px 16px;border-radius:9px;border:1px solid var(--accent);background:var(--blue2);color:var(--accent);font-size:12px;font-weight:700;}
+#normModal #modalOpenDoc:hover {background:var(--panel2);}
+#normModal .nm-footer {font-size:11px;color:var(--muted);}
+@media(max-width:720px){
+ #normModal {padding:7px;align-items:center;}
+ #normModal .modal-card {max-height:97dvh;border-radius:12px;}
+ #normModal .modal-top {padding:18px 15px 12px;gap:8px;}
+ #normModal .modal-top h3 {font-size:21px;}
+ #normModal .modal-short {padding:13px 15px 9px;}
+ #normModal #modalFormula {padding:0 15px;}
+ #normModal .nm-grid {grid-template-columns:1fr;margin:8px 12px 0;}
+ #normModal .nm-nav {padding:12px;border-right:0;border-bottom:1px solid var(--line);}
+ #normModal .nm-nav-list {flex-direction:row;overflow-x:auto;flex-wrap:nowrap;gap:7px;padding-bottom:3px;}
+ #normModal .nm-nav button {flex:0 0 auto;min-width:94px;width:auto;}
+ #normModal .nm-nav-divider {margin:10px 0;}
+ #normModal .nm-content {min-width:0;}
+ #normModal .nm-article-heading {padding:13px;}
+ #normModal #modalArticle {max-height:39vh;padding:12px;}
+ #normModal .nm-line.nm-point {margin-left:5px;}
+ #normModal .nm-related-wrap {padding:16px 15px 0;}
+ #normModal #modalOpenDoc {margin:8px 15px 18px;}
+}
+@media(prefers-reduced-motion:reduce){
+ #normModal .nm-line {scroll-behavior:auto;}
+}
