@@ -253,7 +253,7 @@
 })();
 
 
-/* Раскрытие правовых норм непосредственно в текущем разделе памятки. */
+/* Просмотр правовых норм во всплывающем окне поверх текущего раздела. */
 (() => {
   "use strict";
   const docsNode=document.getElementById("docsData");
@@ -261,10 +261,50 @@
   const documents=Object.fromEntries(JSON.parse(docsNode.textContent).map(d=>[d.id,d]));
   const escapeHtml=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const numberPattern=/^\d+(?:\.\d+)*$/;
+  const overlay=document.createElement("div");
+  overlay.className="inline-law-overlay";
+  overlay.hidden=true;
   const viewer=document.createElement("section");
   viewer.className="inline-law-viewer";
-  viewer.setAttribute("aria-label","Текст правовой нормы");
+  viewer.setAttribute("role","dialog");
+  viewer.setAttribute("aria-modal","true");
+  viewer.setAttribute("aria-labelledby","inlineLawTitle");
+  viewer.tabIndex=-1;
+  overlay.appendChild(viewer);
+  document.body.appendChild(overlay);
   let lastTrigger=null,entries=[],active=0;
+
+  function closeViewer(){
+    overlay.hidden=true;
+    document.body.classList.remove("inline-law-open");
+    const previous=lastTrigger;
+    lastTrigger=null;
+    if(previous?.isConnected)previous.focus({preventScroll:true});
+  }
+  overlay.addEventListener("click",e=>{
+    if(e.target===overlay)closeViewer();
+  });
+  document.addEventListener("keydown",e=>{
+    if(overlay.hidden)return;
+    if(e.key==="Escape"){
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      closeViewer();
+      return;
+    }
+    if(e.key!=="Tab")return;
+    const controls=[...viewer.querySelectorAll('button:not([disabled]),a[href],[tabindex]:not([tabindex="-1"])')]
+      .filter(el=>el.getClientRects().length);
+    if(!controls.length){e.preventDefault();viewer.focus();return;}
+    const first=controls[0],last=controls[controls.length-1];
+    if(e.shiftKey && (document.activeElement===first || document.activeElement===viewer)){
+      e.preventDefault();last.focus();
+    }else if(!e.shiftKey && document.activeElement===last){
+      e.preventDefault();first.focus();
+    }else if(!viewer.contains(document.activeElement)){
+      e.preventDefault();first.focus();
+    }
+  },true);
 
   function expandRange(start,end){
     if(!end)return [start];
@@ -349,14 +389,13 @@
     const tabs=entries.length>1?'<div class="inline-law-tabs" role="tablist" aria-label="Ссылки на нормы">'+entries.map((e,i)=>
       '<button type="button" data-inline-tab="'+i+'" class="'+(i===active?"active":"")+'" role="tab" aria-selected="'+(i===active)+'">'+
       escapeHtml((documents[e.doc]?.category==="Правила проекта"?"п. ":"ст. ")+e.ref.num+(e.ref.chapter?" · гл. "+e.ref.chapter:""))+'</button>').join("")+'</div>':"";
-    viewer.innerHTML='<div class="inline-law-head"><div><small>ПРАВОВАЯ НОРМА</small><h4>'+escapeHtml(doc?.title||current.doc)+'</h4><span>'+escapeHtml(sub)+'</span></div><button type="button" class="inline-law-close" data-inline-close aria-label="Закрыть статью">×</button></div>'+
+    viewer.innerHTML='<div class="inline-law-head"><div><small>ПРАВОВАЯ НОРМА</small><h4 id="inlineLawTitle">'+escapeHtml(doc?.title||current.doc)+'</h4><span>'+escapeHtml(sub)+'</span></div><button type="button" class="inline-law-close" data-inline-close aria-label="Закрыть статью">×</button></div>'+
       tabs+(doc?.reviewRequired?'<p class="inline-law-warning">Документ требует повторной сверки.</p>':"")+
       '<div class="inline-law-body">'+content(current)+'</div>';
-    viewer.querySelector("[data-inline-close]").addEventListener("click",()=>{
-      viewer.remove();lastTrigger=null;
-    });
+    viewer.querySelector("[data-inline-close]").addEventListener("click",closeViewer);
     viewer.querySelectorAll("[data-inline-tab]").forEach(tab=>tab.addEventListener("click",()=>{
       active=Number(tab.dataset.inlineTab);render();
+      viewer.querySelector(".inline-law-body").scrollTop=0;
     }));
   }
   document.addEventListener("click",e=>{
@@ -372,13 +411,12 @@
     if(!refs.length)return;
     e.preventDefault();
     e.stopImmediatePropagation();
-    if(lastTrigger===button && viewer.isConnected){viewer.remove();lastTrigger=null;return;}
     const select=selectionFor(button,doc);
     entries=refs.map(ref=>({doc:id,ref,selection:select}));
     active=0;lastTrigger=button;
-    const anchor=button.closest(".refs, .sit-refs, .scenario-law-links, .cross-doc-results, .convoy-law-links")||button;
-    anchor.insertAdjacentElement("afterend",viewer);
+    overlay.hidden=false;
+    document.body.classList.add("inline-law-open");
     render();
-    viewer.scrollIntoView({behavior:"smooth",block:"nearest"});
+    viewer.querySelector("[data-inline-close]").focus({preventScroll:true});
   },true);
 })();
