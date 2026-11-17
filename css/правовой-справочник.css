@@ -96,3 +96,13 @@
 #normModal .nm-nav { display:none !important; }
 #normModal #modalArticle.nm-whole-article { box-shadow:none; background:transparent; }
 #normModal #modalArticle .nm-whole-block { display:block; border-left:3px solid var(--accent); border-radius:9px; padding:14px 16px; background:color-mix(in srgb,var(--accent) 13%,var(--panel)); white-space:pre-wrap; line-height:1.8; overflow-wrap:anywhere; }
+
+/* Поиск по ситуациям: одна внешняя рамка без внутренней обводки поля. */
+.situation-search #localScenarioSearch {
+  border: 0;
+  border-radius: 0;
+  outline: 0;
+  box-shadow: none;
+  background: transparent;
+  padding: 11px 0;
+}
