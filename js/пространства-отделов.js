@@ -311,7 +311,11 @@
           if (file) {
             const types = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp" };
             if (!types[file.type] || file.size > 5 * 1024 * 1024) throw new Error("Выберите JPG, PNG или WebP до 5 МБ.");
-            uploaded = code + "/" + crypto.randomUUID() + "." + types[file.type];
+            // Storage paths use ASCII; department codes remain Cyrillic in the database and UI.
+            const storageFolders = { "УК": "uk", "УЛО": "ulo", "УСН": "usn", "УВК": "uvk" };
+            const folder = storageFolders[code];
+            if (!folder) throw new Error("Неизвестное подразделение.");
+            uploaded = folder + "/" + crypto.randomUUID() + "." + types[file.type];
             const result = await db.storage.from("kut-uniforms").upload(uploaded, file, { contentType: file.type, upsert: false });
             if (result.error) throw result.error;
             row.image_path = uploaded;
