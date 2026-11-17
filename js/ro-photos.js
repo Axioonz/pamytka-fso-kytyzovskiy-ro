@@ -9,6 +9,16 @@
     {selector:'#page-convoys > .section-head', name:'section', photos:['motorcade.webp']},
     {selector:'#page-departments > .section-head', name:'section', photos:['fso-officer.webp']}
   ];
+  // Compact photo accents outside reference text and search controls.
+  const accents = [
+    {selector:'#page-basis > .page-title-row', layout:'split', photo:'government-house.webp'},
+    {selector:'#page-situations #localScenarios > .section-head', layout:'postcard', photo:'kremlin-tower-autumn.webp'},
+    {selector:'#page-process > .section-head', layout:'split', photo:'fso-officer.webp'},
+    {selector:'#page-terms > .section-head', layout:'postcard', photo:'st-basil.webp'},
+    {selector:'#page-codes > .section-head', layout:'ribbon', photo:'moscow-evening.webp'},
+    {selector:'#page-cheats > .section-head', layout:'postcard', photo:'hero-autumn.webp'},
+    {selector:'#page-laws > .section-head', layout:'split', photo:'moscow-skyline.webp'}
+  ];
   function preload(file) {
     return new Promise(resolve => {
       const image = new Image();
@@ -68,12 +78,32 @@
       if (!paused && !document.hidden && !reduced.matches && host.getClientRects().length) select(active + 1);
     }, 8500);
   }
+  function createAccent(group, url) {
+    const host = document.querySelector(group.selector);
+    if (!host || host.classList.contains('ro-accent-header')) return;
+    const photo = document.createElement('div');
+    photo.className = 'ro-photo-accent';
+    photo.setAttribute('aria-hidden', 'true');
+    const img = document.createElement('img');
+    img.src = url;
+    img.alt = '';
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    photo.appendChild(img);
+    host.classList.add('ro-accent-header', 'ro-accent-' + group.layout);
+    host.appendChild(photo);
+  }
   function init() {
     groups.forEach(async group => {
       const host = document.querySelector(group.selector);
       if (!host) return;
       const results = await Promise.all(group.photos.map(preload));
       createGallery(group, results.filter(Boolean));
+    });
+    accents.forEach(async group => {
+      if (!document.querySelector(group.selector)) return;
+      const url = await preload(group.photo);
+      if (url) createAccent(group, url);
     });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, {once:true});
