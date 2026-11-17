@@ -1,0 +1,103 @@
+/* Порядок задержания ФСО РО. Один последовательный список вместо узкой колонки. */
+#page-process .process-procedure {
+  grid-column:1/-1;
+  min-width:0;
+  padding:clamp(17px,2.6vw,28px);
+}
+#page-process .process-procedure>h3 {
+  font-size:clamp(17px,2vw,21px);
+  margin:0 0 8px;
+}
+#page-process .process-procedure .process-intro {
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.55;
+  margin:0 0 18px;
+}
+#page-process .process-video-notice {
+  border:1px solid color-mix(in srgb,var(--accent) 30%,var(--line));
+  border-left:3px solid var(--accent);
+  border-radius:9px;
+  background:color-mix(in srgb,var(--accent) 7%,var(--panel2));
+  padding:11px 14px;
+  font-size:12px;
+  line-height:1.6;
+  margin:0 0 19px;
+}
+#page-process .process-video-notice b {color:var(--text)}
+#page-process .process-procedure .steps {
+  list-style:none;
+  counter-reset:det-step;
+  padding:0;
+  margin:0;
+  display:grid;
+  gap:9px;
+}
+#page-process .process-procedure .steps li {
+  min-width:0;
+  counter-increment:det-step;
+  display:grid;
+  grid-template-columns:35px minmax(0,1fr);
+  gap:12px;
+  align-items:start;
+  padding:13px 15px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:var(--panel2);
+  overflow-wrap:anywhere;
+  margin:0;
+}
+#page-process .process-procedure .steps li::before {
+  content:counter(det-step);
+  display:grid;
+  place-items:center;
+  min-width:30px;
+  min-height:30px;
+  padding:2px 3px;
+  border-radius:8px;
+  background:var(--blue2);
+  color:var(--accent);
+  font-size:12px;
+  font-weight:800;
+}
+#page-process .process-procedure .step-copy {min-width:0}
+#page-process .process-procedure .step-copy strong {
+  display:block;
+  margin:0 0 4px;
+  font-size:13px;
+  font-weight:750;
+  color:var(--text);
+}
+#page-process .process-procedure .step-copy p {
+  margin:0;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.6;
+  overflow-wrap:anywhere;
+}
+#page-process .process-priority {
+  margin:16px 0 0;
+  padding:11px 13px;
+  border-radius:9px;
+  background:var(--blue2);
+  color:var(--text);
+  line-height:1.6;
+  font-size:11px;
+}
+#page-process .process-procedure-links {
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:15px;
+}
+#page-process .process-procedure-links .open-doc {margin-top:0}
+#page-process .process-times {
+  grid-column:1/-1;
+  margin:0 0 4px;
+}
+#page-process .process-boundary {grid-column:1/-1}
+@media(max-width:760px) {
+  #page-process .process-procedure .steps li {padding:11px;gap:9px;grid-template-columns:30px minmax(0,1fr)}
+  #page-process .process-procedure .steps li::before {min-width:26px;min-height:26px}
+  #page-process .process-procedure-links .open-doc {max-width:100%}
+}
