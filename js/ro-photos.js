@@ -4,8 +4,8 @@
   const folder = './assets/ro/';
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const groups = [
-    {selector:'#page-home .hero', name:'hero', photos:['kremlin-panorama.webp','hero-autumn.webp','moscow-evening.webp','moscow-skyline.webp','st-basil.webp']},
-    {selector:'#page-territories > .section-head', name:'section', photos:['kremlin-tower-autumn.webp','government-house.webp','spasskaya-tower.webp']},
+    {selector:'#page-home .hero', name:'hero', photos:['kremlin-panorama.webp']},
+    {selector:'#page-territories > .section-head', name:'section', photos:['spasskaya-tower.webp']},
     {selector:'#page-convoys > .section-head', name:'section', photos:['motorcade.webp']},
     {selector:'#page-departments > .section-head', name:'section', photos:['fso-officer.webp']}
   ];
