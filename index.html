@@ -6498,8 +6498,7 @@ if(docs.length) renderDoc(docs[0]);
 header{padding:22px;border:1px solid #29313b;border-radius:16px;background:#111821}header small{color:#6fa8dc;font-weight:800;letter-spacing:.08em}h1{margin:5px 0 7px;font-size:25px}header p{margin:0;color:#9ca8b5;font-size:13px}.item{margin-top:10px;padding:16px;border:1px solid #29313b;border-radius:13px;background:#111821}
 .top{display:flex;justify-content:space-between;align-items:center}.top span{font-size:10px;color:#78aee0;font-weight:900;text-transform:uppercase}.top b{color:#697586;font-size:10px}h2{margin:8px 0;font-size:17px}.body{white-space:normal;color:#c2cad3;font-size:13px;line-height:1.55}.source{margin-top:10px;color:#78aee0;font-size:11px;font-weight:800}.note{margin-top:11px;padding:10px;border:1px solid #34404c;border-radius:9px;background:#0d131a;color:#d5dce3;font-size:12px;line-height:1.5}.note b{display:block;margin-bottom:4px;color:#96a7b8;font-size:9px;text-transform:uppercase}
 footer{margin-top:18px;color:#728091;font-size:10px;text-align:center}@media print{body{background:#fff;color:#111}.wrap{width:100%;margin:0}.item,header{background:#fff;border-color:#bbb;break-inside:avoid}.body,.note{color:#222}.source{color:#244f78}.note{background:#f7f7f7}}
-</style></head><body><main class="wrap"><header><small>ФСО · РОССИЯ ОНЛАЙН · КУТУЗОВСКИЙ</small><h1>Личная шпаргалка</h1><p>${arr.length} ${countWord(arr.length)} · сформировано ${new Date().toLocaleString("ru-RU")}</p></header>${cards}<footer>Сформировано из памятки ФСО · by Арсений Рубежной</footer></main><script src="./js/ro-photos.js?v=20261117-1"></script>
-</body></html>`;
+</style></head><body><main class="wrap"><header><small>ФСО · РОССИЯ ОНЛАЙН · КУТУЗОВСКИЙ</small><h1>Личная шпаргалка</h1><p>${arr.length} ${countWord(arr.length)} · сформировано ${new Date().toLocaleString("ru-RU")}</p></header>${cards}<footer>Сформировано из памятки ФСО · by Арсений Рубежной</footer></main></body></html>`;
     downloadBlob(new Blob([doc],{type:"text/html;charset=utf-8"}),fileBase()+".html");
     toast("HTML-шпаргалка скачана.");
   }
@@ -7135,4 +7134,5 @@ body{font-size:7.2pt;line-height:1.24}
 <script src="./js/правовой-справочник.js?v=20261117-basis-ui-4"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/dist/umd/supabase.js"></script>
 <script src="./js/пространства-отделов.js?v=20261117-kut-departments-1"></script>
+<script src="./js/ro-photos.js?v=20261117-1"></script>
 </body></html>
