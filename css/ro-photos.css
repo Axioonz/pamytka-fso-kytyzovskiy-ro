@@ -36,3 +36,31 @@ html[data-theme="light"] .ro-photo-host{box-shadow:0 12px 36px rgba(24,45,67,.12
  .ro-photo-host{border-radius:14px}
 }
 @media(prefers-reduced-motion:reduce){.ro-photo-media img,.ro-photo-dots button:before{transition:none!important}}
+
+/* Editorial photo accents. Smaller than banners and kept away from law text. */
+.ro-accent-header{position:relative!important;margin-bottom:20px!important}
+.ro-photo-accent{position:relative;isolation:isolate;flex-shrink:0;overflow:hidden;border-radius:14px;border:1px solid color-mix(in srgb,var(--line) 76%,transparent);background:#182531;box-shadow:0 11px 28px rgba(9,20,31,.13)}
+.ro-photo-accent img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.ro-photo-accent::after{content:"";position:absolute;inset:0;background:linear-gradient(125deg,transparent 24%,rgba(9,19,29,.19));pointer-events:none}
+.ro-accent-split{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:28px!important;min-height:166px}
+.ro-accent-split>:not(.ro-photo-accent){flex:1 1 auto;min-width:0}
+.ro-accent-split>.ro-photo-accent{flex:0 0 39%;height:166px}
+.ro-accent-postcard{display:flex!important;justify-content:flex-start!important;align-items:center!important;flex-wrap:wrap;column-gap:16px!important;row-gap:6px!important;min-height:152px;padding-right:244px!important}
+.ro-accent-postcard>.ro-photo-accent{position:absolute;right:0;top:0;width:220px;height:148px}
+.ro-accent-postcard>.count,.ro-accent-postcard>.cheat-head-stat{flex:0 0 auto}
+.ro-accent-ribbon{display:flex!important;flex-direction:column;align-items:stretch!important;gap:12px!important}
+.ro-accent-ribbon>.ro-photo-accent{width:100%;height:74px;border-radius:11px}
+#page-basis .ro-photo-accent img{object-position:center 49%}
+#page-situations .ro-photo-accent img{object-position:center 42%}
+#page-process .ro-photo-accent img{object-position:center 31%}
+#page-terms .ro-photo-accent img{object-position:center 42%}
+#page-codes .ro-photo-accent img{object-position:center 54%}
+#page-cheats .ro-photo-accent img{object-position:center 38%}
+#page-laws .ro-photo-accent img{object-position:center 46%}
+@media(max-width:700px){
+  .ro-accent-split{display:block!important;min-height:0}
+  .ro-accent-split>.ro-photo-accent{width:100%;height:128px;margin-top:14px}
+  .ro-accent-postcard{display:flex!important;min-height:0;padding-right:0!important;padding-bottom:140px!important}
+  .ro-accent-postcard>.ro-photo-accent{right:auto;left:0;top:auto;bottom:0;width:min(100%,320px);height:124px}
+  .ro-accent-ribbon>.ro-photo-accent{height:65px}
+}
