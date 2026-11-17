@@ -281,10 +281,10 @@
   }
   function selectionFor(button,doc){
     const label=button.textContent||"";
-    const part=button.dataset.part||label.match(/\bч(?:асть)?\.?\s*(\d+(?:\.\d+)*)/i)?.[1]||"";
+    const part=button.dataset.part||label.match(/(?:^|[\s,(])ч(?:асть)?\.?\s*(\d+(?:\.\d+)*)/i)?.[1]||"";
     // В правилах проекта «п. 12.4» обозначает саму норму, а не пункт внутри статьи.
-    const point=button.dataset.point||(doc?.category!=="Правила проекта" && /\bст(?:атья|атьи|атью)?\.?\s*\d/i.test(label)
-      ? label.match(/\bп(?:ункт)?\.?\s*(\d+(?:\.\d+)*)/i)?.[1]||"" : "");
+    const point=button.dataset.point||(doc?.category!=="Правила проекта" && /(?:^|[\s,(])ст(?:атья|атьи|атью)?\.?\s*\d/i.test(label)
+      ? label.match(/(?:^|[\s,(])п(?:ункт)?\.?\s*(\d+(?:\.\d+)*)/i)?.[1]||"" : "");
     return {part:String(part),point:String(point)};
   }
   function references(button,doc){
