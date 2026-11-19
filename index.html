@@ -2719,6 +2719,59 @@ body.access-pending .footer{visibility:hidden}
 .detention-reference p{margin:5px 0 12px;font-size:12px;color:var(--muted);line-height:1.55}
 @media(max-width:760px){.process-times{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
+<style id="detention-complete-layout-20261119">
+/* Единая визуальная система справочника по задержаниям */
+#page-process .detention-source-note{font-size:14px;line-height:1.6;padding:15px 18px}
+#page-process .process-grid{display:flex;flex-direction:column;gap:15px;align-items:stretch}
+#page-process .detention-unified-panel{margin:0;min-width:0;padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+#page-process .detention-unified-panel>h3{font-size:20px;line-height:1.35;margin:0 0 16px;color:var(--strong)}
+#page-process .detention-special-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+#page-process .detention-special-card,#page-process .detention-procedure-card,#page-process .detention-right-card,#page-process .detention-reference-tile{min-width:0;display:flex;align-items:flex-start;gap:12px;background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:13px 14px}
+#page-process .detention-special-card>span,#page-process .detention-index,#page-process .detention-ref-number{display:grid;place-items:center;min-width:34px;height:30px;padding:0 6px;flex-shrink:0;border-radius:7px;background:var(--blue2);font-size:12px;font-weight:800;color:var(--accent)}
+#page-process .detention-special-card>p,#page-process .detention-procedure-card p,#page-process .detention-right-card p,#page-process .detention-reference-tile p{margin:0;font-size:14px;line-height:1.5;overflow-wrap:anywhere;color:var(--text)}
+#page-process .detention-fso-panel>p{padding:13px 15px;margin:13px 0;border-left:3px solid var(--accent);border-radius:0 8px 8px 0;background:var(--blue2);font-size:14px;line-height:1.55}
+#page-process .detention-fso-panel>p b{display:block;margin-bottom:5px;color:var(--strong)}
+#page-process .detention-procedure-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+#page-process .detention-procedure-card h4{font-size:14px;line-height:1.35;margin:0 0 6px;color:var(--strong)}
+#page-process .detention-procedure-card small{display:block;margin:0 0 6px;font-size:10px;letter-spacing:.04em;text-transform:uppercase;font-weight:800;color:var(--accent)}
+#page-process .detention-procedure-exception{border-left:3px solid var(--accent)}
+#page-process .detention-steps-panel>p{font-size:13px;line-height:1.55;margin:14px 0 10px;border-left:3px solid var(--accent);background:var(--blue2);padding:12px 14px;border-radius:0 8px 8px 0}
+#page-process .detention-steps-panel>.open-full{margin-right:8px;margin-top:3px}
+#page-process .process-timing-group{min-width:0;margin:0;padding:18px 20px 20px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+#page-process .process-timing-group::before{content:"Контрольные сроки";display:block;font-size:20px;font-weight:800;line-height:1.35;margin-bottom:14px;color:var(--strong)}
+#page-process .process-times{margin:0;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+#page-process .process-time{background:var(--panel2);padding:13px 15px}
+#page-process .process-time b{font-size:20px}
+#page-process .process-time span{font-size:13px}
+#page-process .detention-rights-panel>.rights{font-size:15px;line-height:1.6;font-weight:600;padding:15px 16px;background:var(--blue2);border-left:3px solid var(--accent);margin-bottom:13px}
+#page-process .detention-rights-panel>.rights b{display:block;font-size:13px;font-weight:800;margin-bottom:8px;color:var(--accent)}
+#page-process .detention-rights-section{margin:14px 0}
+#page-process .detention-rights-section>h4{font-size:15px;margin:0 0 10px;color:var(--strong)}
+#page-process .detention-rights-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+#page-process .detention-right-card>span{font-size:12px;color:var(--accent);font-weight:800;flex-shrink:0}
+#page-process .scenario-article{margin:10px 0;background:var(--panel)}
+#page-process .scenario-article>summary{font-size:13px;padding:12px 14px}
+#page-process .detention-reference{border:0;margin:18px 0 23px;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
+#page-process .detention-ref-panel{min-width:0;padding:18px 20px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+#page-process .detention-ref-primary{grid-column:1/-1}
+#page-process .detention-ref-panel h3{font-size:19px;line-height:1.35;color:var(--strong);margin:0 0 14px}
+#page-process .detention-ref-panel>p{background:var(--blue2);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;font-size:13px;line-height:1.55;padding:12px 14px;color:var(--text);margin:0 0 13px}
+#page-process .detention-ref-panel>p:last-child{margin:13px 0 0}
+#page-process .detention-reference-tiles{display:grid;grid-template-columns:1fr;gap:8px}
+#page-process .detention-ref-primary .detention-reference-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+#page-process .detention-reference-tile{padding:11px 12px}
+#page-process .detention-ref-number{min-width:30px;height:28px}
+#page-process .detention-drive{margin:14px 0;border:1px solid var(--line);background:var(--panel);padding:0;overflow:hidden;border-radius:12px}
+#page-process .detention-drive>summary{display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:17px 20px;cursor:pointer}
+#page-process .detention-drive>summary b{font-size:18px}
+#page-process .detention-drive>summary span{font-size:12px;color:var(--muted)}
+#page-process .detention-drive>p{margin:8px 20px 14px;padding:13px 15px;background:var(--panel2);border:1px solid var(--line);border-radius:9px;font-size:14px;line-height:1.55}
+#page-process .detention-drive>.open-full{margin:1px 20px 18px}
+@media(max-width:1050px){#page-process .detention-special-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){#page-process .detention-reference{grid-template-columns:1fr}#page-process .detention-ref-primary{grid-column:auto}#page-process .detention-unified-panel,#page-process .process-timing-group,#page-process .detention-ref-panel{padding:15px}}
+@media(max-width:570px){#page-process .detention-special-grid,#page-process .detention-procedure-grid,#page-process .detention-rights-tiles,#page-process .detention-ref-primary .detention-reference-tiles{grid-template-columns:1fr}#page-process .process-times{grid-template-columns:repeat(2,minmax(0,1fr))}#page-process .detention-unified-panel>h3{font-size:18px}}
+
+</style>
 <style id="document-text-audit-fixes">
 /* 20.09.2026 — единое отображение полного текста всех встроенных документов */
 #lawBody{line-height:1.58}
@@ -3375,13 +3428,7 @@ body.ro-about-open{overflow:hidden}
 <section class="page" id="page-process">
 <div class="section-head"><div><h2>Задержание и права</h2><p>Что делать при задержании, как соблюдать сроки и когда передавать материалы.</p></div></div><div class="detention-source-note">Сотрудник ФСО сообщает причину и основание задержания. Права задержанного действуют с момента ограничения свободы. По примечанию к статье 6 главы II ПК сотрудник ФСО не обязан оглашать их до передачи процессуальных действий уполномоченному органу.</div>
 <div class="process-grid">
-<article class="box"><h3>Основания для задержания — ст. 30 ФЗ «О ФСО РО»</h3><ol class="steps">
-<li>Нападение на охраняемое лицо или объект.</li>
-<li>Подготовка опасного нападения в охранной зоне с оружием, взрывным устройством или другим опасным средством.</li>
-<li>Преступление или административное правонарушение на охраняемом объекте или мероприятии, если задержание нужно для пресечения, установления личности или передачи.</li>
-<li>Активное сопротивление законному требованию покинуть охранную зону, если оно создаёт реальную угрозу безопасности.</li><li>4.1) Лицо не прекращает помеху сопровождению после законного требования либо создаёт непосредственную угрозу охраняемому лицу (ч. 1 ст. 30 ФЗ «О ФСО РО»).</li>
-<li>Другое основание, прямо предусмотренное федеральным законом.</li>
-</ol><p><b>Задержание, установление личности и удаление из охранной зоны не одно и то же.</b> Если человек выведен за пределы зоны и свободен, задержания нет. Отказ предъявить документ при законной проверке требует процедуры установления личности, но не означает автоматического права удерживать человека за преступление.</p><details class="scenario-article"><summary>Текст нормы · Уголовный кодекс РО · ст. 17.12</summary><div class="scenario-article-body"><pre>Статья 17.12 (Ф/Р/В) Помеха колонне государственных структур, а равно помеха сопровождению охраняемого лица, осуществляемому Федеральной службой охраны РО, в том числе пешему.
+<article class="box detention-unified-panel detention-fso-panel"><h3>Основания для задержания — ст. 30 ФЗ «О ФСО РО»</h3><div class="detention-special-grid"><div class="detention-special-card"><span>01</span><p>Нападение на охраняемое лицо или объект.</p></div><div class="detention-special-card"><span>02</span><p>Подготовка опасного нападения в охранной зоне с оружием, взрывным устройством или другим опасным средством.</p></div><div class="detention-special-card"><span>03</span><p>Преступление или административное правонарушение на охраняемом объекте или мероприятии, если задержание нужно для пресечения, установления личности или передачи.</p></div><div class="detention-special-card"><span>04</span><p>Активное сопротивление законному требованию покинуть охранную зону, если оно создаёт реальную угрозу безопасности.</p></div><div class="detention-special-card"><span>4.1</span><p>Лицо не прекращает помеху сопровождению после законного требования либо создаёт непосредственную угрозу охраняемому лицу (ч. 1 ст. 30 ФЗ «О ФСО РО»).</p></div><div class="detention-special-card"><span>05</span><p>Другое основание, прямо предусмотренное федеральным законом.</p></div></div><p><b>Задержание, установление личности и удаление из охранной зоны не одно и то же.</b> Если человек выведен за пределы зоны и свободен, задержания нет. Отказ предъявить документ при законной проверке требует процедуры установления личности, но не означает автоматического права удерживать человека за преступление.</p><details class="scenario-article"><summary>Текст нормы · Уголовный кодекс РО · ст. 17.12</summary><div class="scenario-article-body"><pre>Статья 17.12 (Ф/Р/В) Помеха колонне государственных структур, а равно помеха сопровождению охраняемого лица, осуществляемому Федеральной службой охраны РО, в том числе пешему.
 Примечание: Помехой является встраивание, оттягивание её движения, действия направленные на её остановку, а также помеха сопровождению в значении Федерального закона «О Федеральной службе охраны РО». Приоритет розыска 3 Наказание: До 30 месяцев лишения свободы.</pre></div></details><details class="scenario-article"><summary>Текст нормы · ФЗ «О ФСО РО» · ст. 30</summary><div class="scenario-article-body"><pre>Статья 30. Задержание сотрудником ФСО РО
 1. Сотрудник ФСО РО вправе задержать лицо, если:
 1) лицо непосредственно совершает нападение на охраняемое лицо или объект;
@@ -3394,20 +3441,8 @@ body.ro-about-open{overflow:hidden}
 3. Если ограничение свободы является задержанием по Процессуальному кодексу РО, процессуальный срок исчисляется с момента фактического ограничения свободы сотрудником ФСО РО.
 4. Задержанное лицо и относящиеся к задержанию материалы передаются полиции, ФСБ РО, Следственному комитету либо иному компетентному органу без необоснованной задержки.
 5. Кратковременное удаление лица за пределы охранной зоны не является задержанием, если после удаления лицо свободно и в отношении него не продолжается процессуальное ограничение свободы.</pre></div></details></article>
-<article class="box"><h3>Порядок задержания сотрудником ФСО</h3>
-<ol class="steps">
-<li><b>Обеспечить безопасность.</b> Наручники применять при наличии законных оснований и необходимости. Сам факт задержания не требует надевать их на каждого.</li>
-<li><b>Представиться.</b> Показать удостоверение, жетон, нашивку или другой опознавательный знак сотрудника ФСО.</li>
-<li><b>Сообщить причину задержания.</b> Назвать фактическую причину и основание задержания.</li>
-<li><b>Обеспечить права задержанного.</b> Сообщить основание задержания; разъяснить процессуальные права либо передать их разъяснение уполномоченному органу согласно примечанию к ст. 6 главы II ПК.</li>
-<li><b>Провести первичный досмотр.</b> Проверить наличие оружия, взрывчатки и других опасных или запрещённых предметов.</li>
-<li><b>Проверить документы и личность.</b> Установить личность задержанного и его принадлежность к государственному органу.</li>
-<li><b>Снять предметы, скрывающие личность.</b> При необходимости снять маску или другой предмет, мешающий установлению личности.</li>
-<li><b>Передать задержанного компетентному органу.</b> Сообщить время и основание задержания, предварительную квалификацию, применённые меры. Передать видеозапись, изъятые предметы и сведения о свидетелях. Первоначальный срок не обнуляется.</li>
-<li><b>Вызвать адвоката по запросу.</b> По просьбе задержанного вызвать адвоката в установленном порядке.</li>
-<li><b>Если задержан госслужащий.</b> Вызвать прокурора либо следователя СК; при вызове следователя уведомить прокурора. На принятие вызова отводится 5 минут, на прибытие ещё 15 минут. Если вызванный не ответил или не прибыл, вызвать другого. Если не прибыл никто, освободить задержанного и направить материалы в прокуратуру и СК.</li>
-<li><b>Если заявлена неприкосновенность.</b> Проверить статус и документы. При подтверждении соблюдать ограничения специального закона и порядок разрешения принудительных мер. Если непосредственная угроза прекращена и разрешения на дальнейшее удержание нет, освободить лицо.</li>
-</ol>
+<article class="box detention-unified-panel detention-steps-panel"><h3>Порядок задержания сотрудником ФСО</h3>
+<div class="detention-procedure-grid"><div class="detention-procedure-card"><span class="detention-index">01</span><div><h4>Обеспечить безопасность.</h4><p>Наручники применять при наличии законных оснований и необходимости. Сам факт задержания не требует надевать их на каждого.</p></div></div><div class="detention-procedure-card"><span class="detention-index">02</span><div><h4>Представиться.</h4><p>Показать удостоверение, жетон, нашивку или другой опознавательный знак сотрудника ФСО.</p></div></div><div class="detention-procedure-card"><span class="detention-index">03</span><div><h4>Сообщить причину задержания.</h4><p>Назвать фактическую причину и основание задержания.</p></div></div><div class="detention-procedure-card"><span class="detention-index">04</span><div><h4>Обеспечить права задержанного.</h4><p>Сообщить основание задержания; разъяснить процессуальные права либо передать их разъяснение уполномоченному органу согласно примечанию к ст. 6 главы II ПК.</p></div></div><div class="detention-procedure-card"><span class="detention-index">05</span><div><h4>Провести первичный досмотр.</h4><p>Проверить наличие оружия, взрывчатки и других опасных или запрещённых предметов.</p></div></div><div class="detention-procedure-card"><span class="detention-index">06</span><div><h4>Проверить документы и личность.</h4><p>Установить личность задержанного и его принадлежность к государственному органу.</p></div></div><div class="detention-procedure-card"><span class="detention-index">07</span><div><h4>Снять предметы, скрывающие личность.</h4><p>При необходимости снять маску или другой предмет, мешающий установлению личности.</p></div></div><div class="detention-procedure-card"><span class="detention-index">08</span><div><h4>Передать задержанного компетентному органу.</h4><p>Сообщить время и основание задержания, предварительную квалификацию, применённые меры. Передать видеозапись, изъятые предметы и сведения о свидетелях. Первоначальный срок не обнуляется.</p></div></div><div class="detention-procedure-card"><span class="detention-index">09</span><div><h4>Вызвать адвоката по запросу.</h4><p>По просьбе задержанного вызвать адвоката в установленном порядке.</p></div></div><div class="detention-procedure-card detention-procedure-exception"><span class="detention-index">10</span><div><small>Особый порядок</small><h4>Если задержан госслужащий.</h4><p>Вызвать прокурора либо следователя СК; при вызове следователя уведомить прокурора. На принятие вызова отводится 5 минут, на прибытие ещё 15 минут. Если вызванный не ответил или не прибыл, вызвать другого. Если не прибыл никто, освободить задержанного и направить материалы в прокуратуру и СК.</p></div></div><div class="detention-procedure-card detention-procedure-exception"><span class="detention-index">11</span><div><small>Особый порядок</small><h4>Если заявлена неприкосновенность.</h4><p>Проверить статус и документы. При подтверждении соблюдать ограничения специального закона и порядок разрешения принудительных мер. Если непосредственная угроза прекращена и разрешения на дальнейшее удержание нет, освободить лицо.</p></div></div></div>
 <p>Задержание и его основания фиксируются на видео. Запись хранится <b>не менее 48 часов</b>; при незавершённом разбирательстве, жалобе или законном запросе материалы сохраняются до окончания соответствующей процедуры.</p>
 <button class="open-full open-doc" data-article="2" data-chapter="II" data-doc="pk">Гл. II ст. 2 ПК</button>
 <button class="open-full open-doc" data-article="6" data-chapter="II" data-doc="pk">Гл. II ст. 6 ПК</button>
@@ -3422,8 +3457,8 @@ body.ro-about-open{overflow:hidden}
 <div class="process-time"><b>48 ч.</b><span>минимальный срок хранения обязательной записи</span></div>
 </div>
 </div>
-<article class="box"><h3>Права задержанного и что говорить</h3><div class="rights"><b>Причина и основание:</b> «Вы задержаны за [конкретное действие]. Основание задержания — пункт [номер] части 1 статьи 30 Федерального закона «О ФСО РО». Ваши действия предварительно квалифицируются по части [номер] статьи [номер] УК или КоАП РО».</div>
-<p><b>Права задержанного.</b> Знать причину задержания и применяемые нормы; хранить молчание и не свидетельствовать против себя, супруга и близких родственников; сделать один телефонный звонок до 3 минут в присутствии сотрудника; получить помощь адвоката и по его запросу поговорить с ним конфиденциально до 10 минут; заявлять ходатайства и обжаловать действия и решения должностных лиц.</p>
+<article class="box detention-unified-panel detention-rights-panel"><h3>Права задержанного и что говорить</h3><div class="rights"><b>Причина и основание:</b> «Вы задержаны за [конкретное действие]. Основание задержания — пункт [номер] части 1 статьи 30 Федерального закона «О ФСО РО». Ваши действия предварительно квалифицируются по части [номер] статьи [номер] УК или КоАП РО».</div>
+<div class="detention-rights-section"><h4>Права задержанного</h4><div class="detention-rights-tiles"><div class="detention-right-card"><span>01</span><p>Знать причину задержания и применяемые нормы</p></div><div class="detention-right-card"><span>02</span><p>хранить молчание и не свидетельствовать против себя, супруга и близких родственников</p></div><div class="detention-right-card"><span>03</span><p>сделать один телефонный звонок до 3 минут в присутствии сотрудника</p></div><div class="detention-right-card"><span>04</span><p>получить помощь адвоката и по его запросу поговорить с ним конфиденциально до 10 минут</p></div><div class="detention-right-card"><span>05</span><p>заявлять ходатайства и обжаловать действия и решения должностных лиц.</p></div></div></div>
 <div class="rights" style="margin-top:10px"><b>Как разъяснить права:</b> «Вы имеете право хранить молчание. Всё сказанное вами может использоваться против вас. Вы имеете право на телефонный звонок и адвоката. Понятны ли вам эти права?» Сотрудник ФСО может разъяснить их на месте, но по примечанию к ст. 6 главы II ПК не обязан делать это до передачи процессуальных действий.</div>
 <details class="scenario-article"><summary>Текст нормы · Процессуальный кодекс РО · гл. II, ст. 6</summary><div class="scenario-article-body"><pre>Статья 6. Разъяснение процессуальных прав задержанному.
 1. При задержании лицу ясно и разборчиво сообщаются его основные процессуальные права. Допускается следующая формулировка: «Вы имеете право хранить молчание. Всё, что вы скажете, может и будет использовано против Вас в суде. Вы имеете право на один телефонный звонок. Также Вы имеете право на адвоката. Если вам необходим адвокат, он будет для Вас запрошен. Вы понимаете свои права?»
@@ -3467,40 +3502,18 @@ body.ro-about-open{overflow:hidden}
 </section>
 
 <section class="detention-reference" aria-label="Общие основания и субъекты задержания">
-<h3>Основания для задержания по ПК</h3>
+<div class="detention-ref-panel detention-ref-primary"><h3>Основания для задержания по ПК</h3>
 <p>Общие процессуальные основания. Задержание допускается, когда за правонарушение предусмотрено лишение свободы или административный арест. Специальные основания для ФСО указаны выше.</p>
-<ol>
-<li>Лицо застигнуто при совершении правонарушения либо сразу после него.</li>
-<li>На лице, одежде, при нём или в его жилище найдены явные следы правонарушения.</li>
-<li>На лицо как на нарушителя указывают не менее трёх свидетелей.</li>
-<li>Совершение правонарушения подтверждено фото- или видеозаписью.</li>
-<li>Есть действующий акт уполномоченного лица, разрешающий задержание.</li>
-<li>Есть ориентировка на лицо или транспорт либо основания считать лицо объявленным в розыск.</li>
-<li>Лицо создаёт непосредственную угрозу жизни или здоровью либо из-за опьянения не может безопасно продолжать свои действия при наличии признаков правонарушения.</li>
-</ol>
-<h3>Основания для освобождения</h3>
-<ol>
-<li>Подозрение в правонарушении не подтвердилось.</li>
-<li>Вопрос о штрафе или иной мере ответственности решён, оснований удерживать человека больше нет.</li>
-<li>Задержание произведено с нарушением установленных оснований.</li>
-<li>Процессуальный час истёк, а законное решение о дальнейшем ограничении свободы, ответственности или передаче не принято.</li>
-<li>Подтверждён статус неприкосновенности. Исключение предусмотрено при непосредственной угрозе жизни и здоровью окружающих.</li>
-<li>Допустимых и достаточных доказательств нет, их невозможно представить либо они признаны недопустимыми.</li>
-</ol>
-<h3>Субъекты задержания</h3>
-<ol>
-<li>Сотрудник, проводящий задержание, и сотрудники, чьё участие он явно согласовал.</li>
-<li>Задержанный.</li>
-<li>Адвокат, приглашённый по запросу задержанного.</li>
-<li>Прокурор, прибывший по задержанию госслужащего или осуществляющий надзор.</li>
-<li>Следователь Следственного комитета РО, принявший вызов по задержанию госслужащего.</li>
-<li>Премьер-министр и/или вице-премьер-министр с охраной.</li>
-<li>Один представитель руководства задержанного госслужащего.</li>
-</ol>
+<div class="detention-reference-tiles"><div class="detention-reference-tile"><span class="detention-ref-number">01</span><p>Лицо застигнуто при совершении правонарушения либо сразу после него.</p></div><div class="detention-reference-tile"><span class="detention-ref-number">02</span><p>На лице, одежде, при нём или в его жилище найдены явные следы правонарушения.</p></div><div class="detention-reference-tile"><span class="detention-ref-number">03</span><p>На лицо как на нарушителя указывают не менее трёх свидетелей.</p></div><div class="detention-reference-tile"><span class="detention-ref-number">04</span><p>Совершение правонарушения подтверждено фото- или видеозаписью.</p></div><div class="detention-reference-tile"><span class="detention-ref-number">05</span><p>Есть действующий акт уполномоченного лица, разрешающий задержание.</p></div><div class="detention-reference-tile"><span class="detention-ref-number">06</span><p>Есть ориентировка на лицо или транспорт либо основания считать лицо объявленным в розыск.</p></div><div class="detention-reference-tile"><span class="detention-ref-number">07</span><p>Лицо создаёт непосредственную угрозу жизни или здоровью либо из-за опьянения не может безопасно продолжать свои действия при наличии признаков правонарушения.</p></div></div>
+</div><div class="detention-ref-panel"><h3>Основания для освобождения</h3>
+<div class="detention-reference-tiles"><div class="detention-reference-tile"><span class="detention-ref-number">01</span><p>Подозрение в правонарушении не подтвердилось.</p></div><div class="detention-reference-tile"><span class="detention-ref-number">02</span><p>Вопрос о штрафе или иной мере ответственности решён, оснований удерживать человека больше нет.</p></div><div class="detention-reference-tile"><span class="detention-ref-number">03</span><p>Задержание произведено с нарушением установленных оснований.</p></div><div class="detention-reference-tile"><span class="detention-ref-number">04</span><p>Процессуальный час истёк, а законное решение о дальнейшем ограничении свободы, ответственности или передаче не принято.</p></div><div class="detention-reference-tile"><span class="detention-ref-number">05</span><p>Подтверждён статус неприкосновенности. Исключение предусмотрено при непосредственной угрозе жизни и здоровью окружающих.</p></div><div class="detention-reference-tile"><span class="detention-ref-number">06</span><p>Допустимых и достаточных доказательств нет, их невозможно представить либо они признаны недопустимыми.</p></div></div>
+</div><div class="detention-ref-panel"><h3>Субъекты задержания</h3>
+<div class="detention-reference-tiles"><div class="detention-reference-tile"><span class="detention-ref-number">01</span><p>Сотрудник, проводящий задержание, и сотрудники, чьё участие он явно согласовал.</p></div><div class="detention-reference-tile"><span class="detention-ref-number">02</span><p>Задержанный.</p></div><div class="detention-reference-tile"><span class="detention-ref-number">03</span><p>Адвокат, приглашённый по запросу задержанного.</p></div><div class="detention-reference-tile"><span class="detention-ref-number">04</span><p>Прокурор, прибывший по задержанию госслужащего или осуществляющий надзор.</p></div><div class="detention-reference-tile"><span class="detention-ref-number">05</span><p>Следователь Следственного комитета РО, принявший вызов по задержанию госслужащего.</p></div><div class="detention-reference-tile"><span class="detention-ref-number">06</span><p>Премьер-министр и/или вице-премьер-министр с охраной.</p></div><div class="detention-reference-tile"><span class="detention-ref-number">07</span><p>Один представитель руководства задержанного госслужащего.</p></div></div>
 <p>По заявлению прибывшего адвоката могут участвовать до трёх младших адвокатов. Присутствие посторонних лиц само по себе не даёт им права вмешиваться в задержание.</p>
+</div>
 </section>
 
-<details class="box"><summary><b>Привод</b></summary>
+<details class="box detention-drive"><summary><b>Привод</b><span>Отдельная процессуальная мера</span></summary>
 <p>Привод — доставление к следователю, прокурору или в суд по процессуальному решению. Исполнение может быть поручено МВД или другому уполномоченному органу.</p>
 <p>ФСО исполняет привод только при соответствующем поручении или другом прямом федеральном основании. В постановлении должны быть указаны лицо, основание, место доставки и принимающий орган.</p>
 <button class="open-full open-doc" data-article="12" data-chapter="V" data-doc="pk">Гл. V ст. 12 ПК</button></details>
