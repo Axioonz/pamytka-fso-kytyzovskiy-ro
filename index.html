@@ -2990,6 +2990,19 @@ body.ro-about-open{overflow:hidden}
   #page-process .detention-law-column>.detention-ref-panel{padding:13px 14px}
   #page-process .detention-law-cluster .detention-legal-list p{font-size:14px}
 }
+
+/* Основные сроки и приостановки отсчёта в одном блоке */
+#page-process .process-timing-group{width:100%;min-width:0}
+#page-process .detention-timing-extra{margin-top:13px;padding-top:12px;border-top:1px solid var(--line)}
+#page-process .detention-time-start{font-size:14px;line-height:1.55;color:var(--text);padding:9px 12px;background:var(--blue2);border-left:3px solid var(--accent);border-radius:0 7px 7px 0;margin:0 0 14px}
+#page-process .detention-time-start strong{color:var(--strong)}
+#page-process .detention-timing-pauses h4{font-size:16px;line-height:1.35;color:var(--strong);margin:0 0 9px}
+#page-process .detention-timing-pauses .detention-pause-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+#page-process .detention-timing-pauses .detention-pause-item{min-height:0;padding:10px 11px;font-size:14px;line-height:1.45;gap:6px}
+#page-process .detention-timing-pauses .detention-pause-item b{font-size:12px}
+#page-process .detention-timing-pauses .detention-action-footer{font-size:13px;color:var(--muted);margin-top:9px;padding-top:9px}
+@media(max-width:980px){#page-process .detention-timing-pauses .detention-pause-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){#page-process .detention-timing-pauses .detention-pause-grid{grid-template-columns:minmax(0,1fr)}#page-process .detention-timing-pauses .detention-pause-item{font-size:14px}#page-process .detention-time-start{font-size:14px}}
 </style></head><body class="access-pending">
 <div aria-hidden="false" class="access-gate" id="accessGate">
 <div class="access-gate-card">
@@ -3578,7 +3591,7 @@ body.ro-about-open{overflow:hidden}
 </div>
 <div class="detention-law-column">
 <div class="detention-ref-panel detention-ref-primary"><h3>Основания для задержания по ПК</h3>
-<p>Общие процессуальные основания. Задержание допускается, когда за правонарушение предусмотрено лишение свободы или административный арест. Специальные основания для ФСО указаны выше.</p>
+<p>Общие процессуальные основания. Задержание допускается, когда за правонарушение предусмотрено лишение свободы или административный арест.</p>
 <ol class="detention-legal-list">
 <li><span class="detention-list-number">1.</span><p>Лицо застигнуто при совершении правонарушения либо сразу после него.</p></li><li><span class="detention-list-number">2.</span><p>На лице, одежде, при нём или в его жилище найдены явные следы правонарушения.</p></li><li><span class="detention-list-number">3.</span><p>На лицо как на нарушителя указывают не менее трёх свидетелей.</p></li><li><span class="detention-list-number">4.</span><p>Совершение правонарушения подтверждено фото- или видеозаписью.</p></li><li><span class="detention-list-number">5.</span><p>Есть действующий акт уполномоченного лица, разрешающий задержание.</p></li><li><span class="detention-list-number">6.</span><p>Есть ориентировка на лицо или транспорт либо основания считать лицо объявленным в розыск.</p></li><li><span class="detention-list-number">7.</span><p>Лицо создаёт непосредственную угрозу жизни или здоровью либо из-за опьянения не может безопасно продолжать свои действия при наличии признаков правонарушения.</p></li>
 </ol>
@@ -3592,7 +3605,7 @@ body.ro-about-open{overflow:hidden}
 <ol class="detention-legal-list">
 <li><span class="detention-list-number">1.</span><p>Сотрудник, проводящий задержание, и сотрудники, чьё участие он явно согласовал.</p></li><li><span class="detention-list-number">2.</span><p>Задержанный.</p></li><li><span class="detention-list-number">3.</span><p>Адвокат, приглашённый по запросу задержанного.</p></li><li><span class="detention-list-number">4.</span><p>Прокурор, прибывший по задержанию госслужащего или осуществляющий надзор.</p></li><li><span class="detention-list-number">5.</span><p>Следователь Следственного комитета РО, принявший вызов по задержанию госслужащего.</p></li><li><span class="detention-list-number">6.</span><p>Премьер-министр и/или вице-премьер-министр с охраной.</p></li><li><span class="detention-list-number">7.</span><p>Один представитель руководства задержанного госслужащего.</p></li>
 </ol>
-<p>По заявлению прибывшего адвоката могут участвовать до трёх младших адвокатов. Присутствие посторонних лиц само по себе не даёт им права вмешиваться в задержание.</p>
+<p>По заявлению прибывшего адвоката могут участвовать до трёх младших адвокатов.</p>
 </div>
 </div>
 </section>
@@ -3607,6 +3620,22 @@ body.ro-about-open{overflow:hidden}
 <div class="process-time"><b>15 мин.</b><span>на прибытие прокурора либо следователя СК после принятия вызова</span></div>
 <div class="process-time"><b>48 ч.</b><span>минимальный срок хранения обязательной записи</span></div>
 </div>
+<div class="detention-timing-extra">
+<p class="detention-time-start"><strong>Начало отсчёта.</strong> С момента фактического ограничения свободы. При доставлении или передаче задержанного срок не начинается заново.</p>
+<div class="detention-timing-pauses">
+<h4>Когда отсчёт приостанавливается</h4>
+    <div class="detention-pause-grid">
+      <div class="detention-pause-item"><span>Допрос задержанного</span></div>
+      <div class="detention-pause-item"><span>Ожидание и общение с адвокатом</span></div>
+      <div class="detention-pause-item"><span>Ожидание прокурора или следователя СК по делу госслужащего</span></div>
+      <div class="detention-pause-item"><span>Дополнительная проверка</span><b>не более 20 мин.</b></div>
+      <div class="detention-pause-item"><span>Доставка и ожидание сотрудника СК или ФСБ</span><b>не более 20 мин. суммарно</b></div>
+      <div class="detention-pause-item"><span>Срочное судебное рассмотрение жалобы</span></div>
+    </div>
+    
+<div class="detention-action-footer">Фиксируй начало и окончание каждой паузы.</div>
+</div>
+</div>
 </div>
 <article class="box detention-unified-panel detention-rights-panel"><h3>Права задержанного и что говорить</h3><div class="rights"><b>Причина и основание:</b> «Вы задержаны за [конкретное действие]. Основание задержания — пункт [номер] части 1 статьи 30 Федерального закона «О ФСО РО». Ваши действия предварительно квалифицируются по части [номер] статьи [номер] УК или КоАП РО».</div>
 <div class="detention-rights-section"><h4>Как разъяснить права задержанному</h4><p class="detention-miranda">«Вы имеете право хранить молчание и не свидетельствовать против себя, своего супруга и близких родственников. Всё сказанное вами может быть использовано против вас в суде. Вы имеете право на один телефонный звонок продолжительностью до трёх минут в присутствии сотрудника и на помощь адвоката. По требованию адвоката вам предоставляется право на конфиденциальный разговор с ним продолжительностью до десяти минут. Вы также вправе заявлять ходатайства и обжаловать действия и решения должностных лиц. Вам понятны ваши права?»</p><p class="detention-rights-note"><b>Примечание для ФСО.</b> Согласно примечанию к ст. 6 главы II ПК сотрудник ФСО не обязан разъяснять права до передачи процессуальных действий уполномоченному органу. При этом необходимо сообщить основания задержания и передать дальнейшие процессуальные действия уполномоченному органу.</p></div>
@@ -3619,38 +3648,7 @@ body.ro-about-open{overflow:hidden}
 
 </div>
 
-<section class="detention-actions" aria-label="Процессуальный час и освобождение">
-  <article class="detention-action-card">
-    <div class="detention-action-heading"><h3>Процессуальный час</h3><span>Срок задержания</span></div>
-    <div class="detention-hour-metric">
-      <strong>60 <small>минут</small></strong>
-      <div><b>Отсчёт начинается</b><span>С момента фактического ограничения свободы.</span></div>
-    </div>
-    <div class="detention-hour-rule">При доставлении или передаче задержанного срок не начинается заново.</div>
-    <h4>Когда отсчёт приостанавливается</h4>
-    <div class="detention-pause-grid">
-      <div class="detention-pause-item"><span>Допрос задержанного</span></div>
-      <div class="detention-pause-item"><span>Ожидание и общение с адвокатом</span></div>
-      <div class="detention-pause-item"><span>Ожидание прокурора или следователя СК по делу госслужащего</span></div>
-      <div class="detention-pause-item"><span>Дополнительная проверка</span><b>не более 20 мин.</b></div>
-      <div class="detention-pause-item"><span>Доставка и ожидание сотрудника СК или ФСБ</span><b>не более 20 мин. суммарно</b></div>
-      <div class="detention-pause-item"><span>Срочное судебное рассмотрение жалобы</span></div>
-    </div>
-    <div class="detention-action-footer">Фиксируй начало и окончание каждой паузы.</div>
-  </article>
-  <article class="detention-action-card detention-release-card">
-    <div class="detention-action-heading"><h3>Освобождение</h3><span>Прекращение задержания</span></div>
-    <h4>Когда необходимо освободить</h4>
-    <ol class="detention-legal-list">
 
-      <li><span class="detention-list-number">1.</span><p>Подозрение не подтвердилось</p></li>
-      <li><span class="detention-list-number">2.</span><p>Недостаточно доказательств</p></li>
-      <li><span class="detention-list-number">3.</span><p>Правовое основание удержания отпало</p></li>
-      <li><span class="detention-list-number">4.</span><p>Допустимый срок истёк без законного решения</p></li>
-</ol>
-    <div class="detention-release-result"><strong>Освободить задержанного</strong><span>Материалы и видеозапись сохранить для дальнейшего разбирательства.</span></div>
-  </article>
-</section>
 
 
 
