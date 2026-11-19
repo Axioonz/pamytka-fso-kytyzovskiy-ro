@@ -2679,11 +2679,14 @@ body.access-pending .footer{visibility:hidden}
 @media(max-width:760px){.convoy-law-grid{grid-template-columns:1fr}}
 </style>
 <style id="process-timeline-style">
-.process-times{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:12px 0 16px}
-.process-time{border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:10px 11px}
-.process-time b{display:block;font-size:15px;margin-bottom:2px}
-.process-time span{display:block;font-size:9px;line-height:1.4;color:var(--muted)}
-.process-boundary{margin:12px 0 16px;padding:10px 12px;border-left:3px solid var(--accent);background:var(--panel2);border-radius:0 9px 9px 0;font-size:10px;line-height:1.55}
+.process-timing-group{min-width:0;align-self:start}
+.process-times{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0 10px;align-content:start;grid-auto-rows:max-content}
+.process-time{border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:10px 11px;min-height:0;align-self:start}
+.process-time b{display:block;font-size:18px;line-height:1.15;margin-bottom:6px}
+.process-time span{display:block;font-size:12px;line-height:1.4;color:var(--muted)}
+.process-boundary{margin:10px 0 14px;padding:12px 14px;border-left:3px solid var(--accent);background:var(--panel2);border-radius:0 9px 9px 0;font-size:13px;line-height:1.6}
+.process-boundary p{margin:0 0 10px}
+.process-boundary p:last-child{margin-bottom:0}
 .detention-reference{margin:16px 0 22px;padding:16px 0 0;border-top:1px solid var(--line)}
 .detention-reference h3{font-size:17px;line-height:1.35;margin:17px 0 8px}
 .detention-reference h3:first-child{margin-top:0}
@@ -3385,6 +3388,7 @@ body.ro-about-open{overflow:hidden}
 <button class="open-full open-doc" data-article="2" data-chapter="II" data-doc="pk">Гл. II ст. 2 ПК</button>
 <button class="open-full open-doc" data-article="6" data-chapter="II" data-doc="pk">Гл. II ст. 6 ПК</button>
 </article>
+<div class="process-timing-group">
 <div class="process-times">
 <div class="process-time"><b>60 мин.</b><span>основной процессуальный срок с момента фактического ограничения свободы</span></div>
 <div class="process-time"><b>3 мин.</b><span>ответ по государственному адвокату</span></div>
@@ -3392,6 +3396,8 @@ body.ro-about-open{overflow:hidden}
 <div class="process-time"><b>5 мин.</b><span>на принятие вызова прокурором либо следователем СК</span></div>
 <div class="process-time"><b>15 мин.</b><span>на прибытие прокурора либо следователя СК после принятия вызова</span></div>
 <div class="process-time"><b>48 ч.</b><span>минимальный срок хранения обязательной записи</span></div>
+</div>
+<div class="process-boundary"><p><b>Процессуальный час.</b> Основной предел задержания 60 минут с момента фактического ограничения свободы. Он не начинается заново при доставлении или передаче. Приостанавливается на время допроса, ожидания и общения с адвокатом, ожидания прокурора или следователя СК по делу госслужащего, дополнительной проверки не более 20 минут, доставки и ожидания сотрудника СК или ФСБ суммарно не более 20 минут, срочного судебного рассмотрения жалобы. Фиксируй начало и конец каждой паузы.</p><p><b>Освобождение.</b> Если подозрение не подтвердилось, доказательств недостаточно, правовое основание удержания отпало или допустимый срок истёк без законного решения, задержанного необходимо освободить. Материалы и запись сохраняются для дальнейшего разбирательства.</p></div>
 </div>
 <article class="box"><h3>Права задержанного и что говорить</h3><div class="rights"><b>Причина и основание:</b> «Вы задержаны за [конкретное действие]. Основание задержания — пункт [номер] части 1 статьи 30 Федерального закона «О ФСО РО». Ваши действия предварительно квалифицируются по части [номер] статьи [номер] УК или КоАП РО».</div>
 <p><b>Права задержанного.</b> Знать причину задержания и применяемые нормы; хранить молчание и не свидетельствовать против себя, супруга и близких родственников; сделать один телефонный звонок до 3 минут в присутствии сотрудника; получить помощь адвоката и по его запросу поговорить с ним конфиденциально до 10 минут; заявлять ходатайства и обжаловать действия и решения должностных лиц.</p>
@@ -3402,7 +3408,7 @@ body.ro-about-open{overflow:hidden}
 3. Если задержанный сообщает, что не понял разъяснение, сотрудник обязан повторно разъяснить соответствующее право или права. Формальное многократное повторение уже понятого разъяснения не требуется.
 4. Право хранить молчание означает в том числе право не давать показания против самого себя, своего супруга и близких родственников в пределах, установленных Конституцией и федеральным законодательством.
 Примечание: Сотрудники ФСО,а также ГИБДД не обязаны разъяснять задержанному его права до передачи проц.действий. Обязаны разъяснить основания для задержания и передать процессуальные действия уполномоченному органу.</pre></div></details><button class="open-full open-doc" data-article="15" data-doc="constitution">ст. 15 Конституции — основание и нормы</button></article>
-<div class="process-boundary"><p><b>Процессуальный час.</b> Основной предел задержания 60 минут с момента фактического ограничения свободы. Он не начинается заново при доставлении или передаче. Приостанавливается на время допроса, ожидания и общения с адвокатом, ожидания прокурора или следователя СК по делу госслужащего, дополнительной проверки не более 20 минут, доставки и ожидания сотрудника СК или ФСБ суммарно не более 20 минут, срочного судебного рассмотрения жалобы. Фиксируй начало и конец каждой паузы.</p><p><b>Освобождение.</b> Если подозрение не подтвердилось, доказательств недостаточно, правовое основание удержания отпало или допустимый срок истёк без законного решения, задержанного необходимо освободить. Материалы и запись сохраняются для дальнейшего разбирательства.</p></div>
+
 </div>
 
 <section class="detention-reference" aria-label="Общие основания и субъекты задержания">
