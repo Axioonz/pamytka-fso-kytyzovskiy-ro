@@ -2912,6 +2912,43 @@ body.ro-about-open{overflow:hidden}
   #page-process .detention-legal-list .detention-list-number{font-size:14px;line-height:1.5}
   #page-process .detention-miranda{font-size:14px;line-height:1.58}
 }
+
+/* Основания, освобождение и субъекты собраны в один компактный блок. */
+#page-process .detention-law-cluster{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  width:100%;
+  max-width:1100px;
+  margin:14px auto 17px;
+  padding:0;
+  align-items:start;
+  border:0;
+}
+#page-process .detention-law-cluster>.detention-fso-panel,
+#page-process .detention-law-cluster>.detention-ref-panel{
+  width:100%;
+  min-width:0;
+  margin:0;
+  padding:15px 17px;
+  align-self:start;
+}
+#page-process .detention-law-cluster>.detention-ref-primary{grid-column:auto}
+#page-process .detention-law-cluster .detention-unified-panel>h3,
+#page-process .detention-law-cluster .detention-ref-panel>h3{
+  font-size:19px;
+  margin:0 0 9px;
+  line-height:1.35;
+}
+#page-process .detention-law-cluster .detention-legal-list p{font-size:15px}
+@media(max-width:820px){
+  #page-process .detention-law-cluster{grid-template-columns:minmax(0,1fr);max-width:680px;gap:10px}
+}
+@media(max-width:640px){
+  #page-process .detention-law-cluster>.detention-fso-panel,
+  #page-process .detention-law-cluster>.detention-ref-panel{padding:13px 14px}
+  #page-process .detention-law-cluster .detention-legal-list p{font-size:14px}
+}
 </style></head><body class="access-pending">
 <div aria-hidden="false" class="access-gate" id="accessGate">
 <div class="access-gate-card">
@@ -3474,7 +3511,7 @@ body.ro-about-open{overflow:hidden}
 <article class="box"><h3>Основания кадровой проверки</h3><button class="open-doc open-full" data-article="1.5" data-chapter="" data-doc="state_rules" type="button">ПГО · п. 1.5</button><button class="open-doc open-full" data-article="1.9" data-chapter="" data-doc="uk" type="button">УК · ст. 1.9</button><button class="open-doc open-full" data-article="5.8" data-chapter="" data-doc="uk" type="button">УК · ст. 5.8</button><button class="open-doc open-full" data-article="4.2" data-chapter="" data-doc="leader_rules" type="button">Правила лидеров · п. 4.2</button><button class="open-doc open-full" data-article="4.3.2" data-chapter="" data-doc="leader_rules" type="button">Правила лидеров · п. 4.3.2</button><p>Возраст, категория водительских прав и дополнительные требования ФСО требуют действующего внутреннего акта. Его реквизиты в переданных материалах не подтверждены.</p></article></section>
 <section class="page" id="page-process">
 <div class="section-head"><div><h2>Задержание и права</h2><p>Что делать при задержании, как соблюдать сроки и когда передавать материалы.</p></div></div><div class="detention-source-note">Сотрудник ФСО сообщает причину и основание задержания. Права задержанного действуют с момента ограничения свободы. По примечанию к статье 6 главы II ПК сотрудник ФСО не обязан оглашать их до передачи процессуальных действий уполномоченному органу.</div>
-<div class="process-grid">
+<section class="detention-reference detention-law-cluster" aria-label="Общие основания и субъекты задержания">
 <article class="box detention-unified-panel detention-fso-panel"><h3>Основания для задержания — ст. 30 ФЗ «О ФСО РО»</h3><ol class="detention-legal-list">
 <li><span class="detention-list-number">1)</span><p>Нападение на охраняемое лицо или объект.</p></li><li><span class="detention-list-number">2)</span><p>Подготовка опасного нападения в охранной зоне с оружием, взрывным устройством или другим опасным средством.</p></li><li><span class="detention-list-number">3)</span><p>Преступление или административное правонарушение на охраняемом объекте или мероприятии, если задержание нужно для пресечения, установления личности или передачи.</p></li><li><span class="detention-list-number">4)</span><p>Активное сопротивление законному требованию покинуть охранную зону, если оно создаёт реальную угрозу безопасности.</p></li><li><span class="detention-list-number">4.1)</span><p>Лицо не прекращает помеху сопровождению после законного требования либо создаёт непосредственную угрозу охраняемому лицу (ч. 1 ст. 30 ФЗ «О ФСО РО»).</p></li><li><span class="detention-list-number">5)</span><p>Другое основание, прямо предусмотренное федеральным законом.</p></li>
 </ol><p><b>Задержание, установление личности и удаление из охранной зоны не одно и то же.</b> Если человек выведен за пределы зоны и свободен, задержания нет. Отказ предъявить документ при законной проверке требует процедуры установления личности, но не означает автоматического права удерживать человека за преступление.</p><details class="scenario-article"><summary>Текст нормы · Уголовный кодекс РО · ст. 17.12</summary><div class="scenario-article-body"><pre>Статья 17.12 (Ф/Р/В) Помеха колонне государственных структур, а равно помеха сопровождению охраняемого лица, осуществляемому Федеральной службой охраны РО, в том числе пешему.
@@ -3490,6 +3527,23 @@ body.ro-about-open{overflow:hidden}
 3. Если ограничение свободы является задержанием по Процессуальному кодексу РО, процессуальный срок исчисляется с момента фактического ограничения свободы сотрудником ФСО РО.
 4. Задержанное лицо и относящиеся к задержанию материалы передаются полиции, ФСБ РО, Следственному комитету либо иному компетентному органу без необоснованной задержки.
 5. Кратковременное удаление лица за пределы охранной зоны не является задержанием, если после удаления лицо свободно и в отношении него не продолжается процессуальное ограничение свободы.</pre></div></details></article>
+<div class="detention-ref-panel detention-ref-primary"><h3>Основания для задержания по ПК</h3>
+<p>Общие процессуальные основания. Задержание допускается, когда за правонарушение предусмотрено лишение свободы или административный арест. Специальные основания для ФСО указаны выше.</p>
+<ol class="detention-legal-list">
+<li><span class="detention-list-number">1.</span><p>Лицо застигнуто при совершении правонарушения либо сразу после него.</p></li><li><span class="detention-list-number">2.</span><p>На лице, одежде, при нём или в его жилище найдены явные следы правонарушения.</p></li><li><span class="detention-list-number">3.</span><p>На лицо как на нарушителя указывают не менее трёх свидетелей.</p></li><li><span class="detention-list-number">4.</span><p>Совершение правонарушения подтверждено фото- или видеозаписью.</p></li><li><span class="detention-list-number">5.</span><p>Есть действующий акт уполномоченного лица, разрешающий задержание.</p></li><li><span class="detention-list-number">6.</span><p>Есть ориентировка на лицо или транспорт либо основания считать лицо объявленным в розыск.</p></li><li><span class="detention-list-number">7.</span><p>Лицо создаёт непосредственную угрозу жизни или здоровью либо из-за опьянения не может безопасно продолжать свои действия при наличии признаков правонарушения.</p></li>
+</ol>
+</div><div class="detention-ref-panel"><h3>Основания для освобождения</h3>
+<ol class="detention-legal-list">
+<li><span class="detention-list-number">1.</span><p>Подозрение в правонарушении не подтвердилось.</p></li><li><span class="detention-list-number">2.</span><p>Вопрос о штрафе или иной мере ответственности решён, оснований удерживать человека больше нет.</p></li><li><span class="detention-list-number">3.</span><p>Задержание произведено с нарушением установленных оснований.</p></li><li><span class="detention-list-number">4.</span><p>Процессуальный час истёк, а законное решение о дальнейшем ограничении свободы, ответственности или передаче не принято.</p></li><li><span class="detention-list-number">5.</span><p>Подтверждён статус неприкосновенности. Исключение предусмотрено при непосредственной угрозе жизни и здоровью окружающих.</p></li><li><span class="detention-list-number">6.</span><p>Допустимых и достаточных доказательств нет, их невозможно представить либо они признаны недопустимыми.</p></li>
+</ol>
+</div><div class="detention-ref-panel"><h3>Субъекты задержания</h3>
+<ol class="detention-legal-list">
+<li><span class="detention-list-number">1.</span><p>Сотрудник, проводящий задержание, и сотрудники, чьё участие он явно согласовал.</p></li><li><span class="detention-list-number">2.</span><p>Задержанный.</p></li><li><span class="detention-list-number">3.</span><p>Адвокат, приглашённый по запросу задержанного.</p></li><li><span class="detention-list-number">4.</span><p>Прокурор, прибывший по задержанию госслужащего или осуществляющий надзор.</p></li><li><span class="detention-list-number">5.</span><p>Следователь Следственного комитета РО, принявший вызов по задержанию госслужащего.</p></li><li><span class="detention-list-number">6.</span><p>Премьер-министр и/или вице-премьер-министр с охраной.</p></li><li><span class="detention-list-number">7.</span><p>Один представитель руководства задержанного госслужащего.</p></li>
+</ol>
+<p>По заявлению прибывшего адвоката могут участвовать до трёх младших адвокатов. Присутствие посторонних лиц само по себе не даёт им права вмешиваться в задержание.</p>
+</div>
+</section>
+<div class="process-grid">
 <article class="box detention-unified-panel detention-steps-panel"><h3>Порядок задержания сотрудником ФСО</h3>
 <ol class="detention-legal-list">
 <div class="detention-procedure-grid"><li><span class="detention-list-number">1.</span><p><strong>Обеспечить безопасность.</strong> Наручники применять при наличии законных оснований и необходимости. Сам факт задержания не требует надевать их на каждого.</p></li><li><span class="detention-list-number">2.</span><p><strong>Представиться.</strong> Показать удостоверение, жетон, нашивку или другой опознавательный знак сотрудника ФСО.</p></li><li><span class="detention-list-number">3.</span><p><strong>Сообщить причину задержания.</strong> Назвать фактическую причину и основание задержания.</p></li><li><span class="detention-list-number">4.</span><p><strong>Обеспечить права задержанного.</strong> Сообщить основание задержания; разъяснить процессуальные права либо передать их разъяснение уполномоченному органу согласно примечанию к ст. 6 главы II ПК.</p></li><li><span class="detention-list-number">5.</span><p><strong>Провести первичный досмотр.</strong> Проверить наличие оружия, взрывчатки и других опасных или запрещённых предметов.</p></li><li><span class="detention-list-number">6.</span><p><strong>Проверить документы и личность.</strong> Установить личность задержанного и его принадлежность к государственному органу.</p></li><li><span class="detention-list-number">7.</span><p><strong>Снять предметы, скрывающие личность.</strong> При необходимости снять маску или другой предмет, мешающий установлению личности.</p></li><li><span class="detention-list-number">8.</span><p><strong>Передать задержанного компетентному органу.</strong> Сообщить время и основание задержания, предварительную квалификацию, применённые меры. Передать видеозапись, изъятые предметы и сведения о свидетелях. Первоначальный срок не обнуляется.</p></li><li><span class="detention-list-number">9.</span><p><strong>Вызвать адвоката по запросу.</strong> По просьбе задержанного вызвать адвоката в установленном порядке.</p></li><li><span class="detention-list-number">10.</span><p><span class="detention-inline-label">Особый порядок.</span> <strong>Если задержан госслужащий.</strong> Вызвать прокурора либо следователя СК; при вызове следователя уведомить прокурора. На принятие вызова отводится 5 минут, на прибытие ещё 15 минут. Если вызванный не ответил или не прибыл, вызвать другого. Если не прибыл никто, освободить задержанного и направить материалы в прокуратуру и СК.</p></li><li><span class="detention-list-number">11.</span><p><span class="detention-inline-label">Особый порядок.</span> <strong>Если заявлена неприкосновенность.</strong> Проверить статус и документы. При подтверждении соблюдать ограничения специального закона и порядок разрешения принудительных мер. Если непосредственная угроза прекращена и разрешения на дальнейшее удержание нет, освободить лицо.</p></li></div>
@@ -3553,23 +3607,7 @@ body.ro-about-open{overflow:hidden}
   </article>
 </section>
 
-<section class="detention-reference" aria-label="Общие основания и субъекты задержания">
-<div class="detention-ref-panel detention-ref-primary"><h3>Основания для задержания по ПК</h3>
-<p>Общие процессуальные основания. Задержание допускается, когда за правонарушение предусмотрено лишение свободы или административный арест. Специальные основания для ФСО указаны выше.</p>
-<ol class="detention-legal-list">
-<li><span class="detention-list-number">1.</span><p>Лицо застигнуто при совершении правонарушения либо сразу после него.</p></li><li><span class="detention-list-number">2.</span><p>На лице, одежде, при нём или в его жилище найдены явные следы правонарушения.</p></li><li><span class="detention-list-number">3.</span><p>На лицо как на нарушителя указывают не менее трёх свидетелей.</p></li><li><span class="detention-list-number">4.</span><p>Совершение правонарушения подтверждено фото- или видеозаписью.</p></li><li><span class="detention-list-number">5.</span><p>Есть действующий акт уполномоченного лица, разрешающий задержание.</p></li><li><span class="detention-list-number">6.</span><p>Есть ориентировка на лицо или транспорт либо основания считать лицо объявленным в розыск.</p></li><li><span class="detention-list-number">7.</span><p>Лицо создаёт непосредственную угрозу жизни или здоровью либо из-за опьянения не может безопасно продолжать свои действия при наличии признаков правонарушения.</p></li>
-</ol>
-</div><div class="detention-ref-panel"><h3>Основания для освобождения</h3>
-<ol class="detention-legal-list">
-<li><span class="detention-list-number">1.</span><p>Подозрение в правонарушении не подтвердилось.</p></li><li><span class="detention-list-number">2.</span><p>Вопрос о штрафе или иной мере ответственности решён, оснований удерживать человека больше нет.</p></li><li><span class="detention-list-number">3.</span><p>Задержание произведено с нарушением установленных оснований.</p></li><li><span class="detention-list-number">4.</span><p>Процессуальный час истёк, а законное решение о дальнейшем ограничении свободы, ответственности или передаче не принято.</p></li><li><span class="detention-list-number">5.</span><p>Подтверждён статус неприкосновенности. Исключение предусмотрено при непосредственной угрозе жизни и здоровью окружающих.</p></li><li><span class="detention-list-number">6.</span><p>Допустимых и достаточных доказательств нет, их невозможно представить либо они признаны недопустимыми.</p></li>
-</ol>
-</div><div class="detention-ref-panel"><h3>Субъекты задержания</h3>
-<ol class="detention-legal-list">
-<li><span class="detention-list-number">1.</span><p>Сотрудник, проводящий задержание, и сотрудники, чьё участие он явно согласовал.</p></li><li><span class="detention-list-number">2.</span><p>Задержанный.</p></li><li><span class="detention-list-number">3.</span><p>Адвокат, приглашённый по запросу задержанного.</p></li><li><span class="detention-list-number">4.</span><p>Прокурор, прибывший по задержанию госслужащего или осуществляющий надзор.</p></li><li><span class="detention-list-number">5.</span><p>Следователь Следственного комитета РО, принявший вызов по задержанию госслужащего.</p></li><li><span class="detention-list-number">6.</span><p>Премьер-министр и/или вице-премьер-министр с охраной.</p></li><li><span class="detention-list-number">7.</span><p>Один представитель руководства задержанного госслужащего.</p></li>
-</ol>
-<p>По заявлению прибывшего адвоката могут участвовать до трёх младших адвокатов. Присутствие посторонних лиц само по себе не даёт им права вмешиваться в задержание.</p>
-</div>
-</section>
+
 
 <details class="box detention-drive"><summary><b>Привод</b><span>Отдельная процессуальная мера</span></summary>
 <p>Привод — доставление к следователю, прокурору или в суд по процессуальному решению. Исполнение может быть поручено МВД или другому уполномоченному органу.</p>
