@@ -2684,10 +2684,33 @@ body.access-pending .footer{visibility:hidden}
 .process-time{border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:10px 11px;min-height:0;align-self:start}
 .process-time b{display:block;font-size:18px;line-height:1.15;margin-bottom:6px}
 .process-time span{display:block;font-size:12px;line-height:1.4;color:var(--muted)}
-.process-boundary{margin:12px 0 16px;padding:16px 18px;border-left:3px solid var(--accent);background:var(--panel2);border-radius:0 9px 9px 0;font-size:16px;line-height:1.6}
-.process-boundary p{margin:0 0 16px;font-size:inherit;line-height:inherit;color:var(--text)}
-.process-boundary p:last-child{margin-bottom:0}
-.process-boundary p b{display:block;margin-bottom:5px;font-size:17px;line-height:1.35;color:var(--strong)}
+.detention-actions{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr);gap:14px;margin:16px 0 20px;align-items:stretch}
+.detention-action-card{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px}
+.detention-action-heading{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:15px;flex-wrap:wrap}
+.detention-action-heading h3{font-size:19px;line-height:1.3;margin:0;color:var(--strong)}
+.detention-action-heading>span{font-size:11px;color:var(--muted)}
+.detention-hour-metric{display:flex;align-items:center;gap:18px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:15px 17px}
+.detention-hour-metric>strong{white-space:nowrap;font-size:43px;line-height:1;font-weight:800;color:var(--accent)}
+.detention-hour-metric small{font-size:17px;font-weight:700}
+.detention-hour-metric>div{display:grid;gap:3px;font-size:13px;line-height:1.4}
+.detention-hour-metric>div b{font-size:13px}
+.detention-hour-metric>div span{color:var(--muted)}
+.detention-hour-rule{border-left:3px solid var(--accent);padding:8px 12px;margin:12px 0 17px;font-size:13px;font-weight:600;line-height:1.45;background:var(--panel2)}
+.detention-action-card h4{font-size:13px;letter-spacing:.015em;margin:0 0 11px;color:var(--strong)}
+.detention-pause-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.detention-pause-item{display:flex;flex-direction:column;align-items:start;justify-content:space-between;gap:8px;min-height:67px;padding:11px 12px;border:1px solid var(--line);border-radius:9px;background:var(--panel2);font-size:13px;line-height:1.35}
+.detention-pause-item>b{font-size:11px;line-height:1.2;color:var(--accent);border:1px solid var(--line);border-radius:5px;padding:4px 6px}
+.detention-action-footer{margin-top:13px;padding-top:11px;border-top:1px solid var(--line);font-size:13px;font-weight:600}
+.detention-release-card{display:flex;flex-direction:column}
+.detention-release-reasons{display:grid;gap:9px}
+.detention-release-reason{display:flex;gap:13px;align-items:center;padding:13px 12px;border:1px solid var(--line);border-radius:9px;background:var(--panel2);min-height:58px}
+.detention-release-reason span{font-size:12px;font-weight:800;color:var(--accent);flex:0 0 22px}
+.detention-release-reason b{font-size:13px;line-height:1.4;font-weight:600}
+.detention-release-result{display:grid;gap:5px;margin-top:auto;padding:15px 16px;border-radius:10px;background:var(--blue2);border-left:3px solid var(--accent)}
+.detention-release-result strong{font-size:16px;line-height:1.3}
+.detention-release-result span{font-size:12px;line-height:1.45;color:var(--text)}
+@media(max-width:1000px){.detention-actions{grid-template-columns:1fr}}
+@media(max-width:560px){.detention-action-card{padding:14px}.detention-pause-grid{grid-template-columns:1fr}.detention-hour-metric{gap:11px;padding:12px}.detention-hour-metric>strong{font-size:35px}.detention-hour-metric small{font-size:14px}}
 .detention-reference{margin:16px 0 22px;padding:16px 0 0;border-top:1px solid var(--line)}
 .detention-reference h3{font-size:17px;line-height:1.35;margin:17px 0 8px}
 .detention-reference h3:first-child{margin-top:0}
@@ -3398,7 +3421,6 @@ body.ro-about-open{overflow:hidden}
 <div class="process-time"><b>15 мин.</b><span>на прибытие прокурора либо следователя СК после принятия вызова</span></div>
 <div class="process-time"><b>48 ч.</b><span>минимальный срок хранения обязательной записи</span></div>
 </div>
-<div class="process-boundary"><p><b>Процессуальный час.</b> Основной предел задержания 60 минут с момента фактического ограничения свободы. Он не начинается заново при доставлении или передаче. Приостанавливается на время допроса, ожидания и общения с адвокатом, ожидания прокурора или следователя СК по делу госслужащего, дополнительной проверки не более 20 минут, доставки и ожидания сотрудника СК или ФСБ суммарно не более 20 минут, срочного судебного рассмотрения жалобы. Фиксируй начало и конец каждой паузы.</p><p><b>Освобождение.</b> Если подозрение не подтвердилось, доказательств недостаточно, правовое основание удержания отпало или допустимый срок истёк без законного решения, задержанного необходимо освободить. Материалы и запись сохраняются для дальнейшего разбирательства.</p></div>
 </div>
 <article class="box"><h3>Права задержанного и что говорить</h3><div class="rights"><b>Причина и основание:</b> «Вы задержаны за [конкретное действие]. Основание задержания — пункт [номер] части 1 статьи 30 Федерального закона «О ФСО РО». Ваши действия предварительно квалифицируются по части [номер] статьи [номер] УК или КоАП РО».</div>
 <p><b>Права задержанного.</b> Знать причину задержания и применяемые нормы; хранить молчание и не свидетельствовать против себя, супруга и близких родственников; сделать один телефонный звонок до 3 минут в присутствии сотрудника; получить помощь адвоката и по его запросу поговорить с ним конфиденциально до 10 минут; заявлять ходатайства и обжаловать действия и решения должностных лиц.</p>
@@ -3411,6 +3433,38 @@ body.ro-about-open{overflow:hidden}
 Примечание: Сотрудники ФСО,а также ГИБДД не обязаны разъяснять задержанному его права до передачи проц.действий. Обязаны разъяснить основания для задержания и передать процессуальные действия уполномоченному органу.</pre></div></details><button class="open-full open-doc" data-article="15" data-doc="constitution">ст. 15 Конституции — основание и нормы</button></article>
 
 </div>
+
+<section class="detention-actions" aria-label="Процессуальный час и освобождение">
+  <article class="detention-action-card">
+    <div class="detention-action-heading"><h3>Процессуальный час</h3><span>Срок задержания</span></div>
+    <div class="detention-hour-metric">
+      <strong>60 <small>минут</small></strong>
+      <div><b>Отсчёт начинается</b><span>С момента фактического ограничения свободы.</span></div>
+    </div>
+    <div class="detention-hour-rule">При доставлении или передаче задержанного срок не начинается заново.</div>
+    <h4>Когда отсчёт приостанавливается</h4>
+    <div class="detention-pause-grid">
+      <div class="detention-pause-item"><span>Допрос задержанного</span></div>
+      <div class="detention-pause-item"><span>Ожидание и общение с адвокатом</span></div>
+      <div class="detention-pause-item"><span>Ожидание прокурора или следователя СК по делу госслужащего</span></div>
+      <div class="detention-pause-item"><span>Дополнительная проверка</span><b>не более 20 мин.</b></div>
+      <div class="detention-pause-item"><span>Доставка и ожидание сотрудника СК или ФСБ</span><b>не более 20 мин. суммарно</b></div>
+      <div class="detention-pause-item"><span>Срочное судебное рассмотрение жалобы</span></div>
+    </div>
+    <div class="detention-action-footer">Фиксируй начало и окончание каждой паузы.</div>
+  </article>
+  <article class="detention-action-card detention-release-card">
+    <div class="detention-action-heading"><h3>Освобождение</h3><span>Прекращение задержания</span></div>
+    <h4>Когда необходимо освободить</h4>
+    <div class="detention-release-reasons">
+      <div class="detention-release-reason"><span>01</span><b>Подозрение не подтвердилось</b></div>
+      <div class="detention-release-reason"><span>02</span><b>Недостаточно доказательств</b></div>
+      <div class="detention-release-reason"><span>03</span><b>Правовое основание удержания отпало</b></div>
+      <div class="detention-release-reason"><span>04</span><b>Допустимый срок истёк без законного решения</b></div>
+    </div>
+    <div class="detention-release-result"><strong>Освободить задержанного</strong><span>Материалы и видеозапись сохранить для дальнейшего разбирательства.</span></div>
+  </article>
+</section>
 
 <section class="detention-reference" aria-label="Общие основания и субъекты задержания">
 <h3>Основания для задержания по ПК</h3>
