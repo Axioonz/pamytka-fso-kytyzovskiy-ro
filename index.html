@@ -2866,17 +2866,52 @@ body.ro-about-open{overflow:hidden}
 <link rel="stylesheet" href="./css/button-layout.css?v=20261117-sitewide-1">
 
 <style id="detention-unified-list-styles">
-#page-process .detention-legal-list{list-style:none;display:block;margin:10px 0 16px;padding:0;counter-reset:none}
-#page-process .detention-legal-list>li{display:grid;grid-template-columns:2.5rem minmax(0,1fr);gap:10px;align-items:start;margin:0;padding:11px 2px;border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent;box-shadow:none;min-width:0}
-#page-process .detention-legal-list>li:last-child{border-bottom:0}
-#page-process .detention-legal-list .detention-list-number{font-size:13px;font-weight:750;line-height:1.55;color:var(--accent);text-align:left;background:transparent;border:0;padding:0;min-width:0}
-#page-process .detention-legal-list p{margin:0;font-size:13px;line-height:1.6;color:var(--text);overflow-wrap:anywhere}
+/* Компактные списки без уменьшения основного текста */
+#page-process .process-grid{gap:10px}
+#page-process .detention-unified-panel,
+#page-process .process-timing-group,
+#page-process .detention-ref-panel{padding:15px 17px}
+#page-process .detention-unified-panel>h3{margin:0 0 9px;font-size:20px;line-height:1.3}
+#page-process .detention-ref-panel h3{margin:0 0 9px;font-size:19px}
+#page-process .detention-legal-list{list-style:none;display:block;margin:4px 0 9px;padding:0;counter-reset:none}
+#page-process .detention-legal-list>li{display:grid;grid-template-columns:2.35rem minmax(0,1fr);gap:7px;align-items:start;margin:0;padding:7px 1px;border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent;box-shadow:none;min-width:0}
+#page-process .detention-legal-list>li:last-child{border-bottom:0;padding-bottom:3px}
+#page-process .detention-legal-list .detention-list-number{font-size:14px;font-weight:750;line-height:1.48;color:var(--accent);text-align:left;background:transparent;border:0;padding:0;min-width:0}
+#page-process .detention-legal-list p{margin:0;font-size:15px;line-height:1.48;color:var(--text);overflow-wrap:anywhere}
 #page-process .detention-legal-list p strong{font-weight:750;color:var(--strong)}
-#page-process .detention-legal-list .detention-inline-label{font-size:11px;color:var(--muted);font-weight:650}
-#page-process .detention-miranda{font-size:14px;line-height:1.75;color:var(--text);margin:10px 0 14px}
-#page-process .detention-rights-note{font-size:12px;line-height:1.6;color:var(--muted);margin:0;padding-top:12px;border-top:1px solid var(--line)}
-#page-process .detention-reference-tiles,#page-process .detention-special-grid,#page-process .detention-procedure-grid{display:block}
-@media(max-width:640px){#page-process .detention-legal-list>li{grid-template-columns:2rem minmax(0,1fr);gap:7px;padding:10px 1px}#page-process .detention-legal-list p{font-size:12px}}
+#page-process .detention-legal-list .detention-inline-label{font-size:13px;color:var(--muted);font-weight:650}
+#page-process .detention-miranda{font-size:15px;line-height:1.58;color:var(--text);margin:8px 0 10px}
+#page-process .detention-rights-section{margin:10px 0}
+#page-process .detention-rights-section>h4{margin:0 0 7px}
+#page-process .detention-rights-note{font-size:13px;line-height:1.5;color:var(--muted);margin:0;padding-top:9px;border-top:1px solid var(--line)}
+#page-process .detention-rights-panel>.rights{margin-bottom:8px;padding:11px 13px;font-size:15px;line-height:1.5}
+#page-process .detention-rights-panel>.rights b{margin-bottom:4px}
+#page-process .detention-fso-panel>p,
+#page-process .detention-steps-panel>p{margin:9px 0;padding:10px 12px;font-size:14px}
+#page-process .detention-source-note{padding:11px 14px;line-height:1.5}
+#page-process .detention-ref-panel>p{font-size:14px;line-height:1.5;padding:9px 12px;margin:0 0 9px}
+#page-process .detention-ref-panel>p:last-child{margin:9px 0 0}
+#page-process .detention-reference{margin:11px 0 15px;gap:10px}
+#page-process .detention-action-card{padding:15px 17px}
+#page-process .detention-action-heading{margin-bottom:9px}
+#page-process .detention-hour-metric{padding:11px 13px}
+#page-process .process-timing-group::before{margin-bottom:9px}
+#page-process .process-times{gap:7px}
+#page-process .process-time{padding:10px 12px}
+#page-process .detention-reference-tiles,
+#page-process .detention-special-grid,
+#page-process .detention-procedure-grid{display:block}
+@media(max-width:760px){
+  #page-process .detention-unified-panel,
+  #page-process .process-timing-group,
+  #page-process .detention-ref-panel{padding:13px 14px}
+}
+@media(max-width:640px){
+  #page-process .detention-legal-list>li{grid-template-columns:2rem minmax(0,1fr);gap:6px;padding:7px 0}
+  #page-process .detention-legal-list p{font-size:14px;line-height:1.5}
+  #page-process .detention-legal-list .detention-list-number{font-size:14px;line-height:1.5}
+  #page-process .detention-miranda{font-size:14px;line-height:1.58}
+}
 </style></head><body class="access-pending">
 <div aria-hidden="false" class="access-gate" id="accessGate">
 <div class="access-gate-card">
