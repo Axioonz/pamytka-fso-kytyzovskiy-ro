@@ -87,6 +87,11 @@
   text-align:center;
 }
 .cheat-source-wrap>.cheat-quick-add {max-width:100%!important}
+/* При фильтрации правовых оснований скрываем всю обёртку,
+   а не только карточку: кнопка шпаргалки принадлежит той же карточке. */
+#page-basis .cheat-source-wrap:has(.basis-card.is-hidden) {
+  display:none!important;
+}
 :where(.nav,.kut-tabs) {min-width:0;max-width:100%}
 :where(.nav button,#page-departments .kut-tab,.nav-scroll) {
   white-space:nowrap;
