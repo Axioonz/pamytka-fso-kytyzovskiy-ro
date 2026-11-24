@@ -246,3 +246,32 @@ html.lx-redesign .lx-live-panel #homeSmartResults:empty{display:none}
 html.lx-redesign .lx-live-panel #homeSmartResults .smart-result{min-width:0;text-align:left;border-radius:8px}
 html.lx-redesign #page-home .hero.lx-ready{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)}
 @media(max-width:700px){html.lx-redesign #page-home .hero.lx-ready{grid-template-columns:minmax(0,1fr)}}
+
+/* Refinement: clear photography and calm motion. */
+html.lx-redesign {--lx-motion: cubic-bezier(.22,.68,.28,1);}
+html.lx-redesign #page-home .hero.lx-ready{min-height:0;padding:38px 0 30px!important;gap:clamp(22px,4vw,48px)}
+html.lx-redesign #page-home .hero.lx-ready h1{margin-top:0!important}
+html.lx-redesign .lx-live-bottom{justify-content:flex-end}
+html.lx-redesign .lx-panorama{position:relative;isolation:isolate;overflow:hidden;margin:0 0 34px;border:1px solid var(--line);border-radius:15px;height:clamp(190px,25vw,320px);background:var(--panel);box-shadow:var(--shadow)}
+html.lx-redesign .lx-panorama img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 49%;filter:saturate(.86);}
+html.lx-redesign .lx-panorama:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,rgba(10,15,28,.32),transparent 50%)}
+html.lx-redesign .lx-directory-card{min-height:180px;justify-content:flex-end;transition:transform .34s var(--lx-motion),border-color .34s var(--lx-motion),box-shadow .34s var(--lx-motion)!important}
+html.lx-redesign .lx-directory-card .lx-card-photo{inset:0;width:100%;height:100%;object-fit:cover;object-position:center 45%;opacity:.82;filter:saturate(.78);transform:scale(1.015);transition:transform .65s var(--lx-motion),opacity .4s var(--lx-motion),filter .4s var(--lx-motion)}
+html.lx-redesign .lx-directory-card.lx-has-photo:after{background:linear-gradient(90deg,rgba(12,17,29,.96) 0%,rgba(12,17,29,.82) 28%,rgba(12,17,29,.40) 70%,rgba(12,17,29,.16) 100%),linear-gradient(0deg,rgba(12,17,29,.78),transparent 65%)}
+html.lx-redesign .lx-directory-card.lx-has-photo :is(strong,small){color:#f2f5ff!important;position:relative;text-shadow:0 1px 8px #10172580;max-width:90%}
+html.lx-redesign .lx-directory-card.lx-has-photo small{color:#c8d1e4!important}
+html.lx-redesign .lx-directory-card.lx-has-photo .lx-card-symbol{background:#172338c9;color:#c5d3ff;border-color:#b5c5ff38}
+html.lx-redesign .lx-directory-card.lx-has-photo>.lx-icon{color:#d2deff}
+html.lx-redesign .lx-directory-card[data-lx-page="departments"] .lx-card-photo{object-position:65% 35%}
+html.lx-redesign .lx-directory-card[data-lx-page="territories"] .lx-card-photo{object-position:65% 32%}
+html.lx-redesign .lx-directory-card[data-lx-page="convoys"] .lx-card-photo{object-position:65% 62%}
+html.lx-redesign .lx-directory-card[data-lx-page="basis"] .lx-card-photo{object-position:75% 40%}
+html.lx-redesign .lx-directory-card[data-lx-page="terms"] .lx-card-photo{object-position:70% 36%}
+html.lx-redesign .lx-directory-card>.lx-icon{transition:transform .34s var(--lx-motion)}
+html.lx-redesign :is(.lx-primary,.lx-secondary,.lx-law-item,.nav button,.core-card,.quick-actions button,.theme,.lx-text-link){transition:transform .3s var(--lx-motion),background-color .3s var(--lx-motion),border-color .3s var(--lx-motion),color .3s var(--lx-motion),box-shadow .3s var(--lx-motion)!important}
+@media(hover:hover) and (pointer:fine){html.lx-redesign .lx-directory-card:hover{transform:translateY(-3px);box-shadow:0 10px 26px #0003}html.lx-redesign .lx-directory-card:hover .lx-card-photo{transform:scale(1.065);opacity:1;filter:saturate(.98)}html.lx-redesign .lx-directory-card:hover>.lx-icon{transform:translate(2px,-2px)}}
+html.lx-redesign .lx-directory-card:active{transform:translateY(0) scale(.99)}
+html.lx-redesign body.access-ready .page.active{animation:lx-page-in .32s var(--lx-motion) both!important}
+@keyframes lx-page-in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:700px){html.lx-redesign #page-home .hero.lx-ready{padding:18px 0 22px!important}html.lx-redesign .lx-panorama{height:190px;margin-bottom:24px}html.lx-redesign .lx-directory-card{min-height:160px}html.lx-redesign .lx-directory-card .lx-card-photo{width:100%;opacity:.82}}
+@media(prefers-reduced-motion:reduce){html.lx-redesign :is(.lx-directory-card,.lx-card-photo,.lx-directory-card>.lx-icon,.lx-primary,.lx-secondary,.lx-law-item,.nav button,.core-card,.quick-actions button,.theme,.lx-text-link){transition:none!important;transform:none!important}html.lx-redesign body.access-ready .page.active{animation:none!important}}
