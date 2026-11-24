@@ -247,26 +247,31 @@ html.lx-redesign .lx-live-panel #homeSmartResults .smart-result{min-width:0;text
 html.lx-redesign #page-home .hero.lx-ready{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)}
 @media(max-width:700px){html.lx-redesign #page-home .hero.lx-ready{grid-template-columns:minmax(0,1fr)}}
 
-/* Consistent homepage refinements. Preserve the approved layout and original sections. */
+/* Homepage refinement: visible photography, stable first paint, calm motion. */
 html.lx-redesign{--lx-motion:cubic-bezier(.22,.68,.28,1)}
-html.lx-redesign #page-home .hero.lx-ready .hero-kicker[hidden]{display:none!important}
-html.lx-redesign #page-home .hero.lx-ready .hero-center h1{margin-top:0!important}
-html.lx-redesign #page-home .hero.lx-ready .lx-hero-photo{width:100%;height:clamp(142px,15vw,205px);margin:24px 0 0;background-position:center 48%;border-radius:12px;box-shadow:none;min-height:142px}
-html.lx-redesign .lx-hero-photo:before{background:linear-gradient(0deg,#10172535,transparent 72%)}
+html.lx-redesign #page-home .hero.lx-ready .hero-center h1{margin:22px 0 16px!important}
+html.lx-redesign #page-home .hero.lx-ready .lx-hero-photo{display:block;position:relative;width:100%;height:clamp(160px,17vw,225px);margin:0 0 22px;overflow:hidden;border:1px solid var(--line);border-radius:13px;background:var(--panel)}
+html.lx-redesign #page-home .hero.lx-ready .lx-hero-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 46%;filter:saturate(.95);margin:0;border:0;border-radius:0}
 html.lx-redesign .lx-live-bottom{justify-content:flex-end}
-html.lx-redesign .lx-directory-card .lx-card-photo{inset:0;width:100%;height:100%;object-position:65% 46%;opacity:1;filter:saturate(.87);transform:scale(1.005);transition:transform .6s var(--lx-motion),filter .38s var(--lx-motion)}
-html.lx-redesign .lx-directory-card.lx-has-photo:after{background:linear-gradient(90deg,#111725f7 0%,#111725e0 27%,#11172585 56%,#11172518 100%),linear-gradient(0deg,#11172565,transparent 60%)}
-html.lx-redesign .lx-directory-card.lx-has-photo strong{color:#fff!important;text-shadow:0 1px 5px #101725a0}
-html.lx-redesign .lx-directory-card.lx-has-photo small{color:#dce4f5!important;text-shadow:0 1px 4px #101725a0}
-html.lx-redesign .lx-directory-card.lx-has-photo .lx-card-symbol{background:#202b40;color:#c5d3ff;border-color:#b5c5ff38}
-html.lx-redesign .lx-directory-card.lx-has-photo>.lx-icon{color:#e1e9ff}
-html.lx-redesign .lx-directory-card[data-lx-page="departments"] .lx-card-photo{object-position:60% 35%}
-html.lx-redesign .lx-directory-card[data-lx-page="territories"] .lx-card-photo{object-position:72% 30%}
-html.lx-redesign .lx-directory-card[data-lx-page="convoys"] .lx-card-photo{object-position:70% 63%}
-html.lx-redesign .lx-directory-card[data-lx-page="basis"] .lx-card-photo{object-position:75% 40%}
+html.lx-redesign .lx-directory-card .lx-card-photo{position:absolute;inset:0 0 0 auto;width:76%;height:100%;object-fit:cover;object-position:65% 46%;opacity:1;filter:saturate(.94);z-index:-2;mask-image:linear-gradient(90deg,transparent 0%,#000 62%);-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 62%);transition:transform .65s var(--lx-motion),filter .4s var(--lx-motion);transform-origin:75% 50%}
+html.lx-redesign .lx-directory-card.lx-has-photo:after{background:linear-gradient(90deg,var(--panel2) 0%,var(--panel2) 25%,color-mix(in srgb,var(--panel2) 88%,transparent) 44%,color-mix(in srgb,var(--panel2) 22%,transparent) 72%,transparent 100%);z-index:-1}
+html.lx-redesign .lx-directory-card.lx-has-photo strong{max-width:77%;color:var(--text)!important;position:relative}
+html.lx-redesign .lx-directory-card.lx-has-photo small{max-width:72%;color:var(--muted)!important;position:relative}
+html.lx-redesign .lx-directory-card.lx-has-photo>.lx-icon{filter:drop-shadow(0 1px 3px #11172580)}
+html.lx-redesign .lx-directory-card[data-lx-page="departments"] .lx-card-photo{object-position:65% 35%}
+html.lx-redesign .lx-directory-card[data-lx-page="territories"] .lx-card-photo{object-position:70% 25%}
+html.lx-redesign .lx-directory-card[data-lx-page="convoys"] .lx-card-photo{object-position:65% 63%}
+html.lx-redesign .lx-directory-card[data-lx-page="basis"] .lx-card-photo{object-position:70% 40%}
 html.lx-redesign .lx-directory-card[data-lx-page="terms"] .lx-card-photo{object-position:70% 36%}
-html.lx-redesign :is(.lx-directory-card,.lx-primary,.lx-secondary,.lx-law-item,.nav button,.core-card,.quick-actions button,.theme,.lx-text-link){transition:transform .32s var(--lx-motion),background-color .32s var(--lx-motion),border-color .32s var(--lx-motion),color .32s var(--lx-motion),box-shadow .32s var(--lx-motion)!important}
-@media(hover:hover) and (pointer:fine){html.lx-redesign .lx-directory-card:hover{transform:translateY(-2px);box-shadow:0 9px 24px #0002}html.lx-redesign .lx-directory-card:hover .lx-card-photo{transform:scale(1.06);filter:saturate(1)}}
+html.lx-redesign .lx-directory-card[data-lx-page="process"] .lx-card-photo{object-position:64% 30%}
+html.lx-redesign :is(.lx-directory-card,.lx-primary,.lx-secondary,.lx-law-item,.nav button,.core-card,.quick-actions button,.theme,.lx-text-link,.access-role-grid button,.access-login-submit,.doc-btn,.basis-tab,.term-filter,.situation-filter){transition:transform .34s var(--lx-motion),background-color .34s var(--lx-motion),border-color .34s var(--lx-motion),color .34s var(--lx-motion),box-shadow .34s var(--lx-motion)!important}
+html.lx-redesign .lx-directory-card>.lx-icon{transition:transform .34s var(--lx-motion)}
+@media(hover:hover) and (pointer:fine){html.lx-redesign .lx-directory-card:hover{transform:translateY(-2px);box-shadow:0 9px 24px #0002}html.lx-redesign .lx-directory-card:hover .lx-card-photo{transform:scale(1.045);filter:saturate(1)}html.lx-redesign .lx-directory-card:hover>.lx-icon{transform:translate(2px,-1px)}}
 html.lx-redesign .lx-directory-card:active{transform:scale(.99)}
-@media(max-width:700px){html.lx-redesign #page-home .hero.lx-ready .lx-hero-photo{height:150px;margin-top:18px}html.lx-redesign .lx-directory-card .lx-card-photo{width:100%;opacity:1}}
-@media(prefers-reduced-motion:reduce){html.lx-redesign :is(.lx-directory-card,.lx-card-photo,.lx-primary,.lx-secondary,.lx-law-item,.nav button,.core-card,.quick-actions button,.theme,.lx-text-link){transition:none!important;transform:none!important}}
+/* Opacity only: no transform on whole pages, no persistent stacking context. */
+html.lx-redesign .page.active{animation:lx-soft-page .36s var(--lx-motion)!important}
+@keyframes lx-soft-page{from{opacity:.65}to{opacity:1}}
+html.lx-redesign .access-gate{font-family:var(--lx-sans)!important}
+html.lx-redesign .access-gate-brand h1{font-family:var(--lx-sans)!important}
+@media(max-width:700px){html.lx-redesign #page-home .hero.lx-ready .lx-hero-photo{height:170px;margin-bottom:18px}html.lx-redesign .lx-directory-card .lx-card-photo{width:70%;opacity:1}html.lx-redesign .lx-directory-card.lx-has-photo strong{max-width:84%}}
+@media(prefers-reduced-motion:reduce){html.lx-redesign :is(.lx-directory-card,.lx-card-photo,.lx-directory-card>.lx-icon,.lx-primary,.lx-secondary,.lx-law-item,.nav button,.core-card,.quick-actions button,.theme,.lx-text-link,.access-role-grid button,.access-login-submit,.doc-btn,.basis-tab,.term-filter,.situation-filter){transition:none!important;transform:none!important}html.lx-redesign .page.active{animation:none!important}}
