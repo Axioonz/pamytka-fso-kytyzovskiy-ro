@@ -3260,6 +3260,39 @@ html.lx-redesign .access-gate-note{font-size:11px;margin-top:4px;line-height:1.5
   html.lx-redesign .access-gate .access-role-grid button{min-height:87px;padding:11px!important}
 }
 
+
+/* Preview v3: remove redundant shortcuts, tidy service material grid. */
+html.lx-redesign #page-home .lx-directory-head:has(+ .core-grid){display:none!important}
+html.lx-redesign #page-home .core-grid:not(:has(>button:not(.access-hidden):not([hidden]))){display:none!important;margin:0!important}
+html.lx-redesign #page-home .core-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0 0}
+html.lx-redesign #page-home .home-block{margin-top:20px}
+html.lx-redesign #page-home .quick-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0}
+html.lx-redesign #page-home .quick-actions>button:first-child{grid-column:auto}
+html.lx-redesign #page-home .quick-actions>button{
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;
+  text-align:left;min-width:0;min-height:138px;
+  padding:18px 20px!important;border-radius:16px!important;
+  background:var(--matte-panel)!important;border:1px solid var(--matte-edge)!important;
+  box-shadow:none!important;gap:0;
+}
+html.lx-redesign #page-home .quick-actions>button.access-hidden{display:none!important}
+html.lx-redesign #page-home .quick-actions>button:hover{background:var(--matte-role-active)!important;border-color:var(--accent)!important}
+html.lx-redesign #page-home .quick-actions>button>span{
+  width:34px;height:34px;flex:0 0 34px;margin:0 0 12px!important;
+  border-radius:9px!important;background:var(--matte-role-active)!important;
+  border:1px solid var(--matte-edge);font-size:15px;
+}
+html.lx-redesign #page-home .quick-actions>button>b{font-size:16px;line-height:1.35;margin:0 0 6px}
+html.lx-redesign #page-home .quick-actions>button>small{max-width:100%;font-size:12px;line-height:1.5;color:var(--muted);overflow-wrap:anywhere}
+html.lx-redesign #page-home .quick-actions>button::after{top:18px;right:18px;font-size:17px;color:var(--muted);opacity:1}
+@media(max-width:900px){
+  html.lx-redesign #page-home :is(.quick-actions,.core-grid){grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:520px){
+  html.lx-redesign #page-home :is(.quick-actions,.core-grid){grid-template-columns:minmax(0,1fr);gap:10px}
+  html.lx-redesign #page-home .quick-actions>button{min-height:120px;padding:16px!important}
+}
+
 </style></head><body class="access-pending">
 <div aria-hidden="false" class="access-gate" id="accessGate">
 <div class="access-gate-card">
@@ -3340,9 +3373,6 @@ html.lx-redesign .access-gate-note{font-size:11px;margin-top:4px;line-height:1.5
 <div class="smart-search-hints"><button data-smart="тк увольнение">ТК · увольнение</button><button data-smart="мат">мат</button><button data-smart="без одежды">без одежды</button><button data-smart="досмотр">досмотр</button><button data-smart="не выполняет требование">не выполняет требование</button><button data-smart="задержание">задержание</button></div>
 <div class="smart-results" id="homeSmartResults"></div>
 <div class="core-grid">
-<button class="core-card core-link" data-jump-page="basis" data-search-seed="компетенция"><i class="core-icon">§</i>
-<b>Пределы компетенции</b><span>ФЗ «О ФСО РО» — ст. 6</span><p>Сначала определите, относится ли ситуация к государственной охране и какое полномочие применяется.</p>
-</button>
 <button class="core-card core-link" data-jump-situation="entry-duty"><i class="core-icon">▣</i>
 <b>Документы и цель посещения</b><span>ФЗ «О ФСО» ст. 27 · ФЗ о территориях ст. 10</span><p>Что можно проверить на входе и когда отсутствие документа или цели влияет на доступ.</p>
 </button>
@@ -3351,9 +3381,6 @@ html.lx-redesign .access-gate-note{font-size:11px;margin-top:4px;line-height:1.5
 </button>
 <button class="core-card core-link" data-jump-situation="lawful-demand"><i class="core-icon">!</i>
 <b>Законное требование</b><span>ПК гл. XI ст. 2 · УК ст. 17.6</span><p>Когда можно предъявить требование и как действовать при отказе.</p>
-</button>
-<button class="core-card core-link" data-jump-page="process"><i class="core-icon">⌁</i>
-<b>Задержание ФСО</b><span>ФЗ «О ФСО» ст. 30 · ПК гл. II</span><p>Основания ст. 30, права задержанного, видеозапись и передача задержанного.</p>
 </button>
 </div>
 <div class="home-block">
