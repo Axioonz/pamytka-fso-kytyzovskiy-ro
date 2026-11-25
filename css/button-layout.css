@@ -297,3 +297,67 @@ html.lx-redesign{overflow-x:clip}
 @media(max-width:850px){html.lx-redesign #page-home .hero.lx-ready{min-height:0;padding:26px!important;gap:24px}}
 @media(max-width:700px){html.lx-redesign #page-home .hero.lx-ready{padding:25px 18px!important;gap:22px;border-radius:19px!important;background-position:56% center!important}html.lx-redesign #page-home .hero.lx-ready .hero-center h1{font-size:clamp(36px,8.5vw,53px)!important}html.lx-redesign #page-home .hero.lx-ready .lx-live-panel{border-radius:16px}}
 @media(prefers-reduced-motion:reduce){html.lx-redesign .nav.lx-pill-motion .lx-nav-glass{transition:none!important}html.lx-redesign .page.active{animation:none!important}}
+
+/* Frosted glass materials: theme-aware, rounded, with restrained highlights. */
+html.lx-redesign{
+ --bg2:var(--panel2);--lx-motion:cubic-bezier(.32,.72,.25,1);
+ --lx-glass-radius:24px;--lx-pill-radius:999px;
+ --lx-atmosphere:radial-gradient(ellipse at 10% 8%,#526ab32b,transparent 48%),radial-gradient(ellipse at 89% 32%,#487f9d19,transparent 52%),radial-gradient(ellipse at 47% 90%,#7562b118,transparent 48%);
+ --lx-glass-surface:linear-gradient(145deg,rgba(181,203,255,.13),rgba(121,148,208,.035) 54%,rgba(185,197,255,.065)),rgba(22,30,48,.56);
+ --lx-glass-control:linear-gradient(155deg,rgba(220,235,255,.28),rgba(140,169,221,.12) 48%,rgba(150,172,230,.18)),rgba(45,58,85,.45);
+ --lx-glass-edge:rgba(210,226,255,.24);--lx-glass-shine:rgba(255,255,255,.25);
+ --lx-glass-shadow:0 8px 28px rgba(0,0,0,.19),inset 0 1px 1px rgba(255,255,255,.13),inset 0 -1px 2px rgba(201,221,255,.06);
+ --lx-hero-glass:rgba(19,28,46,.49);
+ --lx-photo-veil:linear-gradient(90deg,rgba(13,19,33,.94),rgba(13,19,33,.81) 35%,rgba(13,19,33,.23));
+ --lx-about-cover:radial-gradient(ellipse at 12% 0%,rgba(102,138,204,.25),transparent 75%),linear-gradient(135deg,#192438,#111827);
+ --lx-glass-icon:rgba(182,207,255,.13);
+}
+html.lx-redesign[data-theme="light"]{
+ --lx-atmosphere:radial-gradient(ellipse at 8% 6%,#b0e6ef8c,transparent 48%),radial-gradient(ellipse at 90% 32%,#c5d6ff80,transparent 52%),radial-gradient(ellipse at 42% 95%,#d8ccf880,transparent 54%);
+ --lx-glass-surface:linear-gradient(145deg,rgba(255,255,255,.85),rgba(245,248,255,.44) 60%,rgba(255,255,255,.64)),rgba(239,245,255,.41);
+ --lx-glass-control:linear-gradient(155deg,rgba(255,255,255,.96),rgba(232,241,255,.6) 52%,rgba(255,255,255,.86)),rgba(231,240,255,.52);
+ --lx-glass-edge:rgba(255,255,255,.97);--lx-glass-shine:rgba(255,255,255,.98);
+ --lx-glass-shadow:0 8px 28px rgba(55,80,125,.11),inset 0 1px 1px #fff,inset 0 -1px 2px rgba(140,160,205,.15);
+ --lx-hero-glass:rgba(249,252,255,.74);
+ --lx-photo-veil:linear-gradient(90deg,rgba(248,251,255,.98),rgba(248,251,255,.88) 38%,rgba(248,251,255,.25));
+ --lx-about-cover:radial-gradient(ellipse at 12% 0%,rgba(168,218,241,.62),transparent 75%),linear-gradient(135deg,#f5faff,#e4eaf9);
+ --lx-glass-icon:rgba(83,112,186,.09);
+ --lx-hero-overlay:linear-gradient(90deg,rgba(245,249,255,.94),rgba(238,245,255,.69) 52%,rgba(235,243,255,.28)),linear-gradient(0deg,rgba(235,242,255,.32),transparent 80%);
+ --lx-hero-text:#17243b;--lx-hero-muted:#344761;
+}
+html.lx-redesign body{background:var(--lx-atmosphere),var(--bg)!important;background-attachment:fixed!important}
+html.lx-redesign .topbar{background:color-mix(in srgb,var(--bg) 63%,transparent)!important;backdrop-filter:blur(26px) saturate(155%);-webkit-backdrop-filter:blur(26px) saturate(155%);border-color:color-mix(in srgb,var(--line) 55%,var(--lx-glass-edge))!important}
+html.lx-redesign .nav{border-radius:var(--lx-pill-radius);padding:5px 7px!important;isolation:isolate}
+html.lx-redesign .nav button,html.lx-redesign .nav button.active{border-radius:var(--lx-pill-radius)!important}
+html.lx-redesign .nav button.active{background:var(--lx-glass-control)!important;box-shadow:var(--lx-glass-shadow)!important}
+html.lx-redesign .nav.lx-pill-ready button.active{background:transparent!important;box-shadow:none!important}
+html.lx-redesign .nav .lx-nav-glass{border-radius:var(--lx-pill-radius);background:var(--lx-glass-control);border:1px solid var(--lx-glass-edge);box-shadow:var(--lx-glass-shadow);backdrop-filter:blur(22px) saturate(155%);-webkit-backdrop-filter:blur(22px) saturate(155%)}
+html.lx-redesign .nav.lx-pill-motion .lx-nav-glass{transition:transform .62s var(--lx-motion),width .62s var(--lx-motion),height .45s var(--lx-motion),opacity .28s ease}
+html.lx-redesign #page-home .hero.lx-ready{border-radius:32px!important}
+html.lx-redesign #page-home .hero.lx-ready .lx-live-panel{background:var(--lx-glass-surface),var(--lx-hero-glass)!important;border:1px solid var(--lx-glass-edge)!important;border-radius:28px;backdrop-filter:blur(28px) saturate(155%);-webkit-backdrop-filter:blur(28px) saturate(155%);box-shadow:var(--lx-glass-shadow)}
+html.lx-redesign .lx-directory-card,html.lx-redesign #page-home :is(.core-card,.quick-actions button){border-radius:22px!important;background:var(--lx-glass-surface)!important;border:1px solid var(--lx-glass-edge)!important;box-shadow:var(--lx-glass-shadow)!important}
+html.lx-redesign .lx-directory-card.lx-has-photo:after{background:linear-gradient(90deg,color-mix(in srgb,var(--panel) 94%,transparent),color-mix(in srgb,var(--panel) 76%,transparent) 40%,transparent 100%)}
+html.lx-redesign .lx-directory-card .lx-card-symbol,html.lx-redesign #page-home .core-icon{background:var(--lx-glass-icon)!important;border:1px solid var(--lx-glass-edge);border-radius:14px!important;color:var(--accent)}
+html.lx-redesign :is(.lx-primary,.lx-secondary,.theme,.nav-scroll,.lx-law-item){border-radius:var(--lx-pill-radius)!important}
+html.lx-redesign :is(.access-gate-card,.help-panel,.ro-about-panel,.kut-dialog){background:var(--lx-glass-surface),var(--lx-hero-glass)!important;border:1px solid var(--lx-glass-edge)!important;border-radius:26px!important;box-shadow:var(--lx-glass-shadow)!important;backdrop-filter:blur(26px) saturate(145%);-webkit-backdrop-filter:blur(26px) saturate(145%)}
+html.lx-redesign .access-role-grid button{background:var(--lx-glass-surface)!important;border-radius:18px!important;box-shadow:inset 0 1px 0 var(--lx-glass-shine)}
+html.lx-redesign .access-role-grid button.active{background:var(--lx-glass-control)!important;border-color:var(--accent)!important}
+html.lx-redesign .page:not(#page-home) :is(.ro-accent-header,.ro-photo-section){border-radius:26px!important;background:var(--lx-glass-surface),var(--panel)!important;border:1px solid var(--lx-glass-edge)!important;box-shadow:var(--lx-glass-shadow)!important}
+html.lx-redesign .page:not(#page-home) .ro-photo-section .ro-photo-media:after{background:var(--lx-photo-veil)!important}
+html.lx-redesign .ro-photo-section :is(h1,h2,.territory-kicker){color:var(--text)!important;text-shadow:none!important}
+html.lx-redesign .ro-photo-section p{color:var(--muted)!important;text-shadow:none!important}
+html.lx-redesign .ro-photo-accent:after{background:linear-gradient(90deg,var(--panel),color-mix(in srgb,var(--panel) 85%,transparent) 30%,transparent 100%)}
+html.lx-redesign .ro-about-cover{background:var(--lx-about-cover)!important;color:var(--text)!important}
+html.lx-redesign .ro-about-cover :is(h1,h2,h3,p,b,strong,small,span){color:inherit}
+html.lx-redesign .convoy-image-button{background:var(--panel2)!important;border-color:var(--line)!important}
+html.lx-redesign .nav-scroll:hover:not(:disabled){background:var(--panel2)!important;color:var(--accent)!important}
+html.lx-redesign .access-login-form input,html.lx-redesign .access-selected b{background:var(--bg2)!important;color:var(--text)!important}
+html.lx-redesign[data-theme="light"] #page-home .hero.lx-ready .lx-secondary{background:var(--lx-glass-control)!important;color:var(--text)!important;border-color:var(--lx-glass-edge)!important}
+html.lx-redesign[data-theme="light"] #page-home .hero.lx-ready .hero-center :is(h1,p){text-shadow:none!important}
+html.lx-redesign[data-theme="light"] .ro-photo-section .ro-photo-dots button:before{background:var(--muted)}
+html.lx-redesign[data-theme="light"] .ro-photo-section .ro-photo-dots button.is-current:before{background:var(--accent)}
+html.lx-redesign[data-theme="light"] :is(.modal,.help-backdrop,.updates-modal,.ro-about-backdrop,.inline-law-overlay,.kut-modal){background:rgba(77,93,123,.39)!important}
+html.lx-redesign :is(.lx-directory-card,.lx-primary,.lx-secondary,.lx-law-item,.nav button,.core-card,.quick-actions button,.theme,.lx-text-link,.access-role-grid button,.access-login-submit,.doc-btn,.basis-tab,.term-filter,.situation-filter){transition:transform .46s var(--lx-motion),background-color .46s var(--lx-motion),border-color .46s var(--lx-motion),color .4s var(--lx-motion),box-shadow .46s var(--lx-motion)!important}
+html.lx-redesign .lx-directory-card .lx-card-photo{transition:transform .85s var(--lx-motion),filter .5s var(--lx-motion)}
+@media(max-width:700px){html.lx-redesign #page-home .hero.lx-ready{border-radius:25px!important}html.lx-redesign #page-home .hero.lx-ready .lx-live-panel{border-radius:23px}}
+@media(prefers-reduced-motion:reduce){html.lx-redesign .nav.lx-pill-motion .lx-nav-glass,html.lx-redesign :is(.lx-directory-card,.lx-card-photo,.lx-primary,.lx-secondary,.lx-law-item,.nav button,.core-card,.quick-actions button,.theme,.lx-text-link,.access-role-grid button,.access-login-submit,.doc-btn,.basis-tab,.term-filter,.situation-filter){transition:none!important}}
