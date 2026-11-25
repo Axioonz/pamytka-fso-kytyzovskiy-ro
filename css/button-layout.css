@@ -269,9 +269,31 @@ html.lx-redesign .lx-directory-card>.lx-icon{transition:transform .34s var(--lx-
 @media(hover:hover) and (pointer:fine){html.lx-redesign .lx-directory-card:hover{transform:translateY(-2px);box-shadow:0 9px 24px #0002}html.lx-redesign .lx-directory-card:hover .lx-card-photo{transform:scale(1.045);filter:saturate(1)}html.lx-redesign .lx-directory-card:hover>.lx-icon{transform:translate(2px,-1px)}}
 html.lx-redesign .lx-directory-card:active{transform:scale(.99)}
 /* Opacity only: no transform on whole pages, no persistent stacking context. */
-html.lx-redesign .page.active{animation:lx-soft-page .36s var(--lx-motion)!important}
-@keyframes lx-soft-page{from{opacity:.65}to{opacity:1}}
+html.lx-redesign .page.active{animation:none!important}
 html.lx-redesign .access-gate{font-family:var(--lx-sans)!important}
 html.lx-redesign .access-gate-brand h1{font-family:var(--lx-sans)!important}
 @media(max-width:700px){html.lx-redesign #page-home .hero.lx-ready .lx-hero-photo{height:170px;margin-bottom:18px}html.lx-redesign .lx-directory-card .lx-card-photo{width:70%;opacity:1}html.lx-redesign .lx-directory-card.lx-has-photo strong{max-width:84%}}
 @media(prefers-reduced-motion:reduce){html.lx-redesign :is(.lx-directory-card,.lx-card-photo,.lx-directory-card>.lx-icon,.lx-primary,.lx-secondary,.lx-law-item,.nav button,.core-card,.quick-actions button,.theme,.lx-text-link,.access-role-grid button,.access-login-submit,.doc-btn,.basis-tab,.term-filter,.situation-filter){transition:none!important;transform:none!important}html.lx-redesign .page.active{animation:none!important}}
+
+/* Frosted surfaces, original title, sliding segmented navigation. */
+html.lx-redesign{--lx-glass:rgba(125,145,194,.16);--lx-glass-edge:rgba(208,224,255,.22);--lx-glass-shine:rgba(255,255,255,.17);--lx-glass-shadow:0 5px 18px rgba(0,0,0,.17);--lx-hero-glass:rgba(17,24,39,.79);--lx-hero-text:#f5f7ff;--lx-hero-muted:#d0d9ed;--lx-hero-overlay:linear-gradient(90deg,rgba(9,15,29,.89),rgba(9,15,29,.65) 52%,rgba(9,15,29,.34)),linear-gradient(0deg,rgba(9,15,29,.42),transparent 80%)}
+html.lx-redesign[data-theme="light"]{--lx-glass:rgba(255,255,255,.72);--lx-glass-edge:rgba(255,255,255,.9);--lx-glass-shine:rgba(255,255,255,.92);--lx-glass-shadow:0 4px 14px rgba(50,66,105,.12);--lx-hero-glass:rgba(250,252,255,.84);--lx-hero-text:#fff;--lx-hero-muted:#e1e7f4}
+html.lx-redesign #page-home .hero.lx-ready{min-height:440px;padding:clamp(25px,4vw,52px)!important;margin:0 0 32px!important;border:1px solid rgba(180,199,236,.22)!important;border-radius:24px!important;overflow:hidden!important;background:var(--lx-hero-overlay),url('../assets/ro/kremlin-panorama.webp') center 48%/cover no-repeat!important;box-shadow:0 16px 45px #080d1a26!important}
+html.lx-redesign #page-home .hero.lx-ready .hero-center h1{font-size:clamp(39px,4.7vw,65px)!important;line-height:1.1!important;margin:0 0 20px!important;color:var(--lx-hero-text)!important;text-shadow:0 2px 18px #0a102e45!important;text-wrap:balance!important}
+html.lx-redesign #page-home .hero.lx-ready .hero-center p{color:var(--lx-hero-muted)!important;text-shadow:0 1px 10px #11182b70!important}
+html.lx-redesign #page-home .hero.lx-ready .lx-live-panel{background:var(--lx-hero-glass)!important;backdrop-filter:blur(22px) saturate(135%);-webkit-backdrop-filter:blur(22px) saturate(135%);border:1px solid rgba(218,230,255,.27)!important;box-shadow:0 14px 45px #0003,inset 0 1px 0 rgba(255,255,255,.12);border-radius:20px}
+html.lx-redesign #page-home .hero.lx-ready .lx-live-panel:before{display:none}
+html.lx-redesign #page-home .hero.lx-ready .lx-secondary{background:rgba(255,255,255,.13)!important;color:#f3f6ff!important;border-color:rgba(255,255,255,.3)!important;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+html.lx-redesign .topbar{backdrop-filter:blur(24px) saturate(145%);-webkit-backdrop-filter:blur(24px) saturate(145%)}
+html.lx-redesign .nav{position:relative;isolation:isolate;border-radius:15px;padding:4px!important;scroll-padding-inline:8px}
+html.lx-redesign .nav button{position:relative;z-index:1;border-radius:12px!important;white-space:nowrap}
+html.lx-redesign .nav button.active{background:var(--lx-glass)!important;color:var(--strong)!important;box-shadow:inset 0 1px 0 var(--lx-glass-shine),inset 0 0 0 1px var(--lx-glass-edge),var(--lx-glass-shadow)!important}
+html.lx-redesign .nav.lx-pill-ready button.active{background:transparent!important;box-shadow:none!important}
+html.lx-redesign .nav .lx-nav-glass{position:absolute;top:0;left:0;pointer-events:none;z-index:0;border-radius:12px;background:var(--lx-glass);border:1px solid var(--lx-glass-edge);box-shadow:inset 0 1px 0 var(--lx-glass-shine),var(--lx-glass-shadow);backdrop-filter:blur(14px) saturate(150%);-webkit-backdrop-filter:blur(14px) saturate(150%);opacity:0;box-sizing:border-box}
+html.lx-redesign .nav.lx-pill-ready .lx-nav-glass{opacity:1}
+html.lx-redesign .nav.lx-pill-motion .lx-nav-glass{transition:transform .42s cubic-bezier(.22,.78,.24,1),width .42s cubic-bezier(.22,.78,.24,1),height .3s ease,opacity .18s ease}
+html.lx-redesign .page:not(#page-home) :is(.ro-accent-header,.ro-photo-section){box-shadow:inset 0 1px 0 var(--lx-glass-shine),0 6px 24px #0001!important;border-color:color-mix(in srgb,var(--line) 75%,var(--lx-glass-edge))!important}
+html.lx-redesign{overflow-x:clip}
+@media(max-width:850px){html.lx-redesign #page-home .hero.lx-ready{min-height:0;padding:26px!important;gap:24px}}
+@media(max-width:700px){html.lx-redesign #page-home .hero.lx-ready{padding:25px 18px!important;gap:22px;border-radius:19px!important;background-position:56% center!important}html.lx-redesign #page-home .hero.lx-ready .hero-center h1{font-size:clamp(36px,8.5vw,53px)!important}html.lx-redesign #page-home .hero.lx-ready .lx-live-panel{border-radius:16px}}
+@media(prefers-reduced-motion:reduce){html.lx-redesign .nav.lx-pill-motion .lx-nav-glass{transition:none!important}html.lx-redesign .page.active{animation:none!important}}

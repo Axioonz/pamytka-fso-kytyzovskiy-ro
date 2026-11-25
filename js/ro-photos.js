@@ -4,7 +4,6 @@
   const folder = './assets/ro/';
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const groups = [
-    {selector:'#page-home .hero', name:'hero', photos:['kremlin-panorama.webp']},
     {selector:'#page-territories > .section-head', name:'section', photos:['spasskaya-tower.webp']},
     {selector:'#page-convoys > .section-head', name:'section', photos:['motorcade.webp']},
     {selector:'#page-departments > .section-head', name:'section', photos:['fso-officer.webp']}
@@ -124,13 +123,13 @@
  const jump=key=>{const e=sourceNav(key);if(isAvailable(e)&&!document.body.classList.contains('access-pending'))e.click()};
  const mkButton=(cls,text,action,ico)=>{const b=make('button',cls,text);b.type='button';if(ico)b.append(icon(ico));b.addEventListener('click',action);return b};
  const brand=document.querySelector('.topbar .brand');if(brand&&!brand.querySelector('.lx-mark')){const mark=make('span','lx-mark');mark.append(icon('shield'));brand.prepend(mark)}
- const heading=copy.querySelector('h1');if(heading){heading.replaceChildren(document.createTextNode('Всё для службы.'),document.createElement('br'),make('span','lx-gradient','В одном месте.'))}
+ // Keep the original heading from index.html.
  const desc=copy.querySelector('p');if(desc)desc.textContent='Памятка сотрудника ФСО. Законодательство, правовые основания, служебные материалы и личная шпаргалка.';
  const actions=make('div','lx-hero-actions');const lawCTA=mkButton('lx-primary','Открыть законодательство',()=>jump('laws'),'arrow');const serviceCTA=mkButton('lx-secondary','Материалы службы',()=>jump('territories'));actions.append(lawCTA,serviceCTA);copy.append(actions);
  const panel=make('div','lx-live-panel');const top=make('div','lx-live-top'),title=make('span');title.append(icon('book'),document.createTextNode('Правовая база'));top.append(title,make('small',null,'Памятка ФСО'));panel.append(top);
  const searchBox=home.querySelector('.smart-search-box');const searchTitle=home.querySelector('.smart-search-title');if(searchTitle)panel.append(searchTitle);if(searchBox)panel.append(searchBox); const hints=home.querySelector('.smart-search-hints'),results=home.querySelector('#homeSmartResults');if(hints)panel.append(hints);if(results)panel.append(results);
  const lawLabel=make('div','lx-law-label','ОСНОВНЫЕ ДОКУМЕНТЫ');const rows=make('div','lx-law-list');panel.append(lawLabel,rows);
- const photo=make('div','lx-hero-photo');const panorama=make('img');panorama.src='./assets/ro/kremlin-panorama.webp';panorama.alt='Панорама Московского Кремля';panorama.decoding='async';panorama.fetchPriority='high';photo.append(panorama);copy.prepend(photo);
+
  const foot=make('div','lx-live-bottom');const allLaws=mkButton('lx-text-link','Все документы',()=>jump('laws'),'arrow');foot.append(allLaws);panel.append(foot);hero.append(panel);hero.classList.add('lx-ready');
  const catalogHead=make('div','lx-directory-head'),headText=make('div');headText.append(make('h2',null,'Разделы памятки'));catalogHead.append(headText,mkButton('lx-text-link','Поиск по памятке',()=>document.getElementById('homeSmartSearch')?.focus()));
  const directory=make('div','lx-directory');const core=home.querySelector('.core-grid'),homeBlock=home.querySelector('.home-block');if(core){core.before(catalogHead,directory);const h=make('div','lx-directory-head');h.append(make('h2',null,'Основные материалы'));core.before(h)}else{home.append(catalogHead,directory)}
@@ -147,5 +146,79 @@
  sync();new MutationObserver(sync).observe(nav,{subtree:true,attributes:true,childList:true,attributeFilter:['class','style','hidden','disabled']});new MutationObserver(sync).observe(document.body,{attributes:true,attributeFilter:['class']});
  document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'&&!document.body.classList.contains('access-pending')&&isAvailable(sourceNav('home'))){event.preventDefault();jump('home');document.getElementById('homeSmartSearch')?.focus()}});
  };
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();
+
+/* Glass navigation and motion. Observe existing page changes; never change access or routing. */
+(()=>{
+ 'use strict';
+ function init(){
+  const nav=document.getElementById('mainNav'),main=document.querySelector('main.wrap');
+  if(!nav||!main||nav.querySelector('.lx-nav-glass'))return;
+  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+  const ease='cubic-bezier(.22,.78,.24,1)';
+  const pill=document.createElement('span');pill.className='lx-nav-glass';pill.setAttribute('aria-hidden','true');nav.prepend(pill);
+  const buttons=()=>Array.from(nav.querySelectorAll('button[data-page]'));
+  const activeButton=()=>nav.querySelector('button[data-page].active');
+  let raf=0,initialized=false;
+  function positionPill(){
+   raf=0;
+   const btn=activeButton(),r=btn?.getBoundingClientRect(),nr=nav.getBoundingClientRect();
+   if(!btn||!r.width||!r.height||!nr.width||document.body.classList.contains('access-pending')){
+    nav.classList.remove('lx-pill-ready','lx-pill-motion');initialized=false;return;
+   }
+   pill.style.width=r.width+'px';pill.style.height=r.height+'px';
+   pill.style.transform='translate3d('+(r.left-nr.left-nav.clientLeft+nav.scrollLeft)+'px,'+(r.top-nr.top-nav.clientTop+nav.scrollTop)+'px,0)';
+   nav.classList.add('lx-pill-ready');
+   if(!initialized){initialized=true;requestAnimationFrame(()=>{if(initialized)nav.classList.add('lx-pill-motion')})}
+  }
+  function schedulePill(){if(!raf)raf=requestAnimationFrame(positionPill)}
+  const pages=Array.from(main.querySelectorAll(':scope > .page'));
+  let previous=main.querySelector(':scope > .page.active'),previousButton=activeButton(),pageAnimation=null;
+  const seen=new WeakSet(),observed=new Set();
+  const revealSelector='.lx-directory-card,.core-card,.quick-actions > button,.basis-card,.term-card,.code-card,.territory-common-card,.territory-detail-card,.department-home-card,.uk-memo-library-card,.rule-card';
+  const io='IntersectionObserver' in window?new IntersectionObserver(entries=>{
+    for(const entry of entries){
+      if(!entry.isIntersecting)continue;
+      const el=entry.target;io.unobserve(el);observed.delete(el);seen.add(el);
+      if(reduced.matches||document.body.classList.contains('access-pending')||!el.closest('.page.active')||typeof el.animate!=='function')continue;
+      el.animate([{opacity:.42,translate:'0 14px'},{opacity:1,translate:'0 0'}],{duration:480,easing:ease,fill:'none'});
+    }
+  },{threshold:.12}):null;
+  function scan(page){
+   if(!io||!page||reduced.matches||document.body.classList.contains('access-pending'))return;
+   for(const el of page.querySelectorAll(revealSelector)){
+    if(seen.has(el)||observed.has(el))continue;
+    const r=el.getBoundingClientRect();if(!r.width||!r.height)continue;
+    if(r.top<window.innerHeight-20){seen.add(el);continue}
+    observed.add(el);io.observe(el);
+   }
+  }
+  function onPage(){
+   const next=main.querySelector(':scope > .page.active'),btn=activeButton();
+   if(next&&next!==previous){
+    const all=buttons(),before=all.indexOf(previousButton),after=all.indexOf(btn);
+    const direction=before>=0&&after>=0&&before!==after?Math.sign(after-before):Math.sign(pages.indexOf(next)-pages.indexOf(previous))||1;
+    if(pageAnimation){pageAnimation.cancel();pageAnimation=null}
+    if(!reduced.matches&&!document.body.classList.contains('access-pending')&&typeof next.animate==='function'&&previous){
+     pageAnimation=next.animate([{opacity:.38,translate:(direction*30)+'px 0'},{opacity:1,translate:'0 0'}],{duration:420,easing:ease,fill:'none'});
+    }
+    for(const el of observed){if(!next.contains(el)){io?.unobserve(el);observed.delete(el)}}
+    previous=next;
+   }
+   previousButton=btn;schedulePill();scan(next);
+  }
+  const pageObserver=new MutationObserver(onPage);
+  pages.forEach(p=>pageObserver.observe(p,{attributes:true,attributeFilter:['class']}));
+  new MutationObserver(schedulePill).observe(nav,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['class','hidden','disabled']});
+  new MutationObserver(()=>{schedulePill();scan(main.querySelector(':scope > .page.active'))}).observe(document.body,{attributes:true,attributeFilter:['class']});
+  const directory=main.querySelector('.lx-directory');
+  if(directory)new MutationObserver(()=>scan(main.querySelector(':scope > .page.active'))).observe(directory,{childList:true});
+  if('ResizeObserver' in window){const ro=new ResizeObserver(schedulePill);ro.observe(nav);buttons().forEach(b=>ro.observe(b))}
+  window.addEventListener('resize',()=>{schedulePill();scan(main.querySelector(':scope > .page.active'))},{passive:true});
+  reduced.addEventListener?.('change',()=>{if(reduced.matches){pageAnimation?.cancel();for(const el of observed)io?.unobserve(el);observed.clear()}else scan(main.querySelector(':scope > .page.active'))});
+  document.fonts?.ready.then(schedulePill);
+  onPage();
+ }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
