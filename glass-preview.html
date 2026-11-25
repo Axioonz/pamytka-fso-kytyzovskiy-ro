@@ -3362,7 +3362,46 @@ html.lx-redesign #page-home .lx-directory{margin-bottom:36px}
   html.lx-redesign .wrap{padding-bottom:78px}
 }
 
-</style></head><body class="access-pending">
+</style><style id="ro-home-overview-style">
+#page-home .ro-overview{margin:clamp(24px,4vw,48px) 0;color:var(--text)}
+#page-home .ro-overview h2{font-family:Manrope,"IBM Plex Sans",sans-serif;font-size:clamp(22px,2.5vw,32px);font-weight:750;line-height:1.2;letter-spacing:-.035em;margin:0 0 14px;color:var(--text)}
+#page-home .ro-overview h3{font-family:Manrope,"IBM Plex Sans",sans-serif;font-size:16px;line-height:1.3;font-weight:750;color:var(--text);margin:0 0 6px}
+#page-home .ro-overview p{margin:0;font-family:"IBM Plex Sans",sans-serif;font-size:15px;line-height:1.65;color:var(--muted);overflow-wrap:anywhere}
+#page-home .ro-overview .ro-kicker{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+#page-home .ro-intro{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:start;padding:0 0 26px;border-bottom:1px solid var(--line)}
+#page-home .ro-intro-main p{max-width:76ch}
+#page-home .ro-overview .ro-status{padding:18px 20px;border:1px solid var(--matte-edge,var(--line));border-radius:16px;background:var(--matte-panel,var(--panel));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+#page-home .ro-status dl{margin:0}
+#page-home .ro-status dt{color:var(--muted);font-size:11px;margin:0 0 3px}
+#page-home .ro-status dd{color:var(--text);font-size:15px;font-weight:650;line-height:1.4;margin:0 0 14px}
+#page-home .ro-status dd:last-child{margin-bottom:0}
+#page-home .ro-overview .ro-section{padding:24px 0;border-bottom:1px solid var(--line)}
+#page-home .ro-overview .ro-section:first-child{padding-top:0}
+#page-home .ro-task-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+#page-home .ro-task-list article{min-width:0;padding:0 0 0 14px;border-left:1px solid var(--line)}
+#page-home .ro-dept-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:30px}
+#page-home .ro-dept-row{display:grid;grid-template-columns:54px minmax(0,1fr);gap:12px;align-items:start;padding:16px 0;border-top:1px solid var(--line)}
+#page-home .ro-dept-code{font-family:Manrope,sans-serif;font-weight:800;font-size:16px;line-height:1.4;color:var(--accent)}
+#page-home .ro-overview .ro-note{margin-top:14px}
+#page-home .ro-about-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:30px}
+@media(max-width:800px){#page-home .ro-intro,#page-home .ro-about-grid{grid-template-columns:1fr;gap:20px}#page-home .ro-task-list{grid-template-columns:1fr;gap:16px}#page-home .ro-dept-list{grid-template-columns:1fr}#page-home .ro-overview .ro-section{padding:20px 0}}
+
+#page-home .ro-overview{width:100%;min-width:0}
+#page-home .ro-news-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(16px,2.8vw,32px);align-items:start;margin:0 0 32px}
+#page-home .ro-news-panel{min-width:0;padding:clamp(16px,2.4vw,26px);border:1px solid var(--matte-edge,var(--line));border-radius:20px;background:var(--matte-panel,var(--panel));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+#page-home .ro-news-panel h2{font-size:clamp(20px,2vw,25px);margin-bottom:16px}
+#page-home .ro-news-item{padding:13px 0;border-top:1px solid var(--matte-edge,var(--line))}
+#page-home .ro-news-item:last-child{padding-bottom:0}
+#page-home .ro-news-item time,#page-home .ro-news-item .ro-news-label{display:block;font-size:11px;color:var(--muted);margin-bottom:6px;font-weight:600}
+#page-home .ro-news-item h3{font-size:15px}
+#page-home .ro-news-item p{font-size:14px;line-height:1.55}
+#page-home .ro-news-item .ro-news-label{color:var(--accent)}
+#page-home .ro-overview .ro-history-more{margin:14px 0 0;padding:0;background:transparent;color:var(--accent);border:0;box-shadow:none;text-align:left;cursor:pointer;font:inherit;font-size:13px;font-weight:650}
+#page-home .ro-history-more:hover{text-decoration:underline}
+#page-home .ro-history-more:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+@media(max-width:800px){#page-home .ro-news-grid{grid-template-columns:minmax(0,1fr);gap:14px}}
+</style>
+</head><body class="access-pending">
 <div aria-hidden="false" class="access-gate" id="accessGate">
 <div class="access-gate-card">
 <div class="access-gate-brand">
@@ -3444,10 +3483,42 @@ html.lx-redesign #page-home .lx-directory{margin-bottom:36px}
 <p>Всё необходимое для службы сотрудника ФСО.</p>
 </div>
 </div>
+<section class="ro-overview ro-intro" aria-labelledby="ro-home-intro-title">
+<div class="ro-intro-main"><p class="ro-kicker">О службе</p><h2 id="ro-home-intro-title">Федеральная служба охраны</h2><p>ФСО РО является самостоятельным федеральным государственным органом, обеспечивающим безопасность высших должностных лиц, охраняемых государственных объектов и официальных государственных мероприятий. Главная задача службы заключается в предупреждении угроз и обеспечении государственной охраны в пределах установленных законом полномочий.</p></div>
+<aside class="ro-status" aria-label="Статус службы"><dl><dt>Подчинение</dt><dd>Премьер-министру РО</dd><dt>Руководство</dt><dd>Директор ФСО РО</dd><dt>Направление деятельности</dt><dd>Государственная охрана</dd></dl></aside>
+</section>
+<div class="ro-overview ro-news-grid">
+<section class="ro-news-panel" aria-labelledby="ro-home-news-title">
+<h2 id="ro-home-news-title">Актуальная информация</h2>
+<article class="ro-news-item"><span class="ro-news-label">Служебные объявления</span><h3>Новые объявления пока не опубликованы</h3><p>Здесь будут размещаться сообщения руководства, изменения в порядке несения службы и важные уведомления для личного состава.</p></article>
+<article class="ro-news-item"><time datetime="2026-11-25">25 ноября 2026</time><h3>Обновление главной страницы</h3><p>В тестовой версии памятки появилась вводная информация о ФСО, её задачах и структуре. Остальные разделы доступны через верхнюю навигацию.</p></article>
+</section>
+<section class="ro-news-panel" aria-labelledby="ro-home-history-title">
+<h2 id="ro-home-history-title">Последние обновления</h2>
+<article class="ro-news-item"><time datetime="2026-11-25">25 ноября 2026</time><h3>Интерфейс и главная страница</h3><p>Обновлено оформление тестовой версии, добавлены сведения о службе и подразделениях.</p></article>
+<article class="ro-news-item"><time datetime="2026-09-20">20 сентября 2026</time><h3>Актуализация законодательства</h3><p>В журнале отмечено обновление встроенных редакций Конституции, ПК, КоАП, ПДД и закона о государственных территориях.</p></article>
+<button class="ro-history-more" id="roHomeHistoryOpen" type="button" aria-haspopup="dialog">Вся история обновлений →</button>
+</section>
+</div>
 <div class="smart-search-title"><b>Поиск по памятке и документам</b><span>Ищите обычными словами</span></div>
 <div class="smart-search-box"><span>⌕</span><input autocomplete="off" id="homeSmartSearch" placeholder="Например: ТК увольнение, мат, досмотр, пропуск, задержание..."/></div>
 <div class="smart-search-hints"><button data-smart="тк увольнение">ТК · увольнение</button><button data-smart="мат">мат</button><button data-smart="без одежды">без одежды</button><button data-smart="досмотр">досмотр</button><button data-smart="не выполняет требование">не выполняет требование</button><button data-smart="задержание">задержание</button></div>
 <div class="smart-results" id="homeSmartResults"></div>
+<div class="ro-overview ro-details">
+<section class="ro-section" aria-labelledby="ro-home-tasks-title"><p class="ro-kicker">Назначение</p><h2 id="ro-home-tasks-title">Основные задачи ФСО</h2><div class="ro-task-list">
+<article><h3>Охрана должностных лиц</h3><p>Обеспечение личной безопасности охраняемых лиц, сопровождение и предупреждение угроз.</p></article>
+<article><h3>Охрана государственных объектов</h3><p>Обеспечение безопасности охраняемых зданий и территорий, соблюдение пропускного и внутриобъектового режима.</p></article>
+<article><h3>Государственные мероприятия</h3><p>Обеспечение безопасности официальных мероприятий и взаимодействие с компетентными государственными органами.</p></article>
+</div></section>
+<section class="ro-section" aria-labelledby="ro-home-dept-title"><p class="ro-kicker">Внутренняя структура</p><h2 id="ro-home-dept-title">Подразделения ФСО</h2><div class="ro-dept-list">
+<article class="ro-dept-row"><span class="ro-dept-code">УК</span><div><h3>Управление кадров</h3><p>Приём на службу, кадровый учёт, аттестации и организационное сопровождение сотрудников.</p></div></article>
+<article class="ro-dept-row"><span class="ro-dept-code">УЛО</span><div><h3>Управление личной охраны</h3><p>Непосредственная личная охрана и сопровождение охраняемых лиц.</p></div></article>
+<article class="ro-dept-row"><span class="ro-dept-code">УСН</span><div><h3>Управление специального назначения</h3><p>Выполнение специальных задач государственной охраны и усиление охраны при повышенной угрозе.</p></div></article>
+<article class="ro-dept-row"><span class="ro-dept-code">УВК</span><div><h3>Управление внутреннего контроля</h3><p>Контроль законности и служебной дисциплины, проведение служебных проверок.</p></div></article>
+</div><p class="ro-note"><strong>Академия.</strong> Учебный профиль памятки для сотрудников, проходящих подготовку к службе.</p></section>
+<section class="ro-section" aria-labelledby="ro-home-service-title"><p class="ro-kicker">Основы службы</p><h2 id="ro-home-service-title">Полномочия и ответственность</h2><div class="ro-about-grid"><article><h3>Пределы компетенции</h3><p>ФСО не является органом общей полицейской юрисдикции. Сотрудник действует в пределах задач государственной охраны, федерального законодательства и своей должностной компетенции.</p></article><article><h3>Принципы службы</h3><p>Законность, приоритет защиты жизни и здоровья, соразмерность вмешательства, соблюдение служебной дисциплины и уважение прав граждан.</p></article></div></section>
+<section class="ro-section" aria-labelledby="ro-home-about-title"><p class="ro-kicker">О ресурсе</p><h2 id="ro-home-about-title">Для чего нужна памятка</h2><p>Памятка помогает сотрудникам ФСО сервера «Кутузовский» проекта «Россия Онлайн» ориентироваться в служебных обязанностях и находить необходимые сведения. Материалы носят справочный характер и не заменяют действующее законодательство и обязательные служебные документы.</p></section>
+</div>
 </section><section class="page" id="page-basis">
 <div class="page-title-row"><div><h1>Правовой справочник</h1><p>Короткие рабочие формулировки со ссылками на точные статьи.</p></div></div>
 <div class="basis-search"><input id="matrixSearch" placeholder="Поиск обычными словами: досмотр, не уходит, бронежилет, угрожает сотруднику, задержание..."/></div>
@@ -4573,6 +4644,11 @@ html.lx-redesign #page-home .lx-directory{margin-bottom:36px}
 <button aria-label="Закрыть" class="updates-close" id="updatesClose" type="button">×</button>
 </div>
 <div class="updates-body">
+<article class="update-entry">
+<div class="update-date">25.11.2026</div>
+<h4>Обновление тестовой версии памятки</h4>
+<ul><li>Обновлено оформление главной страницы и добавлены сведения о назначении, задачах и структуре ФСО РО.</li><li>Добавлены блоки актуальной информации и истории изменений.</li></ul>
+</article>
 <article class="update-entry">
 <div class="update-date">20.09.2026</div>
 <h4>Актуализация законодательства</h4>
@@ -7612,4 +7688,5 @@ body{font-size:7.2pt;line-height:1.24}
 <script src="./js/ro-photos.js?v=20261125-glass-2"></script>
 <script src="./js/административные-ситуации.js?v=20261118-admin-private-1"></script>
 <script id="matte-dock-behaviour">(()=>{const d=document.getElementById('matteDockMenu');if(!d)return;const summary=d.querySelector('summary');document.addEventListener('pointerdown',e=>{if(d.open&&!d.contains(e.target)&&!e.target.closest('.ro-about-modal,.help-modal,#helpModal'))d.open=false;});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&d.open&&!document.querySelector('#roAboutModal.open,#helpModal.open')){d.open=false;summary.focus();}});})();</script>
+<script id="ro-home-history-script">(()=>{const button=document.getElementById('roHomeHistoryOpen'),modal=document.getElementById('updatesModal');if(!button||!modal)return;button.addEventListener('click',()=>{modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';document.getElementById('updatesClose')?.focus();});})();</script>
 </body></html>
