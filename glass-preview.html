@@ -3132,6 +3132,134 @@ html.lx-redesign .page:not(#page-home) :is(.ro-photo-section,.ro-accent-header){
   html.lx-redesign .topbar-in .access-role-pill{max-width:40vw}
 }
 
+
+/* Preview v2: consistent photo blending, document rows and sign-in geometry. */
+html.lx-redesign{
+  --matte-row-hover:rgba(175,196,230,.07);
+  --matte-field:rgba(12,18,30,.69);
+  --matte-role:rgba(163,183,216,.055);
+  --matte-role-active:rgba(142,166,222,.15);
+}
+html.lx-redesign[data-theme="light"]{
+  --matte-row-hover:rgba(81,110,164,.06);
+  --matte-field:rgba(255,255,255,.78);
+  --matte-role:rgba(90,115,159,.045);
+  --matte-role-active:rgba(90,120,182,.12);
+}
+/* Fade the image itself into the same underlying surface, not one panel into another. */
+html.lx-redesign .page:not(#page-home) .ro-accent-header{
+  background:var(--matte-panel)!important;
+}
+html.lx-redesign .page:not(#page-home) .ro-accent-header .ro-photo-accent{
+  width:100%!important;opacity:1!important;background:transparent!important;
+}
+html.lx-redesign .page:not(#page-home) .ro-accent-header .ro-photo-accent img{
+  width:69%;margin-left:auto;object-fit:cover;
+  filter:saturate(.90) contrast(1.02);
+  mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.12) 15%,rgba(0,0,0,.55) 40%,#000 78%);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.12) 15%,rgba(0,0,0,.55) 40%,#000 78%);
+}
+html.lx-redesign .page:not(#page-home) .ro-accent-header .ro-photo-accent::after{
+  background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
+/* Apply one continuous fade to full-width decorative banners. */
+html.lx-redesign .page:not(#page-home) .ro-photo-section .ro-photo-media img{
+  filter:saturate(.90) contrast(1.02);
+}
+html.lx-redesign .page:not(#page-home) .ro-photo-section .ro-photo-media::after{
+  background:linear-gradient(90deg,var(--panel) 0%,color-mix(in srgb,var(--panel) 92%,transparent) 27%,color-mix(in srgb,var(--panel) 63%,transparent) 51%,color-mix(in srgb,var(--panel) 12%,transparent) 100%)!important;
+  backdrop-filter:blur(.75px);-webkit-backdrop-filter:blur(.75px);
+}
+/* A document list is not a set of capsule buttons. */
+html.lx-redesign #page-home .hero.lx-ready .lx-live-panel{
+  border-radius:22px;padding:20px!important;text-align:left;
+}
+html.lx-redesign .lx-live-panel .lx-live-top{margin:0 0 16px;gap:8px}
+html.lx-redesign .lx-live-panel .lx-live-top small{color:var(--muted);font-size:10px}
+html.lx-redesign .lx-live-panel .smart-search-box{background:var(--matte-field)!important;border-radius:10px;min-height:45px}
+html.lx-redesign .lx-live-panel .smart-search-hints{justify-content:flex-start;gap:6px;margin:10px 0 0}
+html.lx-redesign .lx-live-panel .smart-search-hints button{border-radius:7px!important;padding:5px 8px!important;line-height:1.4}
+html.lx-redesign .lx-live-panel .lx-law-label{text-align:left;margin:20px 0 8px;font-size:10px;color:var(--muted)}
+html.lx-redesign .lx-live-panel .lx-law-list{display:flex;flex-direction:column;gap:0}
+html.lx-redesign .lx-live-panel .lx-law-item{
+  display:grid;grid-template-columns:36px minmax(0,1fr) 16px;
+  align-items:center;gap:11px;width:100%;min-height:62px;
+  padding:10px 6px!important;margin:0!important;border:0!important;
+  border-bottom:1px solid var(--matte-edge)!important;border-radius:0!important;
+  background:transparent!important;box-shadow:none!important;text-align:left;
+}
+html.lx-redesign .lx-live-panel .lx-law-item:last-child{border-bottom:0!important}
+html.lx-redesign .lx-live-panel .lx-law-item:hover{background:var(--matte-row-hover)!important}
+html.lx-redesign .lx-live-panel .lx-law-item>span:nth-child(2){min-width:0;overflow-wrap:anywhere}
+html.lx-redesign .lx-live-panel .lx-law-item .lx-law-symbol{width:36px;height:36px;border-radius:9px;background:var(--matte-role-active);border:1px solid var(--matte-edge)}
+html.lx-redesign .lx-live-panel .lx-law-item strong{font-size:13px;line-height:1.4;font-weight:600}
+html.lx-redesign .lx-live-panel .lx-law-item small{font-size:11px;line-height:1.3;margin-top:3px;color:var(--muted)}
+html.lx-redesign .lx-live-panel .lx-law-item>.lx-icon{width:16px;margin:0;color:var(--muted)}
+html.lx-redesign .lx-live-panel .lx-live-bottom{padding:12px 0 0;margin:4px 0 0;border-top:1px solid var(--matte-edge)}
+/* Sign-in: uniform tiles, no inset highlights, a single alignment grid. */
+html.lx-redesign .access-gate{
+  overflow-y:auto;display:flex;align-items:center;justify-content:center;
+  padding:24px;background:var(--lx-atmosphere),var(--bg);
+}
+html.lx-redesign .access-gate .access-gate-card{
+  flex:0 0 auto;width:min(700px,100%);max-width:100%;margin:auto;padding:30px;
+  background:var(--matte-panel)!important;border:1px solid var(--matte-edge)!important;
+  border-radius:22px!important;box-shadow:var(--matte-shadow)!important;
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+}
+html.lx-redesign .access-gate-brand{margin:0 0 24px;text-align:left}
+html.lx-redesign .access-gate-brand small{font-size:10px;letter-spacing:.09em}
+html.lx-redesign .access-gate-brand h1{margin:8px 0 6px;line-height:1.2;font-size:32px!important}
+html.lx-redesign .access-gate-brand p{font-size:13px;line-height:1.5}
+html.lx-redesign .access-role-grid{grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:1fr;gap:10px}
+html.lx-redesign .access-gate .access-role-grid button{
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:5px;
+  width:100%;min-width:0;min-height:96px;margin:0;padding:15px!important;text-align:left;
+  background:var(--matte-role)!important;border:1px solid var(--matte-edge)!important;
+  border-radius:12px!important;box-shadow:none!important;transform:none!important;
+}
+html.lx-redesign .access-gate .access-role-grid button:hover{background:var(--matte-row-hover)!important;border-color:var(--accent)!important}
+html.lx-redesign .access-gate .access-role-grid button.active{background:var(--matte-role-active)!important;border-color:var(--accent)!important}
+html.lx-redesign .access-role-grid button b{font-size:14px;line-height:1.35;font-weight:650;overflow-wrap:anywhere}
+html.lx-redesign .access-role-grid button span{font-size:11px;line-height:1.4;margin:0;overflow-wrap:anywhere}
+html.lx-redesign .access-login-form{
+  grid-template-columns:minmax(0,1fr) minmax(0,1.45fr) auto;
+  gap:10px;margin-top:22px;padding-top:20px;align-items:end;border-color:var(--matte-edge);
+}
+html.lx-redesign .access-login-form :is(.access-selected,label){min-width:0;display:block}
+html.lx-redesign .access-selected small,html.lx-redesign .access-login-form label>span{font-size:10px;font-weight:650;letter-spacing:0;margin:0 0 7px;line-height:1.4}
+html.lx-redesign .access-login-form .access-selected b,html.lx-redesign .access-login-form input{
+  display:flex;align-items:center;width:100%;height:44px;min-height:44px;min-width:0;padding:0 12px;
+  background:var(--matte-field)!important;border:1px solid var(--matte-edge);border-radius:10px;
+  font-size:13px;line-height:1.3;
+}
+html.lx-redesign .access-login-form .access-selected b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;padding-top:13px}
+html.lx-redesign .access-login-form input:focus{border-color:var(--accent)}
+html.lx-redesign .access-login-form .access-login-submit{height:44px;min-width:94px;padding:0 19px;border-radius:10px!important;box-shadow:none!important}
+html.lx-redesign .access-login-status{font-size:12px;min-height:16px;line-height:1.4}
+html.lx-redesign .access-gate-note{font-size:11px;margin-top:4px;line-height:1.5}
+@media(max-width:760px){
+  html.lx-redesign .access-gate .access-gate-card{padding:22px}
+  html.lx-redesign .access-role-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  html.lx-redesign .access-login-form{grid-template-columns:minmax(0,1fr);gap:10px}
+  html.lx-redesign .access-login-form .access-login-submit{width:100%}
+  html.lx-redesign .access-login-status{grid-column:1/-1}
+}
+@media(max-width:700px){
+  html.lx-redesign .page:not(#page-home) .ro-accent-header .ro-photo-accent img{width:85%;mask-image:linear-gradient(90deg,transparent,rgba(0,0,0,.20) 35%,rgba(0,0,0,.7) 85%);-webkit-mask-image:linear-gradient(90deg,transparent,rgba(0,0,0,.20) 35%,rgba(0,0,0,.7) 85%)}
+  html.lx-redesign #page-home .hero.lx-ready .lx-live-panel{padding:15px!important;border-radius:18px}
+  html.lx-redesign .lx-live-panel .lx-law-item{grid-template-columns:32px minmax(0,1fr) 14px;gap:9px;padding:10px 2px!important}
+  html.lx-redesign .lx-live-panel .lx-law-item .lx-law-symbol{width:32px;height:32px}
+}
+@media(max-width:480px){
+  html.lx-redesign .access-gate{padding:12px}
+  html.lx-redesign .access-gate .access-gate-card{padding:18px;border-radius:18px!important}
+  html.lx-redesign .access-gate-brand{margin-bottom:18px}
+  html.lx-redesign .access-gate-brand h1{font-size:27px!important}
+  html.lx-redesign .access-role-grid{gap:8px}
+  html.lx-redesign .access-gate .access-role-grid button{min-height:87px;padding:11px!important}
+}
+
 </style></head><body class="access-pending">
 <div aria-hidden="false" class="access-gate" id="accessGate">
 <div class="access-gate-card">
