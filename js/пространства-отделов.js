@@ -169,6 +169,7 @@
       access = info.data || null;
     }
     for (const code of views.keys()) render(code);
+    void announcements.refresh();
   }
 
   function loginForm() {
@@ -387,6 +388,7 @@
       await db.auth.signOut(); user = null; access = null;
       accountModal.hidden = true;
       for (const code of views.keys()) render(code);
+      void announcements.refresh();
       return;
     }
     const approve = event.target.closest("[data-kut-approve]");
@@ -462,6 +464,156 @@
     // Не вызываем запросы Supabase синхронно внутри callback Auth.
     setTimeout(() => { void loadAuth(); }, 0);
   });
+
+  // Главная страница: объявления Кутузовского. Использует ту же сессию и RLS.
+  const announcements = (() => {
+    const section = document.getElementById("ro-home-news-title")?.parentElement;
+    if (!section) return { refresh() {} };
+    const initial = section.querySelector(".ro-notice");
+    if (initial) initial.remove();
+    const el = (tag, cls, txt) => {
+      const node = document.createElement(tag);
+      if (cls) node.className = cls;
+      if (txt !== undefined) node.textContent = txt;
+      return node;
+    };
+    const btn = (label, fn) => {
+      const b = el("button", "kut-small-btn", label);
+      b.type = "button"; b.addEventListener("click", fn); return b;
+    };
+    const heading = el("div", "kut-ann-heading");
+    section.insertBefore(heading, section.firstChild);
+    heading.append(document.getElementById("ro-home-news-title"));
+    const tools = el("div", "kut-ann-tools"); heading.append(tools);
+    const feed = el("div", "kut-ann-feed"); section.append(feed);
+    const dialog = el("dialog", "kut-ann-dialog");
+    dialog.setAttribute("aria-label", "Управление объявлениями");
+    document.body.append(dialog);
+    const style = el("style");
+    style.textContent = [
+      ".kut-ann-heading{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:8px}",
+      ".kut-ann-tools,.kut-ann-actions{display:flex;flex-wrap:wrap;gap:7px;align-items:center}",
+      ".kut-ann-feed{display:grid;gap:8px;margin-top:12px;max-height:480px;overflow:auto}",
+      ".kut-ann-card{padding:13px 0;border-bottom:1px solid var(--line);min-width:0}",
+      ".kut-ann-card:last-child{border-bottom:0}.kut-ann-meta{display:flex;flex-wrap:wrap;gap:8px;color:var(--muted);font-size:11px;margin-bottom:7px}",
+      ".kut-ann-card h3{font-size:15px!important;margin:0 0 5px!important;overflow-wrap:anywhere}.kut-ann-card p{white-space:pre-wrap;overflow-wrap:anywhere;margin:0 0 8px!important;line-height:1.5}",
+      ".kut-ann-tag{color:var(--accent);font-weight:600}.kut-ann-empty{font-size:13px;color:var(--muted);padding:10px 0}",
+      ".kut-ann-dialog{width:min(680px,calc(100vw - 32px));max-height:85vh;overflow:auto;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow);font:inherit}",
+      ".kut-ann-dialog::backdrop{background:#0009;backdrop-filter:blur(4px)}.kut-ann-dialog h2{font-size:20px;margin:0}.kut-ann-dialog h3{font-size:15px}",
+      ".kut-ann-dialog form{display:grid;gap:13px;margin:18px 0}.kut-ann-dialog label{display:grid;gap:6px;font-size:13px;color:var(--muted)}",
+      ".kut-ann-dialog input:not([type=checkbox]),.kut-ann-dialog textarea,.kut-ann-dialog select{width:100%;box-sizing:border-box;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:10px;font:inherit}",
+      ".kut-ann-dialog textarea{min-height:125px;resize:vertical}.kut-ann-dialog label.kut-ann-check{display:flex;align-items:center;gap:8px}.kut-ann-dialog .kut-ann-actions{margin-top:10px}",
+      ".kut-ann-error{color:var(--danger);overflow-wrap:anywhere}.kut-ann-dialog .kut-ann-list{display:grid;gap:5px}.kut-ann-dialog [disabled]{opacity:.5;cursor:wait}",
+      ".kut-ann-dialog [hidden]{display:none!important}"
+    ].join("\n");
+    document.head.append(style);
+    const categories = { general:"Объявление", important:"Важно", service:"Служебное" };
+    const when = value => new Date(value).toLocaleString("ru-RU", {dateStyle:"medium",timeStyle:"short"});
+    const active = row => !row.archived && Date.parse(row.published_at) <= Date.now() && (!row.expires_at || Date.parse(row.expires_at) > Date.now());
+    let rows = [], generation = 0, busy = false, loaded = false;
+    const top = el("div", "kut-ann-heading");
+    top.append(el("h2", "", "Управление объявлениями"), btn("Закрыть", () => dialog.close()));
+    dialog.append(top);
+    const status = el("p", "kut-ann-empty"); status.setAttribute("role","status");
+    dialog.append(status);
+    const editor = el("div"); dialog.append(editor);
+    const list = el("div", "kut-ann-list"); dialog.append(list);
+    const message = (t, bad=false) => { status.textContent=t; status.classList.toggle("kut-ann-error",bad); };
+    const card = (row, admin=false) => {
+      const node = el("article","kut-ann-card");
+      const meta = el("div","kut-ann-meta");
+      if (row.pinned) meta.append(el("span","kut-ann-tag","Закреплено"));
+      meta.append(el("span",row.category==="important"?"kut-ann-tag":"",categories[row.category]||"Объявление"),el("time","",when(row.published_at)));
+      if (admin && !active(row)) meta.append(el("span","",row.archived?"В архиве":"Срок истёк / не опубликовано"));
+      node.append(meta,el("h3","",row.title),el("p","",row.body));
+      if (row.expires_at) node.append(el("div","kut-ann-meta","До "+when(row.expires_at)));
+      if (admin) {
+        const actions = el("div","kut-ann-actions");
+        actions.append(btn("Изменить",()=>form(row)),btn(row.pinned?"Открепить":"Закрепить",()=>mutate("update",row,{pinned:!row.pinned})),btn(row.archived?"Вернуть":"В архив",()=>mutate("update",row,{archived:!row.archived})),btn("Удалить",()=>{if(confirm("Удалить объявление без возможности восстановления?")) void mutate("delete",row);}));
+        node.append(actions);
+      }
+      return node;
+    };
+    function render() {
+      tools.replaceChildren();
+      if (isAdmin()) tools.append(btn("Управление",()=>{dialog.showModal();form();renderList();void refresh();}));
+      else if (!user) tools.append(btn("Вход руководства",()=>void openAccount()));
+      if (!loaded) return;
+      const visible = rows.filter(active);
+      feed.replaceChildren(...(visible.length?visible.map(r=>card(r)):[el("div","kut-ann-empty","Нет новых объявлений")]));
+      if (dialog.open) {
+        if (!isAdmin()) { dialog.close(); editor.replaceChildren(); list.replaceChildren(); }
+        else renderList();
+      }
+    }
+    function renderList() {
+      list.replaceChildren(el("h3","","Все объявления"),...(rows.length?rows.map(r=>card(r,true)):[el("p","kut-ann-empty","Объявлений пока нет")]));
+    }
+    async function refresh() {
+      const seq=++generation, admin=isAdmin();
+      if (!admin && dialog.open) dialog.close();
+      // Не оставляем архивные строки в памяти при выходе из кабинета.
+      if (!admin) { rows=rows.filter(active); editor.replaceChildren(); list.replaceChildren(); }
+      render();
+      if (!loaded) feed.replaceChildren(el("div","kut-ann-empty","Загрузка объявлений…"));
+      try {
+        const result=await db.from("kut_announcements").select("*").order("pinned",{ascending:false}).order("published_at",{ascending:false});
+        if(seq!==generation) return;
+        if(result.error) throw result.error;
+        rows=result.data||[];loaded=true;render();
+      } catch(e) {
+        if(seq!==generation)return;
+        feed.replaceChildren(el("div","kut-ann-empty","Не удалось загрузить объявления. "+(e.message||"")));
+        if(dialog.open)message("Не удалось загрузить объявления.",true);
+      }
+    }
+    function localDate(value) {
+      if (!value) return "";
+      const d=new Date(value);
+      return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,16);
+    }
+    function form(row=null) {
+      if(!isAdmin()||busy)return;
+      editor.replaceChildren();
+      const f=el("form");
+      const title=el("input");title.name="title";title.required=true;title.maxLength=120;title.value=row?.title||"";
+      const body=el("textarea");body.name="body";body.required=true;body.maxLength=4000;body.value=row?.body||"";
+      const category=el("select");for(const [value,label] of Object.entries(categories)){const opt=el("option","",label);opt.value=value;category.append(opt);}category.value=row?.category||"general";
+      const expiry=el("input");expiry.type="datetime-local";expiry.value=localDate(row?.expires_at);
+      const pinned=el("input");pinned.type="checkbox";pinned.checked=!!row?.pinned;
+      const field=(label,input,cls="")=>{const l=el("label",cls);l.append(el("span","",label),input);return l;};
+      f.append(el("h3","",row?"Редактирование":"Новое объявление"),field("Заголовок",title),field("Текст",body),field("Категория",category),field("Срок публикации (местное время, необязательно)",expiry),field("Закрепить объявление",pinned,"kut-ann-check"));
+      const actions=el("div","kut-ann-actions"),save=el("button","kut-small-btn",row?"Сохранить":"Опубликовать");save.type="submit";actions.append(save);
+      if(row)actions.append(btn("Отмена",()=>form()));f.append(actions);editor.append(f);
+      f.addEventListener("submit",async e=>{
+        e.preventDefault();
+        const data={title:title.value.trim(),body:body.value.trim(),category:category.value,pinned:pinned.checked,expires_at:expiry.value?new Date(expiry.value).toISOString():null};
+        if(!data.title||!data.body){message("Заполните заголовок и текст.",true);return;}
+        if(data.expires_at&&Date.parse(data.expires_at)<=Date.now()){message("Срок публикации должен быть в будущем.",true);return;}
+        if(await mutate(row?"update":"insert",row,data))form();
+      });
+    }
+    async function mutate(action,row,data) {
+      if(!isAdmin()||busy)return false;
+      busy=true;message("Сохранение…");
+      dialog.querySelectorAll("button").forEach(b=>b.disabled=true);
+      try {
+        let q=db.from("kut_announcements");
+        q=action==="insert"?q.insert(data):action==="update"?q.update(data).eq("id",row.id):q.delete().eq("id",row.id);
+        const result=await q.select("id").single();
+        if(result.error)throw result.error;
+        await refresh();message(action==="delete"?"Объявление удалено.":"Изменения сохранены.");return true;
+      }catch(e){message(e.message||"Не удалось сохранить.",true);return false;}
+      finally{busy=false;dialog.querySelectorAll("button").forEach(b=>b.disabled=false);}
+    }
+    dialog.addEventListener("click",e=>{if(e.target===dialog&&!busy){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
+    dialog.addEventListener("cancel",e=>{if(busy)e.preventDefault();});
+    document.addEventListener("visibilitychange",()=>{if(!document.hidden)void refresh();});
+    setInterval(()=>{if(!document.hidden)void refresh();},30000);
+    void refresh();
+    return {refresh};
+  })();
+
   mount();
   void loadAuth();
   void refresh();
