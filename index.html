@@ -2660,6 +2660,22 @@ body.access-pending .footer{visibility:hidden}
   }
 }
 </style>
+<style id="cheatsheet-button-alignment">
+/* Небольшой одинаковый отступ от правого края, без наложения на материал. */
+html.lx-redesign .cheat-quick-add,
+html.lx-redesign .law-article-cheat{
+  margin-right:12px!important;
+  max-width:calc(100% - 12px)!important;
+}
+html.lx-redesign .cheat-modal-actions{column-gap:3px}
+@media(max-width:520px){
+  html.lx-redesign .cheat-quick-add,
+  html.lx-redesign .law-article-cheat{
+    margin-right:6px!important;
+    max-width:calc(100% - 6px)!important;
+  }
+}
+</style>
 <style id="related-norms-style">
 .law-related{display:none;margin:10px 0 12px;padding:10px 11px;border:1px solid var(--line);border-radius:10px;background:var(--panel2)}
 .law-related.open{display:block}
