@@ -18,14 +18,6 @@
     {selector:'#page-cheats > .section-head', layout:'postcard', photo:'hero-autumn.webp'},
     {selector:'#page-laws > .section-head', layout:'split', photo:'moscow-skyline.webp'}
   ];
-  function preload(file) {
-    return new Promise(resolve => {
-      const image = new Image();
-      image.onload = () => resolve(folder + file);
-      image.onerror = () => resolve(null);
-      image.src = folder + file;
-    });
-  }
   function createGallery(group, urls) {
     if (!urls.length) return;
     const host = document.querySelector(group.selector);
@@ -40,7 +32,7 @@
       img.alt = '';
       img.decoding = 'async';
       img.className = i === 0 ? 'is-current' : '';
-      if (i > 0) img.loading = 'lazy';
+      img.loading = 'lazy';
       media.appendChild(img);
     });
     host.insertBefore(media, host.firstChild);
@@ -93,17 +85,9 @@
     host.appendChild(photo);
   }
   function init() {
-    groups.forEach(async group => {
-      const host = document.querySelector(group.selector);
-      if (!host) return;
-      const results = await Promise.all(group.photos.map(preload));
-      createGallery(group, results.filter(Boolean));
-    });
-    accents.forEach(async group => {
-      if (!document.querySelector(group.selector)) return;
-      const url = await preload(group.photo);
-      if (url) createAccent(group, url);
-    });
+    // Create the layout immediately; native lazy loading defers hidden sections.
+    groups.forEach(group => createGallery(group, group.photos.map(file => folder + file)));
+    accents.forEach(group => createAccent(group, folder + group.photo));
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, {once:true});
   else init();
@@ -139,69 +123,111 @@
   const keys=cards.filter(c=>isAvailable(sourceNav(c[0]))).map(c=>c[0]);const stamp=keys.join('|');
   lawCTA.hidden=!keys.includes('laws');serviceCTA.hidden=!keys.includes('territories');allLaws.hidden=!keys.includes('laws');
   if(stamp===last&&directory.children.length)return;last=stamp;directory.replaceChildren();rows.replaceChildren();
-  for(const c of cards){const [key,label,detail,ico,img]=c;if(!keys.includes(key))continue;const b=mkButton('lx-directory-card'+(key==='laws'?' lx-featured':''),'',()=>jump(key));b.dataset.lxPage=key;if(img){b.classList.add('lx-has-photo');const photo=make('img','lx-card-photo');photo.src='./assets/ro/'+img;photo.alt='';photo.loading='lazy';b.append(photo)}const symbol=make('span','lx-card-symbol');symbol.append(icon(ico));b.append(symbol,make('strong',null,label),make('small',null,detail),icon('ne'));directory.append(b)}
+  for(const c of cards){const [key,label,detail,ico,img]=c;if(!keys.includes(key))continue;const b=mkButton('lx-directory-card'+(key==='laws'?' lx-featured':''),'',()=>jump(key));b.dataset.lxPage=key;if(img){b.classList.add('lx-has-photo');const photo=make('img','lx-card-photo');photo.src='./assets/ro/'+img;photo.alt='';photo.loading='lazy';photo.decoding='async';b.append(photo)}const symbol=make('span','lx-card-symbol');symbol.append(icon(ico));b.append(symbol,make('strong',null,label),make('small',null,detail),icon('ne'));directory.append(b)}
   if(keys.includes('laws'))for(const [key,tag] of docKeys){const doc=document.querySelector('#page-laws .doc-btn[data-doc="'+key+'"]');if(!doc||doc.hidden||doc.disabled||doc.closest('[hidden]'))continue;const row=mkButton('lx-law-item','',()=>{if(!isAvailable(sourceNav('laws')))return;jump('laws');if(isAvailable(doc))doc.click()});const symbol=make('span','lx-law-symbol');symbol.append(icon('doc'));const text=make('span');text.append(make('strong',null,doc.textContent.trim()),make('small',null,tag));row.append(symbol,text,icon('arrow'));rows.append(row)}
   lawLabel.hidden=!rows.children.length;
  }
- sync();new MutationObserver(sync).observe(nav,{subtree:true,attributes:true,childList:true,attributeFilter:['class','style','hidden','disabled']});new MutationObserver(sync).observe(document.body,{attributes:true,attributeFilter:['class']});
+ let syncFrame=0;const scheduleSync=()=>{if(!syncFrame)syncFrame=requestAnimationFrame(()=>{syncFrame=0;sync()})};
+ sync();new MutationObserver(scheduleSync).observe(nav,{subtree:true,attributes:true,childList:true,attributeFilter:['class','style','hidden','disabled']});new MutationObserver(scheduleSync).observe(document.body,{attributes:true,attributeFilter:['class']});
  document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'&&!document.body.classList.contains('access-pending')&&isAvailable(sourceNav('home'))){event.preventDefault();jump('home');document.getElementById('homeSmartSearch')?.focus()}});
  };
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
 
-/* Glass navigation and motion. Observe existing page changes; never change access or routing. */
+/* Elastic navigation and bounded motion. Routing and permissions remain unchanged. */
 (()=>{
  'use strict';
  function init(){
   const nav=document.getElementById('mainNav'),main=document.querySelector('main.wrap');
   if(!nav||!main||nav.querySelector('.lx-nav-glass'))return;
   const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
-  const ease='cubic-bezier(.32,.72,.25,1)';
-  const pill=document.createElement('span');pill.className='lx-nav-glass';pill.setAttribute('aria-hidden','true');nav.prepend(pill);
+  const compact=window.matchMedia('(max-width:760px)');
+  const motion=()=>!reduced.matches&&!document.hidden&&!document.body.classList.contains('access-pending');
+  const ease='cubic-bezier(.22,.75,.24,1)';
+  const pill=document.createElement('span');pill.className='lx-nav-glass';pill.setAttribute('aria-hidden','true');
+  // Animate only transforms, not width/height on every frame.
+  pill.style.setProperty('transition','none','important');pill.style.transformOrigin='left center';nav.prepend(pill);
   const buttons=()=>Array.from(nav.querySelectorAll('button[data-page]'));
   const activeButton=()=>nav.querySelector('button[data-page].active');
-  let raf=0,initialized=false;
+  let raf=0,lastBox=null,pillAnimation=null;
+  const transform=(x,y,sx=1,sy=1)=>'translate3d('+x+'px,'+y+'px,0) scale('+sx+','+sy+')';
   function positionPill(){
    raf=0;
-   const btn=activeButton(),r=btn?.getBoundingClientRect(),nr=nav.getBoundingClientRect();
-   if(!btn||!r.width||!r.height||!nr.width||document.body.classList.contains('access-pending')){
-    nav.classList.remove('lx-pill-ready','lx-pill-motion');initialized=false;return;
+   const btn=activeButton();
+   if(!btn||!btn.offsetWidth||!btn.offsetHeight||!nav.clientWidth||document.body.classList.contains('access-pending')){
+    pillAnimation?.cancel();pillAnimation=null;lastBox=null;nav.classList.remove('lx-pill-ready','lx-pill-motion');return;
    }
-   pill.style.width=btn.offsetWidth+'px';pill.style.height=btn.offsetHeight+'px';
-   pill.style.transform='translate3d('+btn.offsetLeft+'px,'+btn.offsetTop+'px,0)';
-   nav.classList.add('lx-pill-ready');
-   if(!initialized){initialized=true;requestAnimationFrame(()=>{if(initialized)nav.classList.add('lx-pill-motion')})}
+   const box={btn,x:btn.offsetLeft,y:btn.offsetTop,w:btn.offsetWidth,h:btn.offsetHeight};
+   if(lastBox&&['btn','x','y','w','h'].every(k=>box[k]===lastBox[k]))return;
+   const old=lastBox?pill.getBoundingClientRect():null;
+   const changed=lastBox&&lastBox.btn!==btn;
+   pillAnimation?.cancel();pillAnimation=null;
+   pill.style.width=box.w+'px';pill.style.height=box.h+'px';
+   const end=transform(box.x,box.y);pill.style.transform=end;
+   nav.classList.add('lx-pill-ready','lx-pill-motion');
+   lastBox=box;
+   if(!old||!changed||!motion()||typeof pill.animate!=='function')return;
+   const target=pill.getBoundingClientRect();
+   const dx=old.left-target.left,dy=old.top+old.height/2-target.top-target.height/2;
+   const startX=box.x+dx, startY=box.y+dy;
+   const ratio=Math.max(.35,Math.min(3,old.width/box.w));
+   const dir=Math.sign(-dx)||1;
+   const stretch=Math.min(.28,Math.abs(dx)/(box.w*5));
+   // Leading edge pulls forward, the trailing edge catches up, then a small recoil.
+   const pullX=box.x+dx*.34-(dir<0?box.w*stretch:0);
+   pillAnimation=pill.animate([
+    {transform:transform(startX,startY,ratio,old.height/box.h),offset:0},
+    {transform:transform(pullX,box.y,1+stretch,.94),offset:.40},
+    {transform:transform(box.x+dir*3,box.y,.98,1.015),offset:.78},
+    {transform:end,offset:1}
+   ],{duration:compact.matches?410:530,easing:ease,fill:'none'});
   }
   function schedulePill(){if(!raf)raf=requestAnimationFrame(positionPill)}
   const pages=Array.from(main.querySelectorAll(':scope > .page'));
-  let previous=main.querySelector(':scope > .page.active'),previousButton=activeButton(),pageAnimation=null;
+  let previous=main.querySelector(':scope > .page.active'),previousButton=activeButton(),pageAnimation=null,headerAnimation=null;
+  const cancelPage=()=>{pageAnimation?.cancel();headerAnimation?.cancel();pageAnimation=null;headerAnimation=null};
   const seen=new WeakSet(),observed=new Set();
   const revealSelector='.lx-directory-card,.core-card,.quick-actions > button,.basis-card,.term-card,.code-card,.territory-common-card,.territory-detail-card,.department-home-card,.uk-memo-library-card,.rule-card';
   const io='IntersectionObserver' in window?new IntersectionObserver(entries=>{
     for(const entry of entries){
       if(!entry.isIntersecting)continue;
       const el=entry.target;io.unobserve(el);observed.delete(el);seen.add(el);
-      if(reduced.matches||document.body.classList.contains('access-pending')||!el.closest('.page.active')||typeof el.animate!=='function')continue;
-      el.animate([{opacity:.76,translate:'0 9px'},{opacity:1,translate:'0 0'}],{duration:660,easing:ease,fill:'none'});
+      if(!motion()||!el.closest('.page.active')||typeof el.animate!=='function'||pageAnimation?.playState==='running')continue;
+      el.animate([{opacity:.88,translate:'0 6px'},{opacity:1,translate:'0 0'}],{duration:300,easing:ease,fill:'none'});
     }
-  },{threshold:0,rootMargin:'0px 0px 55px 0px'}):null;
+  },{threshold:0,rootMargin:'0px 0px 24px 0px'}):null;
+  let scanFrame=0,scanPage=null;
   function scan(page){
-   if(!io||!page||reduced.matches||document.body.classList.contains('access-pending'))return;
-   for(const el of page.querySelectorAll(revealSelector)){
-    if(seen.has(el)||observed.has(el))continue;
-    const r=el.getBoundingClientRect();if(!r.width||!r.height)continue;
-    if(r.top<window.innerHeight-20){seen.add(el);continue}
-    observed.add(el);io.observe(el);
-   }
+   scanPage=page;
+   if(!scanFrame)scanFrame=requestAnimationFrame(()=>{
+    scanFrame=0;
+    const p=scanPage;
+    if(!io||!p||!motion()||!p.classList.contains('active'))return;
+    // Observe without a layout read per card; the browser batches visibility.
+    for(const el of p.querySelectorAll(revealSelector)){
+     if(seen.has(el)||observed.has(el))continue;
+     observed.add(el);io.observe(el);
+    }
+   });
   }
   function onPage(){
    const next=main.querySelector(':scope > .page.active'),btn=activeButton();
    if(next&&next!==previous){
     const all=buttons(),before=all.indexOf(previousButton),after=all.indexOf(btn);
     const direction=before>=0&&after>=0&&before!==after?Math.sign(after-before):Math.sign(pages.indexOf(next)-pages.indexOf(previous))||1;
-    if(pageAnimation){pageAnimation.cancel();pageAnimation=null}
-    if(!reduced.matches&&!document.body.classList.contains('access-pending')&&typeof next.animate==='function'&&previous){
-     pageAnimation=next.animate([{opacity:.82,translate:(direction*17)+'px 0'},{opacity:.98,translate:(direction*3)+'px 0',offset:.64},{opacity:1,translate:'0 0'}],{duration:620,easing:ease,fill:'none'});
+    cancelPage();
+    if(motion()&&typeof next.animate==='function'&&previous){
+     const distance=compact.matches?12:23;
+     pageAnimation=next.animate([
+      {opacity:.56,translate:(direction*distance)+'px 3px',offset:0},
+      {opacity:.97,translate:(-direction*2)+'px 0',offset:.76},
+      {opacity:1,translate:'0 0',offset:1}
+     ],{duration:compact.matches?350:470,easing:ease,fill:'none'});
+     // Blur only the small heading region: never rasterize a whole long law page.
+     const header=next.querySelector(':scope > .hero .hero-center, :scope > .page-title-row, :scope > .section-head, :scope > .cheat-page-head');
+     if(header&&header.getBoundingClientRect().height<350&&typeof header.animate==='function'){
+      headerAnimation=header.animate([{filter:'blur(3px)'},{filter:'blur(0px)',offset:.72},{filter:'none'}],{duration:compact.matches?260:340,easing:ease,fill:'none'});
+     }
     }
     for(const el of observed){if(!next.contains(el)){io?.unobserve(el);observed.delete(el)}}
     previous=next;
@@ -215,8 +241,9 @@
   const directory=main.querySelector('.lx-directory');
   if(directory)new MutationObserver(()=>scan(main.querySelector(':scope > .page.active'))).observe(directory,{childList:true});
   if('ResizeObserver' in window){const ro=new ResizeObserver(schedulePill);ro.observe(nav);buttons().forEach(b=>ro.observe(b))}
-  window.addEventListener('resize',()=>{schedulePill();scan(main.querySelector(':scope > .page.active'))},{passive:true});
-  reduced.addEventListener?.('change',()=>{if(reduced.matches){pageAnimation?.cancel();for(const el of observed)io?.unobserve(el);observed.clear()}else scan(main.querySelector(':scope > .page.active'))});
+  window.addEventListener('resize',schedulePill,{passive:true});
+  reduced.addEventListener?.('change',()=>{if(reduced.matches){cancelPage();pillAnimation?.cancel();for(const el of observed)io?.unobserve(el);observed.clear()}else scan(main.querySelector(':scope > .page.active'))});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelPage();pillAnimation?.cancel()}else{schedulePill();scan(main.querySelector(':scope > .page.active'))}});
   document.fonts?.ready.then(schedulePill);
   onPage();
  }
